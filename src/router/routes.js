@@ -14,5 +14,3 @@ module.exports = [
     component: () => import('@/page/facilities.vue')
   },
 ];
-
-const routes = require('@/router/routes.js')
