@@ -14,7 +14,7 @@
 		},
 		methods: {
 			clickBack(){
-				this.$router.push("/")
+				// this.$router.push("/")
 			}
 		}
 	}
