@@ -15,7 +15,7 @@ export default {
 </script>
 <style scoped>
 .page {
-  height: 76.3rem ;
+  height: 75.9rem ;
 	background-image: url("../../../assets/img/frame_2.png");
 	background-size: 100% 100%;
 
