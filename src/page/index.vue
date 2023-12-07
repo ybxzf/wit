@@ -549,7 +549,7 @@
 <style scoped>
 	@import url("../assets/css/index.css");
 </style>
-<style>
+<style scoped>
 	.ant-select-selection {
 		background-color: rgba(0, 0, 0, 0);
 		border: 0;
