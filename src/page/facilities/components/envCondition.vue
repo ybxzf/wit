@@ -43,10 +43,10 @@ export default {
 </script>
 <style scoped>
 .unusual {
-  height: 21rem !important;
+  height: 23.7rem !important;
 }
 .title {
-  padding: 0.5rem 0 1rem 4rem !important;
+  padding: 0.8rem 0 1rem 4rem !important;
   margin-left: 2rem !important;
 }
 .icon-avatar {
