@@ -5,7 +5,7 @@
       <ol v-for="(item, index) in testerList">
         <img class="icon-avatar" src="@/assets/img/icon_7.png" />
         <div class="tester-content">
-          检定人员：<span>{{ item.name }}</span>
+          <span class="text">检定人员：</span>{{ item.name }}
         </div>
       </ol>
     </ul>
@@ -21,14 +21,14 @@ export default {
 </script>
 <style scoped>
 .unusual {
-  height: 30rem !important;
+  height: 27rem !important;
 }
 .row {
   height: 80% !important;
   overflow: auto;
 }
 .title {
-  padding: 1.2rem 0 1rem 4rem !important;
+  padding: 1.1rem 0 1rem 4rem !important;
   margin-left: 2rem !important;
 }
 .icon-avatar {
@@ -42,6 +42,9 @@ export default {
   height: 3.7rem;
   width: 22rem;
   background-image: url("../../../assets/img/icon_8.png");
+}
+.tester-content .text {
+  color: #fff;
 }
 ::-webkit-scrollbar {
   display: none;
