@@ -192,11 +192,12 @@
 		Grid
 	} from 'swiper';
 	Swiper.use([Autoplay, Grid]);
-	import GlobalInfo from "../components/GlobalInfo.vue";
+	import GlobalInfo from "@/components/GlobalInfo.vue";
 	export default {
 		name: 'Index',
 		data() {
 			return {
+				refresh:0,
 				tempObj: {},
 				isShow: false,
 				time: "",
@@ -236,6 +237,14 @@
 			this.getData();
 			this.updateTime();
 			this.updateData();
+		},
+		destroyed() {
+			if(this.tempObj.data){
+				clearInterval(this.tempObj.data);
+			}
+			if(this.tempObj.timer){
+				clearInterval(this.tempObj.timer);
+			}
 		},
 		methods: {
 			getData() {
@@ -292,6 +301,10 @@
 			updateData() {
 				this.tempObj.data = setInterval(() => {
 					this.getData()
+					this.refresh++;
+					if(this.refresh > 50){
+						location.reload();
+					}
 				}, GlobalInfo.updatePage)
 			},
 			updateTime() {

@@ -4,28 +4,10 @@
     <el-row>
       <el-col :span="24">
         <div style="float: right; padding: 0 2rem">
-          <button
-            v-for="(item, index) in buttonMun"
-            class="button-top"
-            :style="{ backgroundColor: status == index + 1 ? '#0b6e73' : '' }"
-            @click="toggleStatus(index + 1)"
-          >
+          <button v-for="(item, index) in buttonMun" class="button-top"
+            :style="{ backgroundColor: status == index + 1 ? '#0b6e73' : '' }" @click="toggleStatus(index + 1)">
             {{ item }}
           </button>
-          <!-- <button
-            class="button-top"
-            :style="{ backgroundColor: this.status == 2 ? '#0b6e73' : '' }"
-            @click="toggleStatus(2)"
-          >
-            暂停
-          </button>
-          <button
-            class="button-top"
-            :style="{ backgroundColor: this.status == 3 ? '#0b6e73' : '' }"
-            @click="toggleStatus(3)"
-          >
-            停止
-          </button> -->
         </div>
       </el-col>
       <el-col :span="4">
@@ -35,13 +17,7 @@
       </el-col>
       <el-col :span="20">
         <div class="content-right">
-          <el-table
-            class="table"
-            :data="tableData"
-            border
-            height="65rem"
-            style="width: 100%"
-          >
+          <el-table class="table" :data="tableData" border height="65rem" style="width: 100%">
             <el-table-column label="序号" min-width="15%">
               <template slot-scope="scope">
                 <span style="color: #fff">
@@ -112,8 +88,7 @@ export default {
           epitope14: "+0.172",
           epitope15: "+0.172",
           epitope16: "+0.172",
-        },
-        {
+        }, {
           epitope1: "+0.172",
           epitope2: "+0.172",
           epitope3: "+0.172",
@@ -130,407 +105,11 @@ export default {
           epitope14: "+0.172",
           epitope15: "+0.172",
           epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
-        {
-          epitope1: "+0.172",
-          epitope2: "+0.172",
-          epitope3: "+0.172",
-          epitope4: "+0.172",
-          epitope5: "+0.172",
-          epitope6: "+0.172",
-          epitope7: "+0.172",
-          epitope8: "+0.172",
-          epitope9: "+0.172",
-          epitope10: "+0.172",
-          epitope11: "+0.172",
-          epitope12: "+0.172",
-          epitope13: "+0.172",
-          epitope14: "+0.172",
-          epitope15: "+0.172",
-          epitope16: "+0.172",
-        },
+        }
       ],
     };
   },
-  mounted() {},
+  mounted() { },
   methods: {
     toggleStatus(status) {
       this.status = status;
@@ -545,6 +124,7 @@ export default {
   background-size: 100% 100%;
   /* border: 1px solid red; */
 }
+
 .title {
   padding: 0.7rem 0 0rem 4rem !important;
   margin-left: 2rem !important;
@@ -556,6 +136,7 @@ export default {
   letter-spacing: 0.15rem;
   line-height: 2.58rem;
 }
+
 .button-top {
   height: 2.5rem;
   width: 7rem;
@@ -570,19 +151,22 @@ export default {
   box-shadow: 0 12px 16px 0 rgba(52, 138, 236, 0.24),
     0 17px 50px 0 rgba(45, 154, 226, 0.19);
 }
+
 .button-top:active {
   /* 点击时效果 */
   border: 2px solid #306daa;
   background-color: #0b6e73;
   transform: translateY(1px);
 }
+
 .button-top:hover {
   /* 鼠标悬浮效果 */
   /* border: 2px solid #306daa;
   background-color: #0b6e73; */
 }
-.el-radio__input {
-}
+
+.el-radio__input {}
+
 .content-left {
   height: 67rem;
   background-image: url("../../../assets/img/frame_15.png");
@@ -606,12 +190,14 @@ export default {
   box-shadow: 0 12px 16px 0 rgba(52, 138, 236, 0.24),
     0 17px 50px 0 rgba(45, 154, 226, 0.19);
 }
+
 .content-left .button:active {
   /* 点击时效果 */
   border: 2px solid #306daa;
   background-color: #306daa;
   transform: translateY(1px);
 }
+
 .content-right {
   height: 67rem;
   padding: 1rem 2rem 0 0;
@@ -627,28 +213,34 @@ export default {
   color: #d6bd56;
   font-weight: bolder;
 }
+
 ::v-deep .el-table th.gutter {
   display: none;
 }
+
 /* 表头设置 */
 .el-table /deep/ th {
   font-weight: bolder !important;
   color: #21e1ea;
 }
+
 /*去掉表格边框*/
 .el-table,
 .el-table__expanded-cell {
   background-color: transparent;
   border: none;
 }
+
 .table::before {
   width: 0;
 }
+
 .table::after {
   width: 0;
 }
+
 /* 鼠标移入行样式 */
-.table /deep/ tr:hover > td {
+.table /deep/ tr:hover>td {
   background-color: #b5bbe64a !important;
 }
 </style>
