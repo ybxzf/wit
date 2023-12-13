@@ -16,6 +16,10 @@ Vue.use(VueRouter);
 import tools from './components/module/tools.vue';
 Vue.prototype.$tools = tools;
 
+/**图表类*/
+import myCharts from './components/module/charts.vue';
+Vue.prototype.$myCharts = myCharts;
+
 /**工具类*/
 import {request} from './components/module/NetHttp.js';
 Vue.prototype.$request = request;
