@@ -3,7 +3,7 @@
     <p class="title">检测人员</p>
     <ul class="swiperHead row" style="">
       <ol v-for="(item, index) in testerList">
-        <img class="icon-avatar" src="@/assets/img/icon_7.png" />
+        <img class="icon-avatar" src="@/assets/img/working.png" />
         <div class="tester-content">
           <span class="text">检定人员：</span>{{ item.name }}
         </div>

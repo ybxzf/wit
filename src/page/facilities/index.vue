@@ -75,7 +75,7 @@ export default {
 .unusual {
   width: 100%;
   height: 24rem;
-  background-image: url("../../assets/img/frame_0.png");
+  background-image: url("../../assets/img/frame_0_new.png");
   background-size: 100% 100%;
 }
 .title {
