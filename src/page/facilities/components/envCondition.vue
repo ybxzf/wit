@@ -3,28 +3,28 @@
     <p class="title">环境条件</p>
     <div class="env-content">
       <div class="env-content-item">
-        <img class="icon-avatar" src="@/assets/img/icon_2.png" />
+        <img class="icon-avatar" src="@/assets/img/icon_2_new.png" />
         <span>
           <div class="value" style="">{{ envList.temperature }}</div>
           <div class="name" style="">温度</div>
         </span>
       </div>
       <div class="env-content-item">
-        <img class="icon-avatar" src="@/assets/img/icon_2.png" />
+        <img class="icon-avatar" src="@/assets/img/icon_2_new.png" />
         <span>
           <div class="value" style="">{{ envList.humidity }}</div>
           <div class="name" style="">湿度</div>
         </span>
       </div>
       <div class="env-content-item">
-        <img class="icon-avatar" src="@/assets/img/icon_2.png" />
+        <img class="icon-avatar" src="@/assets/img/icon_2_new.png" />
         <span>
           <div class="value" style="">{{ envList.illumination }}</div>
           <div class="name" style="">光照</div>
         </span>
       </div>
       <div class="env-content-item">
-        <img class="icon-avatar" src="@/assets/img/icon_2.png" />
+        <img class="icon-avatar" src="@/assets/img/icon_2_new.png" />
         <span>
           <div class="value" style="">{{ envList.magneticField }}</div>
           <div class="name" style="">磁场</div>
