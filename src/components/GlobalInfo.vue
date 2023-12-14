@@ -6,7 +6,8 @@ export default {
 	/**
 	 * HTTP地址
 	 */
-	HTTPURL: "http://bianyuan123.gnway.cc/api",
+	HTTPURL: "http://47.108.165.207:20088/api",
+	// HTTPURL: "http://bianyuan123.gnway.cc/api",
 	// HTTPURL: "http://47.108.165.207/api",
 	// HTTPURL: "http://192.168.100.199/api",
 	// HTTPURL:"",
