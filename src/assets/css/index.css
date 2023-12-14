@@ -191,7 +191,7 @@
 }
 
 .indexBox .check .bodyInfo .info .status .work {
-	border: 1px solid #fff;
+	border: 1px solid rgba(76, 134, 243);
 	border-radius: 1rem;
 	/* box-shadow: inset 2px 2px 5px #6fa3ef, -2px -2px 5px #6fa3ef, 0 0 10px #6fa3ef; */
 	box-shadow: inset 0 0 10px rgba(76, 134, 243, 1);
@@ -337,8 +337,8 @@
 	/* border: 1px solid; */
 }
 
-.indexBox .frame .list li:nth-child(1) {
-	top: 5.9rem;
+.indexBox .frame .list li.wait:nth-child(1) {
+	top: 6.4rem;
 	left: 13.92rem;
 	background-image: url("../img/menu_1_new.png");
 	background-size: 19.57rem auto;
@@ -346,11 +346,23 @@
 }
 
 .indexBox .frame .list li.active:nth-child(1) {
+	top: 6.2rem;
+	left: 13.92rem;
 	background-image: url("../img/menu_1_0_new.png");
+	background-size: 19.57rem auto;
+	line-height: 6rem;
 }
 
-.indexBox .frame .list li:nth-child(2) {
-	top: 6.1rem;
+.indexBox .frame .list li.warn:nth-child(1) {
+	top: 6.2rem;
+	left: 13.92rem;
+	background-image: url("../img/menu_1_new_err.png");
+	background-size: 19.57rem auto;
+	line-height: 6.4rem;
+}
+
+.indexBox .frame .list li.wait:nth-child(2) {
+	top: 6.3rem;
 	right: 16.22rem;
 	background-image: url("../img/menu_1_new.png");
 	background-size: 19.57rem auto;
@@ -358,11 +370,23 @@
 }
 
 .indexBox .frame .list li.active:nth-child(2) {
+	top: 6.1rem;
+	right: 16.22rem;
 	background-image: url("../img/menu_1_0_new.png");
+	background-size: 19.57rem auto;
+	line-height: 6.2rem;
 }
 
-.indexBox .frame .list li:nth-child(3) {
-	top: 18.82rem;
+.indexBox .frame .list li.warn:nth-child(2) {
+	top: 6.1rem;
+	right: 16.22rem;
+	background-image: url("../img/menu_1_new_err.png");
+	background-size: 19.57rem auto;
+	line-height: 6.5rem;
+}
+
+.indexBox .frame .list li.wait:nth-child(3) {
+	top: 19.02rem;
 	left: 5.22rem;
 	background-image: url("../img/menu_2_new.png");
 	background-size: 19.57rem auto;
@@ -370,11 +394,23 @@
 }
 
 .indexBox .frame .list li.active:nth-child(3) {
+	top: 18.82rem;
+	left: 5.22rem;
 	background-image: url("../img/menu_2_0_new.png");
+	background-size: 19.57rem auto;
+	line-height: 6rem;
 }
 
-.indexBox .frame .list li:nth-child(4) {
-	top: 19.02rem;
+.indexBox .frame .list li.warn:nth-child(3) {
+	top: 18.82rem;
+	left: 5.22rem;
+	background-image: url("../img/menu_2_new_err.png");
+	background-size: 19.57rem auto;
+	line-height: 6.1rem;
+}
+
+.indexBox .frame .list li.wait:nth-child(4) {
+	top: 18.72rem;
 	right: 6.82rem;
 	background-image: url("../img/menu_2_new.png");
 	background-size: 19.57rem auto;
@@ -382,23 +418,47 @@
 }
 
 .indexBox .frame .list li.active:nth-child(4) {
+	top: 18.52rem;
+	right: 6.82rem;
 	background-image: url("../img/menu_2_0_new.png");
+	background-size: 19.57rem auto;
+	line-height: 6.2rem;
 }
 
-.indexBox .frame .list li:nth-child(5) {
-	top: 32.39rem;
-	left: -1rem;
+.indexBox .frame .list li.warn:nth-child(4) {
+	top: 18.52rem;
+	right: 6.82rem;
+	background-image: url("../img/menu_2_new_err.png");
+	background-size: 19.57rem auto;
+	line-height: 6.2rem;
+}
+
+.indexBox .frame .list li.wait:nth-child(5) {
+	top: 32.99rem;
+	left: -1.5rem;
 	background-image: url("../img/menu_3_new.png");
 	background-size: 18.64rem auto;
 	line-height: 6.2rem;
 }
 
 .indexBox .frame .list li.active:nth-child(5) {
+	top: 32.79rem;
+	left: -1.5rem;
 	background-image: url("../img/menu_3_0_new.png");
+	background-size: 18.64rem auto;
+	line-height: 6.2rem;
 }
 
-.indexBox .frame .list li:nth-child(6) {
-	top: 32.59rem;
+.indexBox .frame .list li.warn:nth-child(5) {
+	top: 32.79rem;
+	left: -1.5rem;
+	background-image: url("../img/menu_3_new_err.png");
+	background-size: 18.64rem auto;
+	line-height: 6.6rem;
+}
+
+.indexBox .frame .list li.wait:nth-child(6) {
+	top: 32.79rem;
 	right: 0rem;
 	background-image: url("../img/menu_3_new.png");
 	background-size: 19.57rem auto;
@@ -406,7 +466,19 @@
 }
 
 .indexBox .frame .list li.active:nth-child(6) {
+	top: 32.59rem;
+	right: 0rem;
 	background-image: url("../img/menu_3_0_new.png");
+	background-size: 19.57rem auto;
+	line-height: 6.2rem;
+}
+
+.indexBox .frame .list li.warn:nth-child(6) {
+	top: 32.59rem;
+	right: 0rem;
+	background-image: url("../img/menu_3_new_err.png");
+	background-size: 19.57rem auto;
+	line-height: 6.6rem;
 }
 
 .indexBox .room {
@@ -609,6 +681,7 @@
 	font-size: 1rem;
 	line-height: 2.42rem;
 	background-image: url("../img/frame_10.png");
+	margin-top: 0.2rem;
 	background-size: 100% 100%;
 	height: 2.42rem;
 	cursor: pointer;
@@ -658,9 +731,9 @@
 }
 
 .indexBox .quality .content {
-	width: 20rem;
+	width: 25rem;
 	height: 3rem;
-	margin: 1rem 5rem;
+	margin: 1rem 3.5rem;
 	position: absolute;
 	border: 1px solid #45c2ff;
 	border-radius: 0.4rem;

@@ -54,6 +54,9 @@ export default {
       },
     };
   },
+  mounted() {
+    console.log(this.$route);
+  },
   methods: {
     clickBack() {
       // this.$router.push("/")
@@ -68,9 +71,11 @@ export default {
 .indexBox {
   padding: 10px;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
+
 /* 
 .unusual {
   width: 100%;
