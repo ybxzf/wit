@@ -53,10 +53,18 @@
                   <img src="../assets/img/working.png" class="icon" />
                   <div class="info">
                     <div class="name fl">
-                      <span>{{ item.personnelName }}</span>
-                      <p class="type">资质信息：{{ item.post }}</p>
+                      <div>{{ item.personnelName }}</div>
+                      <p class="type">
+                        资质信息：<span>{{ item.post }}</span>
+                      </p>
                     </div>
-                    <div></div>
+                    <div class="status">
+                      <span
+                        :class="item.workStatus === '正常' ? 'work' : 'rest'"
+                      >
+                        {{ item.workStatus }}
+                      </span>
+                    </div>
                     <!-- <div class="row">
 											<p class="name fl">
 												检定人员<span>{{ item.personnelName }}</span>
@@ -443,11 +451,37 @@ export default {
 
       this.$request("get", "/bigScreen/personnelInfo").then((res) => {
         this.check = res.data;
+        this.check = [
+          {
+            post: "电能 电阻1",
+            personnelName: "江振涛",
+            equipName: "三项标准表检定装置",
+            workStatus: "正常",
+          },
+          {
+            post: "电能 电阻2",
+            personnelName: "江振涛",
+            equipName: "三项标准表检定装置",
+            workStatus: "休息",
+          },
+          {
+            post: "电能 电阻3",
+            personnelName: "江振涛",
+            equipName: "三项标准表检定装置",
+            workStatus: "正常",
+          },
+          {
+            post: "电能 电阻3",
+            personnelName: "江振涛",
+            equipName: "三项标准表检定装置",
+            workStatus: "正常",
+          },
+        ];
         this.$nextTick(() => {
           this.updateVerticalSwiper(
             "check",
-            4,
-            this.check.length < 4 ? false : true
+            3,
+            this.check.length < 3 ? false : true
           );
         });
       });
