@@ -388,15 +388,19 @@ export default {
         textStyle: {
           color: 'white'
         },
-        formatter: function (params) {
-          for (let i = 0; i < pieData.length; i++) {
-            if (pieData[i].name === params) {
-              return params + ' : ' + (pieData[i].value / total * 100).toFixed(2) + '%'
-            }
-          }
-        }
+        // formatter: function (params) {
+        //   for (let i = 0; i < pieData.length; i++) {
+        //     if (pieData[i].name === params) {
+        //       return params + ' : ' + (pieData[i].value / total * 100).toFixed(2) + '%'
+        //     }
+        //   }
+        // }
       },
       tooltip: { //鼠标指向时提示
+        backgroundColor: "rgba(21, 45, 85, 0.6)", //背景颜色（此时为默认色）
+        textStyle: {
+          color: 'white'
+        },
         formatter: (params) => {
           if (params.seriesName !== "mouseoutSeries") {
             return `${params.seriesName
