@@ -182,7 +182,8 @@
 							<li>当前检定项目</li>
 							<li>检定员</li>
 						</ul>
-						<div class="swiper" v-show="onLineRows">
+						<div class="swiper">
+						<!-- <div class="swiper" v-show="onLineRows"> -->
 							<div class="swiper-wrapper" id="onLineSwiper">
 								<div class="swiper-slide">
 									<ul class="swiperBody row" v-for="(item, idx) in onLine.rows"
@@ -215,56 +216,58 @@
 					<div class="roomTxt">
 						{{ room && room[roomIdx] ? room[roomIdx].labName : "--" }}
 					</div>
-					<div class="box" v-for="item in dataList">
-						<div class="tag">
-							<p>{{ item.equipName }}</p>
-						</div>
-						<div class="bodyInfo">
-							<p class="name">基本信息</p>
-							<div class="info">
-								<ul class="type flexBox">
-									<li>当前检定项目</li>
+					<div id="dataWatch">
+						<div class="box" v-for="item in dataList">
+							<div class="tag">
+								<p>{{ item.equipName }}</p>
+							</div>
+							<div class="bodyInfo">
+								<p class="name">基本信息</p>
+								<div class="info">
+									<ul class="type flexBox">
+										<li>当前检定项目</li>
+										<li>
+											<span>{{ item.projectName }}</span>
+										</li>
+									</ul>
+									<ul class="type flexBox">
+										<li>检定人员</li>
+										<li>
+											<span>{{ item.checker }}</span>
+										</li>
+									</ul>
+								</div>
+								<p class="name" style="margin-top: 0.8rem">实时数据</p>
+								<ul class="list row">
 									<li>
-										<span>{{ item.projectName }}</span>
+										Ua<span>{{ item.Ua ? item.Ua : "--" }}</span>
 									</li>
-								</ul>
-								<ul class="type flexBox">
-									<li>检定人员</li>
 									<li>
-										<span>{{ item.checker }}</span>
+										Ia<span>{{ item.La ? item.La : "--" }}</span>
+									</li>
+									<li>
+										φa<span>{{ item.phia ? item.phia : "--" }}</span>
+									</li>
+									<li>
+										Ub<span>{{ item.Ub ? item.Ub : "--" }}</span>
+									</li>
+									<li>
+										Ib<span>{{ item.Lb ? item.Lb : "--" }}</span>
+									</li>
+									<li>
+										φb<span>{{ item.phib ? item.phib : "--" }}</span>
+									</li>
+									<li>
+										Uc<span>{{ item.Uc ? item.Uc : "--" }}</span>
+									</li>
+									<li>
+										Ic<span>{{ item.Lc ? item.Lc : "--" }}</span>
+									</li>
+									<li>
+										φc<span>{{ item.phic ? item.phic : "--" }}</span>
 									</li>
 								</ul>
 							</div>
-							<p class="name" style="margin-top: 0.8rem">实时数据</p>
-							<ul class="list row">
-								<li>
-									Ua<span>{{ item.Ua ? item.Ua : "--" }}</span>
-								</li>
-								<li>
-									Ia<span>{{ item.La ? item.La : "--" }}</span>
-								</li>
-								<li>
-									φa<span>{{ item.phia ? item.phia : "--" }}</span>
-								</li>
-								<li>
-									Ub<span>{{ item.Ub ? item.Ub : "--" }}</span>
-								</li>
-								<li>
-									Ib<span>{{ item.Lb ? item.Lb : "--" }}</span>
-								</li>
-								<li>
-									φb<span>{{ item.phib ? item.phib : "--" }}</span>
-								</li>
-								<li>
-									Uc<span>{{ item.Uc ? item.Uc : "--" }}</span>
-								</li>
-								<li>
-									Ic<span>{{ item.Lc ? item.Lc : "--" }}</span>
-								</li>
-								<li>
-									φc<span>{{ item.phic ? item.phic : "--" }}</span>
-								</li>
-							</ul>
 						</div>
 					</div>
 				</div>
@@ -337,39 +340,39 @@ export default {
 		getData() {
 			this.$request("get", "/bigScreen/laboratoryInfo").then((res) => {
 				this.room = res.data;
-				// this.room = [
-				//   {
-				//     labNo: "2303",
-				//     labName: "2303实验室",
-				//     labStatus: "闲置待用",
-				//   },
-				//   {
-				//     labNo: "2304",
-				//     labName: "2304实验室",
-				//     labStatus: "正在使用",
-				//   },
-				//   {
-				//     labNo: "2308",
-				//     labName: "2308实验室",
-				//     labStatus: "故障维修",
-				// 		errNum:'12'
-				//   },
-				//   {
-				//     labNo: "2309",
-				//     labName: "2309实验室",
-				//     labStatus: "正在使用",
-				//   },
-				//   {
-				//     labNo: "2311",
-				//     labName: "2311实验室",
-				//     labStatus: "正在使用",
-				//   },
-				//   {
-				//     labNo: "2313",
-				//     labName: "2313实验室",
-				//     labStatus: "正在使用",
-				//   },
-				// ];
+				this.room = [
+				  {
+				    labNo: "2303",
+				    labName: "2303实验室",
+				    labStatus: "闲置待用",
+				  },
+				  {
+				    labNo: "2304",
+				    labName: "2304实验室",
+				    labStatus: "正在使用",
+				  },
+				  {
+				    labNo: "2308",
+				    labName: "2308实验室",
+				    labStatus: "故障维修",
+						errNum:'12'
+				  },
+				  {
+				    labNo: "2309",
+				    labName: "2309实验室",
+				    labStatus: "正在使用",
+				  },
+				  {
+				    labNo: "2311",
+				    labName: "2311实验室",
+				    labStatus: "正在使用",
+				  },
+				  {
+				    labNo: "2313",
+				    labName: "2313实验室",
+				    labStatus: "正在使用",
+				  },
+				];
 				this.$nextTick(() => {
 					this.updateVerticalSwiper(
 						"room",
@@ -387,26 +390,26 @@ export default {
 			});
 			this.$request("get", "/bigScreen/sensorErrorInfo").then((res) => {
 				this.unusual = res.data;
-				// this.unusual = [
-				// 	{
-				// 		"durationTime": "273.00小时",
-				// 		"sensorType": "光照超标",
-				// 		"labName": "2303实验室",
-				// 		"updateTime": "2023-12-03 14:00:00"
-				// 	},
-				// 	{
-				// 		"durationTime": "273.00小时",
-				// 		"sensorType": "温度超标",
-				// 		"labName": "2303实验室",
-				// 		"updateTime": "2023-12-03 14:00:00"
-				// 	},
-				// 	{
-				// 		"durationTime": "273.00小时",
-				// 		"sensorType": "湿度不达标",
-				// 		"labName": "2308实验室",
-				// 		"updateTime": "2023-12-03 14:00:00"
-				// 	}
-				// ]
+				this.unusual = [
+					{
+						"durationTime": "273.00小时",
+						"sensorType": "光照超标",
+						"labName": "2303实验室",
+						"updateTime": "2023-12-03 14:00:00"
+					},
+					{
+						"durationTime": "273.00小时",
+						"sensorType": "温度超标",
+						"labName": "2303实验室",
+						"updateTime": "2023-12-03 14:00:00"
+					},
+					{
+						"durationTime": "273.00小时",
+						"sensorType": "湿度不达标",
+						"labName": "2308实验室",
+						"updateTime": "2023-12-03 14:00:00"
+					}
+				]
 				this.$nextTick(() => {
 					this.updateVerticalSwiper(
 						"unusualSwiper",
@@ -418,25 +421,25 @@ export default {
 
 			this.$request("post", "/bigScreen/personnelInfo", {}).then((res) => {
 				this.check = res.data;
-				// this.check = [
-				// 	{
-				// 		"personnelName": "江*涛",
-				// 		"post": "电能,"
-				// 	},
-				// 	{
-				// 		"personnelName": "江正涛",
-				// 		"userStatus": "正常",
-				// 		"post": "电能,电阻,"
-				// 	},
-				// 	{
-				// 		"personnelName": "张三",
-				// 		"post": "电能,"
-				// 	},
-				// 	{
-				// 		"personnelName": "李四",
-				// 		"post": "电阻,"
-				// 	}
-				// ];
+				this.check = [
+					{
+						"personnelName": "江*涛",
+						"post": "电能,"
+					},
+					{
+						"personnelName": "江正涛",
+						"userStatus": "正常",
+						"post": "电能,电阻,"
+					},
+					{
+						"personnelName": "张三",
+						"post": "电能,"
+					},
+					{
+						"personnelName": "李四",
+						"post": "电阻,"
+					}
+				];
 				this.$nextTick(() => {
 					this.updateVerticalSwiper(
 						"check",
@@ -486,19 +489,19 @@ export default {
 			}, 1000);
 		},
 		updateCapacity(val, data) {
-			//   data = [
-			// 		{
-			// 			"num": 156
-			// 		},
-			// 		{
-			// 			"equipType": "标准表",
-			// 			"num": 12
-			// 		},
-			// 		{
-			// 			"equipType": "电能表",
-			// 			"num": 12
-			// 		}
-			// 	];
+			  data = [
+					{
+						"num": 156
+					},
+					{
+						"equipType": "标准表",
+						"num": 12
+					},
+					{
+						"equipType": "电能表",
+						"num": 12
+					}
+				];
 			if (this.tempObj[val] == undefined) {
 				this.tempObj[val] = this.$echarts.init(document.getElementById(val));
 			}
@@ -518,14 +521,14 @@ export default {
 			this.$tools.updateEcharts(this.tempObj[val], option);
 		},
 		updateQuality(name, data) {
-			if (this.tempObj[name] == undefined) {
-				this.tempObj[name] = this.$echarts.init(document.getElementById(name));
-			}
 			data = {
 				"qualified": 50,
 				"unqualified": 23,
 				"passRate": "0.6849"
 			};
+			if (this.tempObj[name] == undefined) {
+				this.tempObj[name] = this.$echarts.init(document.getElementById(name));
+			}
 			this.passRate = Number(data.passRate)
 			// 传入数据生成 option
 			let option = this.$myCharts.getPie3D(
@@ -556,6 +559,36 @@ export default {
 		updateOnLine() {
 			let msg = this.room[this.roomIdx];
 			this.onLineRows = false
+			this.onLine.sensorInfo = {
+				"illuminationState": "正常",
+				"illumination": " 3300lux",
+				"electromagnetism": "100mg/L",
+				"electromagnetismState": "正常",
+				"temperature": " 25℃",
+				"humidityState": "正常",
+				"humidity": " 55%RH",
+				"temperatureState": "正常"
+			}
+			this.onLine.rows = [
+				{
+					"equipName": "单相电能表检定装置",
+					"equipNo": "2309##004##GN002",
+					"taskName": "1202002",
+					"checker": "江正涛",
+					"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
+					"equipState": "运行",
+					"projectName": "基本误差"
+				},
+				{
+					"equipName": "三相电能表检定装置",
+					"equipNo": "2309##004##HP003",
+					"taskName": "1202002",
+					"checker": "江正涛",
+					"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
+					"equipState": "运行",
+					"projectName": "基本误差"
+				}
+			]
 			this.$request(
 				"post",
 				"/bigScreen/onlineLab",
@@ -569,16 +602,6 @@ export default {
 				}
 			).then((res) => {
 				this.onLine.sensorInfo = res.data.sensorInfo
-				// this.onLine.sensorInfo = {
-				// 	"illuminationState": "正常",
-				// 	"illumination": " 3300lux",
-				// 	"electromagnetism": "100mg/L",
-				// 	"electromagnetismState": "正常",
-				// 	"temperature": " 25℃",
-				// 	"humidityState": "正常",
-				// 	"humidity": " 55%RH",
-				// 	"temperatureState": "正常"
-				// }
 				this.$request(
 					"post",
 					"/bigScreen/online",
@@ -592,27 +615,6 @@ export default {
 					}
 				).then((res) => {
 					this.onLine.rows = res.data.rows;
-					// this.onLine.rows = [
-					// 	{
-					// 		"equipName": "单相电能表检定装置",
-					// 		"equipNo": "2309##004##GN002",
-					// 		"taskName": "1202002",
-					// 		"checker": "江正涛",
-					// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-					// 		"equipState": "运行",
-					// 		"projectName": "基本误差"
-					// 	},
-					// 	{
-					// 		"equipName": "三相电能表检定装置",
-					// 		"equipNo": "2309##004##HP003",
-					// 		"taskName": "1202002",
-					// 		"checker": "江正涛",
-					// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-					// 		"equipState": "运行",
-					// 		"projectName": "基本误差"
-					// 	}
-					// ]
-
 					if (this.tempObj.onLineSwiper) {
 						this.tempObj.onLineSwiper.destroy();
 						this.tempObj.onLineSwiper = null;
@@ -641,8 +643,71 @@ export default {
 					},
 				}
 			).then((res) => {
-				console.log(res);
 				this.dataList = res.data;
+				console.log(res);
+				this.dataList = [
+					{
+						"equipName": "三相电能表检定装置",
+						"phia": "0.00",
+						"phib": "240.00",
+						"phic": "120.00",
+						"checker": "江正涛",
+						"Ua": "219.99",
+						"Ub": "220.01",
+						"Uc": "220.10",
+						"La": "5.01",
+						"Lb": "4.99",
+						"Lc": "4.98",
+						"equipNo": "2303##001##GN001",
+						"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差"
+					},
+					{
+						"equipName": "三相标准表检定装置",
+						"phia": "0.00",
+						"phib": "240.00",
+						"phic": "120.00",
+						"checker": "江正涛",
+						"Ua": "99.99",
+						"Ub": "100.01",
+						"Uc": "99.10",
+						"La": "5.01",
+						"Lb": "4.99",
+						"Lc": "4.98",
+						"equipNo": "2303##001##HP001",
+						"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差"
+					},
+					{
+						"equipName": "三相标准表检定装置",
+						"phia": "0.00",
+						"phib": "240.00",
+						"phic": "120.00",
+						"checker": "江正涛",
+						"Ua": "100.99",
+						"Ub": "99.01",
+						"Uc": "100.10",
+						"La": "4.99",
+						"Lb": "4.99",
+						"Lc": "4.98",
+						"equipNo": "2303##001##HP002",
+						"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差"
+					},
+					{
+						"equipName": "功率电能表标准装置",
+						"phia": "0.00",
+						"phib": "240.00",
+						"phic": "120.00",
+						"checker": "江正涛",
+						"Ua": "99.99",
+						"Ub": "99.01",
+						"Uc": "100.10",
+						"La": "4.99",
+						"Lb": "4.99",
+						"Lc": "4.98",
+						"equipNo": "2303##001##ZERA001",
+						"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差"
+					}
+				].slice(0, 2)
+
 			});
 		},
 		clickJump(item, idx) {
