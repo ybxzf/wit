@@ -11,16 +11,16 @@ export default {
    */
   cylinderOption(xData, list) {
     const option = {
-      // title: {
-      //   text: "单位（台）",
-      //   top: "2%",
-      //   left: "2%",
-      //   textStyle: {
-      //     fontSize: that.$tools.getFitSize(1),
-      //     color: "#fff",
-      //     fontWeight: "normal",
-      //   },
-      // },
+      title: {
+        text: "单位：台",
+        top: "2%",
+        left: "2%",
+        textStyle: {
+          fontSize: that.$tools.getFitSize(1),
+          color: "#fff",
+          fontWeight: "normal",
+        },
+      },
       legend: {
         top: "2%",
         icon: "roundRect",
@@ -39,7 +39,7 @@ export default {
         axisPointer: {
           type: "shadow",
         },
-        formatter: "{b} : {c}", //显示的内容
+        formatter: "{b} : {c}台", //显示的内容
         backgroundColor: "rgba(21, 45, 85, 0.6)", //背景颜色（此时为默认色）
         textStyle: {
           color: "#fff",
@@ -86,6 +86,7 @@ export default {
           },
         },
         axisLabel: {
+          formatter: '{value}', // 这里设置 Y 轴的单位
           color: "rgba(255, 255, 255, 0.6)",
           fontSize: that.$tools.getFitSize(0.86),
         },

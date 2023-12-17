@@ -19,9 +19,9 @@
 
 .indexBox .headBox {
 	width: 100%;
-	height: 5.72rem;
-	/* background-image: url("../img/head.png"); */
-	background-size: 100% auto;
+	height: 6.52rem;
+	background-image: url("../img/head_new.png");
+	background-size: 85% 100%;
 	background-position: center bottom;
 	position: absolute;
 	top: 0;
@@ -198,6 +198,7 @@
 	width: 5rem;
 	text-align: center;
 }
+
 .indexBox .check .bodyInfo .info .status .rest {
 	border: 1px solid rgb(122, 120, 120);
 	border-radius: 1rem;
@@ -209,7 +210,7 @@
 }
 
 .indexBox .check .bodyInfo .info .name div {
-	color: rgb(255,255,255,1);
+	color: rgb(255, 255, 255, 1);
 	font-size: 1.8rem;
 	font-weight: bold;
 	opacity: 0.89;
@@ -222,6 +223,7 @@
 	font-size: 0.96rem;
 	line-height: 3.55rem;
 }
+
 /* .indexBox .check .bodyInfo .info .name p span {
 	color: #FFE117;
 	font-size: 0.96rem;
@@ -309,7 +311,6 @@
 	position: absolute;
 	line-height: 6.57rem;
 	color: #b6b2b2;
-	text-shadow: 2px 2px 5px #6fa3ef, -2px -2px 5px #6fa3ef, 0 0 10px #6fa3ef;
 	text-align: center;
 	padding: 0 0 0 5.5rem;
 	font-size: 1.28rem;
@@ -323,18 +324,23 @@
 	font-weight: bolder;
 	text-shadow: 2px 2px 5px #6fa3ef, -2px -2px 5px #6fa3ef, 0 0 10px #6fa3ef;
 }
-.indexBox .frame .list li .badge  {
+
+.indexBox .frame .list li .badge {
 	padding: 0.6rem 0.5rem 0 0;
-	
+
 }
-.indexBox .frame .list li .badge .el-badge__content  {
+
+.indexBox .frame .list li .badge .el-badge__content {
 	border: none;
 	/* display: inline; */
 }
 
-.indexBox .frame .list li:nth-child(2n) {
+.indexBox .frame .list li.warn:nth-child(n) {
 	/* padding: 0 0 0 0rem; */
 	/* border: 1px solid; */
+	color: #fff;
+	text-shadow: 2px 2px 5px #ff3e3e, -2px -2px 5px #ff3e3e, 0 0 10px #ff3e3e;
+
 }
 
 .indexBox .frame .list li.wait:nth-child(1) {
@@ -636,7 +642,7 @@
 .indexBox .onLine .swiperHead li,
 .indexBox .onLine .swiperBody li {
 	float: left;
-	width: 17%;
+	width: 5rem;
 	text-align: center;
 }
 
@@ -646,17 +652,27 @@
 	padding-left: 0.5rem;
 }
 
+.indexBox .onLine .swiperHead li:nth-child(2),
+.indexBox .onLine .swiperBody li:nth-child(2) {
+	width: 19%;
+}
+
+.indexBox .onLine .swiperHead li:nth-child(3),
+.indexBox .onLine .swiperBody li:nth-child(4) {
+	width: 15%;
+}
+
 .indexBox .onLine .swiperHead li:nth-child(4),
 .indexBox .onLine .swiperBody li:nth-child(4) {
-	width: 23%;
+	width: 20%;
 }
 
 .indexBox .onLine .swiperHead li:nth-child(5),
 .indexBox .onLine .swiperBody li:nth-child(5) {
-	width: 13%;
+	width: 15%;
 }
 
-.indexBox .onLine .roomTxt{
+.indexBox .onLine .roomTxt {
 	position: absolute;
 	width: 8.92rem;
 	height: 2.14rem;
@@ -665,7 +681,7 @@
 	top: 1.1rem;
 	right: 1rem;
 	text-align: center;
-	color:#fff;
+	color: #fff;
 	font-size: 1.14rem;
 	line-height: 2.14rem;
 }
@@ -681,14 +697,23 @@
 	font-size: 1rem;
 	line-height: 2.42rem;
 	background-image: url("../img/frame_10.png");
-	margin-top: 0.2rem;
 	background-size: 100% 100%;
+	margin-top: 0.2rem;
 	height: 2.42rem;
 	cursor: pointer;
 }
 
+.indexBox .onLine .swiper-slide .red_warn  {
+	/* background-image: url("../img/warningBox.png"); */
+	/* border: 1px solid red; */
+	box-shadow: inset 0 0 10px rgb(255, 0, 0);
+
+
+}
+
 .indexBox .onLine .swiperBody:hover {
 	background-image: url("../img/frame_3.png");
+	box-shadow:none;
 }
 
 .indexBox .onLine .swiperBody li.green {
@@ -750,12 +775,12 @@
 }
 
 .indexBox .quality .echarts {
-	width: 100%;
-	height: 19.9rem;
+	width: 31rem;
+	height: 19.5rem;
 	background-image: url("../img/pieBase.png");
-	/* background-size: 24.28rem 24.28rem; */
+	background-size: 21.28rem 8.58rem;
 	background-repeat: no-repeat;
-	background-position: 50% 82%;
+	background-position: 50% 80%;
 }
 
 .indexBox .data {
@@ -784,8 +809,9 @@
 
 .indexBox .data .box .tag {
 	width: 100%;
-	height: 3.28rem;
-	background-image: url("../img/frame_6.png");
+	height: 2.5rem;
+	margin-bottom: 0.8rem;
+	background-image: url("../img/frame_6_new.png");
 	background-size: 100% 100%;
 	padding: 0 0 0 3.28rem;
 }
@@ -794,8 +820,9 @@
 	background: linear-gradient(0deg, #ACDDFF 0%, #FFFFFF 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	font-weight: bold;
-	font-size: 1.72rem;
+	font-weight: bolder;
+	font-size: 1.32rem;
+	line-height: 3rem;
 	font-style: italic;
 	transform: translate3d(0, -0.3rem, 0);
 	-ms-transform: translate(0, -0.3rem, 0);
@@ -805,14 +832,108 @@
 }
 
 .indexBox .data .bodyInfo {
-	width: 27.85rem;
+	width: 100%;
 	height: 17.14rem;
-	background-image: url("../img/frame_12.png");
+	background-image: url("../img/frame_12_new.png");
 	background-size: 100% 100%;
 	padding: 0.92rem;
+	display: flex;
+}
+
+.indexBox .data .bodyInfo .left {
+	width: 24%;
+	height: 100%;
+}
+
+.indexBox .data .bodyInfo .left .left_1 {
+	position: relative;
+	height: 50%;
+}
+
+.indexBox .data .bodyInfo .left .left_2 {
+	position: relative;
+	height: 50%;
+}
+
+.indexBox .data .bodyInfo .left .icon {
+	width: 5.5rem;
+	position: absolute;
+	top: 1rem;
+}
+
+.indexBox .data .bodyInfo .left .triangle {
+	width: 1rem;
+	position: absolute;
+	top: 2.5rem;
+	left: 5rem;
+}
+
+.indexBox .data .bodyInfo .left span {
+	color: #e4eff7;
+	text-shadow: 2px 2px 5px #6fa3ef, -2px -2px 5px #6fa3ef, 0 0 10px #6fa3ef;
+	position: absolute;
+	top: 5rem;
+	font-size: 1rem;
+	font-weight: bold;
+	left: 0.8rem;
+}
+
+.indexBox .data .bodyInfo .right {
+	width: 76%;
+	height: 100%;
+}
+
+.indexBox .data .bodyInfo .right_1  {
+	padding-top: 0.5rem;
+	width: 100%;
+	height: 50%;
+}
+
+.indexBox .data .bodyInfo .right_2  {
+	width: 100%;
+	/* height: 50%; */
+	height: 40%;
+	margin-top: 1.3rem;
+}
+
+.indexBox .data .bodyInfo .right_3  {
+	width: 100%;
+	height: 50%;
 }
 
 .indexBox .data .bodyInfo .name {
+	font-size: 1.14rem;
+	margin-bottom: 0.2rem;
+	font-weight: bold;
+	color: #cccbcb;
+}
+
+.indexBox .data .bodyInfo .person {
+	font-size: 1.1rem;
+	height: 1.14rem;
+	margin-bottom: 1rem;
+	font-weight: bold;
+	color: #F5D133;
+	margin-left: 2rem;
+}
+
+.indexBox .data .list li {
+	width: 33.3333%;
+	float: left;
+	line-height: 1.66rem;
+	font-size: 1rem;
+	color: #fff;
+}
+
+.indexBox .data .list li span {
+	background: linear-gradient(0deg, #F5D133 0%, #EFB921 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: bold;
+	margin: 0 0 0 0.5rem;
+}
+
+/* .indexBox .data .bodyInfo .name {
 	font-size: 1.14rem;
 	height: 1.14rem;
 	margin-bottom: 0.72rem;
@@ -874,9 +995,9 @@
 	-webkit-text-fill-color: transparent;
 	font-weight: bold;
 	margin: 0 0 0 1rem;
-}
+} */
 
-.indexBox .data .roomTxt{
+.indexBox .data .roomTxt {
 	position: absolute;
 	width: 8.92rem;
 	height: 2.14rem;
@@ -885,7 +1006,7 @@
 	top: 1.1rem;
 	right: 1rem;
 	text-align: center;
-	color:#fff;
+	color: #fff;
 	font-size: 1.14rem;
 	line-height: 2.14rem;
 }

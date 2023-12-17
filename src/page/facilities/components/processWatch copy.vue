@@ -1,24 +1,40 @@
 <template>
   <div class="page">
-    <p class="title">设备状态</p>
     <el-row>
-      <el-col :span="24">
-        <div style="float: right; padding: 0 2rem">
+      <el-col class="title" :span="24">
+        <div style="position: relative;width: 10rem;">
+          <img style="position: absolute;width: 10rem;bottom: 0.65rem;" src="../../../assets/img/start_click.png">
+          <img src="../" alt="">
+        </div>
+        <div style="position: relative;width: 10rem;">
+          <img style="position: absolute;width: 10rem;bottom: 0.65rem;" src="../../../assets/img/step_click.png">
+          <img src="../" alt="">
+        </div>
+        <div style="position: relative;width: 10rem;">
+          <img style="position: absolute;width: 10rem;bottom: 0.65rem;" src="../../../assets/img/pause_click.png">
+          <img src="../" alt="">
+        </div>
+        <div style="position: relative;width: 10rem;">
+          <img style="position: absolute;width: 10rem;bottom: 0.65rem;" src="../../../assets/img/stop_click.png">
+          <img src="../" alt="">
+        </div>
+        <!-- <span>过程监测</span> -->
+        <!-- <div style="display: flex;justify-content: end;">
           <button v-for="(item, index) in buttonMun" class="button-top"
             :style="{ backgroundColor: status == index + 1 ? '#0b6e73' : '' }" @click="toggleStatus(index + 1)">
             {{ item }}
           </button>
-        </div>
+        </div> -->
       </el-col>
-      <el-col :span="4">
+      <!-- <el-col :span="4">
         <div class="content-left">
           <button class="button">基本误差试验</button>
         </div>
-      </el-col>
-      <el-col :span="20">
+      </el-col> -->
+      <el-col :span="24">
         <div class="content-right">
           <el-table class="table" :data="tableData" border height="65rem" style="width: 100%">
-            <el-table-column label="序号" min-width="15%">
+            <el-table-column label="鉴定项目" min-width="40%">
               <template slot-scope="scope">
                 <span style="color: #fff">
                   {{ scope.$index + 1 }}
@@ -119,13 +135,22 @@ export default {
 </script>
 <style scoped>
 .page {
-  height: 74.9rem;
-  background-image: url("../../../assets/img/frame_14.png");
-  background-size: 100% 100%;
+  /* height: 74.9rem; */
+  /* background-image: url("../../../assets/img/frame_14.png"); */
+  /* background-size: 100% 100%; */
   /* border: 1px solid red; */
 }
 
 .title {
+  margin-top: 1rem;
+  background-image: url("../../../assets/img/process_watch.png");
+  background-size: 100% 100%;
+  height: 3.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title span {
   padding: 0.7rem 0 0rem 4rem !important;
   margin-left: 2rem !important;
   font-size: 1.72rem;
@@ -200,7 +225,7 @@ export default {
 
 .content-right {
   height: 67rem;
-  padding: 1rem 2rem 0 0;
+  padding: 1rem 0 0 0;
 }
 
 /* 单元格设置 */
@@ -221,7 +246,7 @@ export default {
 /* 表头设置 */
 .el-table /deep/ th {
   font-weight: bolder !important;
-  color: #21e1ea;
+  color: #fff;
 }
 
 /*去掉表格边框*/
@@ -241,6 +266,6 @@ export default {
 
 /* 鼠标移入行样式 */
 .table /deep/ tr:hover>td {
-  background-color: #b5bbe64a !important;
+  background-color: #ec0c0c4a !important;
 }
 </style>
