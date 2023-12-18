@@ -1,7 +1,7 @@
 <template>
   <div class="indexBox">
     <el-row>
-      <el-col :span="6" style="border: 1px solid red;height: 77.2rem ;padding: 1rem 0 1rem 1rem;">
+      <el-col :span="6" style="border: 1px solid red;height: 77rem ;padding: 1rem 0 1rem 1rem;">
         <el-row>
           <el-col :span="24">
             <device-inform :deviceList="this.deviceList" />
@@ -17,7 +17,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="18" style="border: 1px solid red;height: 77.2rem ;padding: 1rem">
+      <el-col :span="18" style="">
         <process-watch :envList="this.envList" />
       </el-col>
     </el-row>
