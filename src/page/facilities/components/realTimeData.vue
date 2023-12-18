@@ -92,7 +92,7 @@ export default {
 
 .left {
   height: 100%;
-  width: 45%;
+  width: 50%;
   position: relative;
 }
 
