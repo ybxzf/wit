@@ -3,20 +3,48 @@
     <el-row>
       <el-col class="title" :span="24">
         <div class="title-botton" @click="toggleStatus('start')">
-          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
-          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
+          <img
+            v-show="buttonMun.start"
+            src="../../../assets/img/start_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.start"
+            src="../../../assets/img/start_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('step')">
-          <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
-          <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
+          <img
+            v-show="buttonMun.step"
+            src="../../../assets/img/step_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.step"
+            src="../../../assets/img/step_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('pause')">
-          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
-          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
+          <img
+            v-show="buttonMun.pause"
+            src="../../../assets/img/pause_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.pause"
+            src="../../../assets/img/pause_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('stop')">
-          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
-          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
+          <img
+            v-show="buttonMun.stop"
+            src="../../../assets/img/stop_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.stop"
+            src="../../../assets/img/stop_default.png"
+          />
         </div>
       </el-col>
       <el-col class="content" :span="24">
@@ -24,7 +52,7 @@
           <!-- 表头 -->
           <thead>
             <tr>
-              <th rowspan="2" style="width: 10.5rem">检定项目</th>
+              <th class="" rowspan="2">检定项目</th>
               <th>表1</th>
               <th>表2</th>
               <th>表3</th>
@@ -118,20 +146,32 @@
         </table>
       </el-col>
       <el-col class="footer" :span="24">
-        <button class="back-page" @click="goBack()">
-        </button>
+        <button class="back-page" @click="goBack()"></button>
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button class="page-button" @click="() => (this.currentPage > 1 ? this.currentPage-- : '')">
+        <button
+          class="page-button"
+          @click="() => (this.currentPage > 1 ? this.currentPage-- : '')"
+        >
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="20" layout="pager" :current-page="this.currentPage" :total="total"
-          @current-change="handleCurrentChange">
+        <el-pagination
+          class="page-list"
+          :page-size="20"
+          layout="pager"
+          :current-page="this.currentPage"
+          :total="total"
+          @current-change="handleCurrentChange"
+        >
         </el-pagination>
-        <button class="page-button" @click="() => (this.currentPage < this.pages ? this.currentPage++ : '')
-          ">
+        <button
+          class="page-button"
+          @click="
+            () => (this.currentPage < this.pages ? this.currentPage++ : '')
+          "
+        >
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -171,7 +211,10 @@ export default {
     currentPage(newValue, oldValue) {
       console.log(newValue, oldValue);
       this.tableLoad = true;
-      this.showData = this.initData.slice(20 * (newValue - 1), 20 * (newValue - 1) + 20);
+      this.showData = this.initData.slice(
+        20 * (newValue - 1),
+        20 * (newValue - 1) + 20
+      );
       this.tableLoad = false;
     },
   },
@@ -247,7 +290,7 @@ export default {
 }
 
 .content {
-  height: 67rem;
+  height: 66.4rem;
   padding: 2rem 0;
   border: 1px solid red;
 }
@@ -271,8 +314,16 @@ thead tr {
   height: 2rem;
 }
 
+thead > :first-child > :first-child {
+  width: 20rem !important;
+}
+
 tbody tr {
   height: 3rem;
+}
+
+tbody td {
+  width: 7rem;
 }
 
 tbody tr:hover {
@@ -304,11 +355,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer>* {
+.footer > * {
   margin-right: 0.5rem;
 }
 
-.footer>:first-child {
+.footer > :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
