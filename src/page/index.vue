@@ -645,6 +645,7 @@ export default {
 		},
 		updateOnLine() {
 			let msg = this.room[this.roomIdx];
+			window.localStorage.setItem('labNo', msg.labNo);
 			this.onLineLoad = false;
 			this.watchLoad = false;
 			// this.onLine.sensorInfo = {
@@ -732,7 +733,7 @@ export default {
 					},
 				}
 			).then((res) => {
-				console.log(res);
+				console.log(msg.labNo);
 				this.dataList.length = 0;
 				res.data.forEach(item => {
 					if (item.projectName) {
@@ -784,11 +785,16 @@ export default {
 			});
 		},
 		clickJump(item, idx) {
+			console.log(this.onLine.rows);
+			console.log(item,idx);
 			this.$router.push({
 				path: "/facilities",
 				// path: "/facilities-model",
 				query: {
-					equipName: item.equipName
+					equipNo: item.equipNo,
+					taskNo:item.taskName,
+					equipType:item.equipType,
+					laboratoryNo:item.item
 				}
 			});
 		},

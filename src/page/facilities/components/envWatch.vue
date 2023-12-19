@@ -26,7 +26,7 @@
       <div class="env-content-item">
         <img class="icon-avatar" src="@/assets/img/icon_5_new.png" />
         <span>
-          <div class="value" style="">{{ envList.magneticField }}</div>
+          <div class="value" style="">{{ envList.electromagnetism }}</div>
           <div class="name" style="">电磁</div>
         </span>
       </div>

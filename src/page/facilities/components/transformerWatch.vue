@@ -2,7 +2,7 @@
   <div class="page">
     <el-row>
       <el-col class="title" :span="24">
-        <div class="title-botton" @click="toggleStatus('start')">
+        <!-- <div class="title-botton" @click="toggleStatus('start')">
           <img
             v-show="buttonMun.start"
             src="../../../assets/img/start_click.png"
@@ -45,7 +45,7 @@
             v-show="!buttonMun.stop"
             src="../../../assets/img/stop_default.png"
           />
-        </div>
+        </div> -->
       </el-col>
       <el-col class="content" :span="24">
         <table class="content-table">
@@ -132,28 +132,15 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button
-          class="page-button"
-          @click="() => (this.currentPage > 1 ? this.currentPage-- : '')"
-        >
+        <button class="page-button" @click="() => (this.currentPage > 1 ? this.currentPage-- : '')">
           上一页
         </button>
 
-        <el-pagination
-          class="page-list"
-          :page-size="19"
-          layout="pager"
-          :current-page="this.currentPage"
-          :total="total"
-          @current-change="handleCurrentChange"
-        >
+        <el-pagination class="page-list" :page-size="19" layout="pager" :current-page="this.currentPage" :total="total"
+          @current-change="handleCurrentChange">
         </el-pagination>
-        <button
-          class="page-button"
-          @click="
-            () => (this.currentPage < this.pages ? this.currentPage++ : '')
-          "
-        >
+        <button class="page-button" @click="() => (this.currentPage < this.pages ? this.currentPage++ : '')
+          ">
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -167,15 +154,14 @@
 import { transformerData } from "../virtualData.js";
 
 export default {
-  props: ["processWatchList"],
   data() {
     return {
-      buttonMun: {
-        start: false,
-        step: false,
-        pause: false,
-        stop: true,
-      },
+      // buttonMun: {
+      //   start: false,
+      //   step: false,
+      //   pause: false,
+      //   stop: true,
+      // },
       //每页能显示19行
       initData: [],
       showData: [],
@@ -207,19 +193,32 @@ export default {
     //初始化
     init() {
       this.tableLoad = true;
-      // this.initData = this.processWatchList;
+      //过程监测
+      this.$request(
+        "post", "/bigScreen/processMonitor", {
+        equipNo: this.$route.query.equipNo,
+        taskNo: this.$route.query.taskNo,
+        equipType: this.$route.query.equipType,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+      ).then((res) => {
+        console.log('互感器过程监测', res);
+      })
       this.initData = transformerData;
       this.total = transformerData.length;
       this.showData = this.initData.slice(0, 19);
       this.tableLoad = false;
     },
     //切换功能
-    toggleStatus(bt) {
-      // console.log(bt);
-      for (const key in this.buttonMun) {
-        this.buttonMun[key] = key == bt ? true : false;
-      }
-    },
+    // toggleStatus(bt) {
+    //   // console.log(bt);
+    //   for (const key in this.buttonMun) {
+    //     this.buttonMun[key] = key == bt ? true : false;
+    //   }
+    // },
     //返回上一级
     goBack() {
       this.$router.go(-1);
@@ -241,7 +240,7 @@ export default {
 </script>
 <style scoped>
 .page {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 77rem;
   padding: 1rem 2rem;
 }
@@ -274,7 +273,7 @@ export default {
 .content {
   height: 66.4rem;
   padding: 2rem 0;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .content-table {
@@ -296,7 +295,7 @@ thead tr {
   height: 2rem;
 }
 
-thead > :first-child > :first-child {
+thead> :first-child> :first-child {
   width: 16rem !important;
 }
 
@@ -330,18 +329,18 @@ tbody .unqualified {
 .footer {
   height: 4.4rem;
   padding: 2rem 0 2rem 0;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: flex-end;
   justify-content: space-between;
 }
 
-.footer > * {
+.footer>* {
   margin-right: 0.5rem;
 }
 
-.footer > :first-child {
+.footer> :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }

@@ -3,48 +3,20 @@
     <el-row>
       <el-col class="title" :span="24">
         <div class="title-botton" @click="toggleStatus('start')">
-          <img
-            v-show="buttonMun.start"
-            src="../../../assets/img/start_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.start"
-            src="../../../assets/img/start_default.png"
-          />
+          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
+          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
         </div>
         <div class="title-botton" @click="toggleStatus('step')">
-          <img
-            v-show="buttonMun.step"
-            src="../../../assets/img/step_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.step"
-            src="../../../assets/img/step_default.png"
-          />
+          <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
+          <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
         </div>
         <div class="title-botton" @click="toggleStatus('pause')">
-          <img
-            v-show="buttonMun.pause"
-            src="../../../assets/img/pause_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.pause"
-            src="../../../assets/img/pause_default.png"
-          />
+          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
+          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
         </div>
         <div class="title-botton" @click="toggleStatus('stop')">
-          <img
-            v-show="buttonMun.stop"
-            src="../../../assets/img/stop_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.stop"
-            src="../../../assets/img/stop_default.png"
-          />
+          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
+          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
         </div>
       </el-col>
       <el-col class="content" :span="24">
@@ -127,28 +99,15 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button
-          class="page-button"
-          @click="() => (this.currentPage > 1 ? this.currentPage-- : '')"
-        >
+        <button class="page-button" @click="() => (this.currentPage > 1 ? this.currentPage-- : '')">
           上一页
         </button>
 
-        <el-pagination
-          class="page-list"
-          :page-size="18"
-          layout="pager"
-          :current-page="this.currentPage"
-          :total="total"
-          @current-change="handleCurrentChange"
-        >
+        <el-pagination class="page-list" :page-size="18" layout="pager" :current-page="this.currentPage" :total="total"
+          @current-change="handleCurrentChange">
         </el-pagination>
-        <button
-          class="page-button"
-          @click="
-            () => (this.currentPage < this.pages ? this.currentPage++ : '')
-          "
-        >
+        <button class="page-button" @click="() => (this.currentPage < this.pages ? this.currentPage++ : '')
+          ">
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -162,7 +121,6 @@
 import { normalMeterData } from "../virtualData.js";
 
 export default {
-  props: ["processWatchList"],
   data() {
     return {
       buttonMun: {
@@ -202,7 +160,20 @@ export default {
     //初始化
     init() {
       this.tableLoad = true;
-      // this.initData = this.processWatchList;
+      //过程监测
+      this.$request(
+        "post", "/bigScreen/processMonitor", {
+        equipNo: this.$route.query.equipNo,
+        taskNo: this.$route.query.taskNo,
+        equipType: this.$route.query.equipType,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+      ).then((res) => {
+        console.log('标准表过程监测', res);
+      })
       this.initData = normalMeterData;
       this.total = normalMeterData.length;
       this.showData = this.initData.slice(0, 18);
@@ -236,7 +207,7 @@ export default {
 </script>
 <style scoped>
 .page {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 77rem;
   padding: 1rem 2rem;
 }
@@ -269,7 +240,7 @@ export default {
 .content {
   height: 66.4rem;
   padding: 2rem 0;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .content-table {
@@ -292,7 +263,7 @@ thead tr th {
   font-size: 1.2rem;
 }
 
-thead > :nth-child(2) > :first-child {
+thead> :nth-child(2)> :first-child {
   width: 12rem !important;
 }
 
@@ -326,18 +297,18 @@ tbody .unqualified {
 .footer {
   height: 4.4rem;
   padding: 2rem 0 2rem 0;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: flex-end;
   justify-content: space-between;
 }
 
-.footer > * {
+.footer>* {
   margin-right: 0.5rem;
 }
 
-.footer > :first-child {
+.footer> :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
