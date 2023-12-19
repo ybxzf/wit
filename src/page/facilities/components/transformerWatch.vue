@@ -3,20 +3,48 @@
     <el-row>
       <el-col class="title" :span="24">
         <div class="title-botton" @click="toggleStatus('start')">
-          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
-          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
+          <img
+            v-show="buttonMun.start"
+            src="../../../assets/img/start_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.start"
+            src="../../../assets/img/start_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('step')">
-          <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
-          <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
+          <img
+            v-show="buttonMun.step"
+            src="../../../assets/img/step_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.step"
+            src="../../../assets/img/step_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('pause')">
-          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
-          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
+          <img
+            v-show="buttonMun.pause"
+            src="../../../assets/img/pause_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.pause"
+            src="../../../assets/img/pause_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('stop')">
-          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
-          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
+          <img
+            v-show="buttonMun.stop"
+            src="../../../assets/img/stop_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.stop"
+            src="../../../assets/img/stop_default.png"
+          />
         </div>
       </el-col>
       <el-col class="content" :span="24">
@@ -24,41 +52,35 @@
           <!-- 表头 -->
           <thead>
             <tr>
-              <th rowspan="2" style="width: 10.5rem">检定项目</th>
-              <th>表1</th>
-              <th>表2</th>
-              <th>表3</th>
-              <th>表4</th>
-              <th>表5</th>
-              <th>表6</th>
-              <th>表7</th>
-              <th>表8</th>
-              <th>表9</th>
-              <th>表10</th>
-              <th>表11</th>
-              <th>表12</th>
-              <th>表13</th>
-              <th>表14</th>
-              <th>表15</th>
-              <th>表16</th>
+              <th rowspan="3">检定项目</th>
+              <th colspan="2">表1</th>
+              <th colspan="2">表2</th>
+              <th colspan="2">表3</th>
+              <th colspan="2">表4</th>
+              <th colspan="2">表5</th>
+              <th colspan="2">表6</th>
             </tr>
             <tr>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
+              <th colspan="2">000001</th>
+              <th colspan="2">000002</th>
+              <th colspan="2">000003</th>
+              <th colspan="2">000004</th>
+              <th colspan="2">000005</th>
+              <th colspan="2">000006</th>
+            </tr>
+            <tr>
+              <th>比角</th>
+              <th>角差</th>
+              <th>比角</th>
+              <th>角差</th>
+              <th>比角</th>
+              <th>角差</th>
+              <th>比角</th>
+              <th>角差</th>
+              <th>比角</th>
+              <th>角差</th>
+              <th>比角</th>
+              <th>角差</th>
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
@@ -101,37 +123,37 @@
               <td :class="item.epitope12 == '不合格' ? 'unqualified' : ''">
                 {{ item.epitope12 }}
               </td>
-              <td :class="item.epitope13 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope13 }}
-              </td>
-              <td :class="item.epitope14 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope14 }}
-              </td>
-              <td :class="item.epitope15 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope15 }}
-              </td>
-              <td :class="item.epitope16 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope16 }}
-              </td>
             </tr>
           </tbody>
         </table>
       </el-col>
       <el-col class="footer" :span="24">
-        <button class="back-page" @click="goBack()">
-        </button>
+        <button class="back-page" @click="goBack()"></button>
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button class="page-button" @click="() => (this.currentPage > 1 ? this.currentPage-- : '')">
+        <button
+          class="page-button"
+          @click="() => (this.currentPage > 1 ? this.currentPage-- : '')"
+        >
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="20" layout="pager" :current-page="this.currentPage" :total="total"
-          @current-change="handleCurrentChange">
+        <el-pagination
+          class="page-list"
+          :page-size="19"
+          layout="pager"
+          :current-page="this.currentPage"
+          :total="total"
+          @current-change="handleCurrentChange"
+        >
         </el-pagination>
-        <button class="page-button" @click="() => (this.currentPage < this.pages ? this.currentPage++ : '')
-          ">
+        <button
+          class="page-button"
+          @click="
+            () => (this.currentPage < this.pages ? this.currentPage++ : '')
+          "
+        >
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -142,7 +164,7 @@
   </div>
 </template>
 <script>
-import { electricMeterData } from "../virtualData.js";
+import { transformerData } from "../virtualData.js";
 
 export default {
   props: ["processWatchList"],
@@ -154,7 +176,7 @@ export default {
         pause: false,
         stop: true,
       },
-      //每页能显示20行
+      //每页能显示19行
       initData: [],
       showData: [],
       tableLoad: false,
@@ -164,14 +186,17 @@ export default {
   },
   computed: {
     pages() {
-      return Math.ceil(this.total / 20);
+      return Math.ceil(this.total / 19);
     },
   },
   watch: {
     currentPage(newValue, oldValue) {
       console.log(newValue, oldValue);
       this.tableLoad = true;
-      this.showData = this.initData.slice(20 * (newValue - 1), 20 * (newValue - 1) + 20);
+      this.showData = this.initData.slice(
+        19 * (newValue - 1),
+        19 * (newValue - 1) + 19
+      );
       this.tableLoad = false;
     },
   },
@@ -183,9 +208,9 @@ export default {
     init() {
       this.tableLoad = true;
       // this.initData = this.processWatchList;
-      this.initData = electricMeterData;
-      this.total = electricMeterData.length;
-      this.showData = this.initData.slice(0, 20);
+      this.initData = transformerData;
+      this.total = transformerData.length;
+      this.showData = this.initData.slice(0, 19);
       this.tableLoad = false;
     },
     //切换功能
@@ -247,7 +272,7 @@ export default {
 }
 
 .content {
-  height: 67rem;
+  height: 66.4rem;
   padding: 2rem 0;
   border: 1px solid red;
 }
@@ -271,8 +296,16 @@ thead tr {
   height: 2rem;
 }
 
+thead > :first-child > :first-child {
+  width: 16rem !important;
+}
+
 tbody tr {
   height: 3rem;
+}
+
+tbody td {
+  width: 7rem;
 }
 
 tbody tr:hover {
@@ -304,11 +337,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer>* {
+.footer > * {
   margin-right: 0.5rem;
 }
 
-.footer>:first-child {
+.footer > :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
