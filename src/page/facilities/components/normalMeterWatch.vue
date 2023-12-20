@@ -6,10 +6,10 @@
           <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
           <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
         </div>
-        <div class="title-botton" @click="toggleStatus('step')">
+        <!-- <div class="title-botton" @click="toggleStatus('step')">
           <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
           <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
-        </div>
+        </div> -->
         <div class="title-botton" @click="toggleStatus('pause')">
           <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
           <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
@@ -125,7 +125,7 @@ export default {
     return {
       buttonMun: {
         start: false,
-        step: false,
+        // step: false,
         pause: false,
         stop: true,
       },

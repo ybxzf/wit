@@ -591,7 +591,7 @@
 }
 
 .indexBox .onLine .tagList {
-	padding: 0 0 0 0.5rem;
+	padding: 0 0 0 0.1rem;
 }
 
 .indexBox .onLine .tagList li {
@@ -608,6 +608,7 @@
 }
 
 .indexBox .onLine .tagList li .info .val {
+	width: 5rem;
 	background: linear-gradient(0deg, #F5D133 0%, #EFB921 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -627,6 +628,11 @@
 	color: #fff;
 	font-size: 1rem;
 	line-height: 1.72rem;
+}
+
+
+.indexBox .onLine .tagList li .info .active {
+	color: #FF6161;
 }
 
 .indexBox .onLine .swiperHead {

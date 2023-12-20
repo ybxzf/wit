@@ -206,6 +206,18 @@ export default {
       }
       ).then((res) => {
         console.log('互感器过程监测', res);
+        [
+          {
+            "itemName": "基本误差|正向无功|ABC|0.5L|1.0Ib",
+            "itemId": "12",
+            "1b": "-0.0211",
+            "1j": "+0.0395",
+            "1_meterNo": "00010223",
+            "2b": "-0.0211",
+            "2j": "+0.0395",
+            "2_meterNo": "00010224",
+          }
+        ]
       })
       this.initData = transformerData;
       this.total = transformerData.length;

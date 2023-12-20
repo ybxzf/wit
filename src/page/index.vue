@@ -115,12 +115,11 @@
 						</div>
 						<ul class="tagList row flexBox" v-if="onLine.sensorInfo">
 							<li class="flexBox">
-								<img src="../assets/img/icon_2_new.png" class="icon" />
+								<img v-if="onLine.sensorInfo.temperatureState == '异常'" src="../assets/img/icon_2_new_warn.png" class="icon" />
+								<img v-else src="../assets/img/icon_2_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.temperatureState == '异常'
-										? 'active'
-										: ''
-										">
+										? 'active': ''">
 										{{
 											onLine && Boolean(onLine.sensorInfo)
 											? onLine.sensorInfo.temperature
@@ -131,7 +130,8 @@
 								</div>
 							</li>
 							<li class="flexBox">
-								<img src="../assets/img/icon_3_new.png" class="icon" />
+								<img v-if="onLine.sensorInfo.humidityState == '异常'" src="../assets/img/icon_3_new_warn.png" class="icon" />
+								<img v-else src="../assets/img/icon_3_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.humidityState == '异常' ? 'active' : ''
 											">
@@ -145,7 +145,8 @@
 								</div>
 							</li>
 							<li class="flexBox">
-								<img src="../assets/img/icon_4_new.png" class="icon" />
+								<img v-if="onLine.sensorInfo.illuminationState == '异常'" src="../assets/img/icon_4_new_warn.png" class="icon" />
+								<img v-else src="../assets/img/icon_4_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.illuminationState == '异常'
 												? 'active'
@@ -161,7 +162,8 @@
 								</div>
 							</li>
 							<li class="flexBox">
-								<img src="../assets/img/icon_5_new.png" class="icon" />
+								<img v-if="onLine.sensorInfo.electromagnetismState == '异常'" src="../assets/img/icon_5_new_warn.png" class="icon" />
+								<img v-else src="../assets/img/icon_5_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.electromagnetismState == '异常'
 												? 'active'
