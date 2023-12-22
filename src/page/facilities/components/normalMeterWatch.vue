@@ -3,20 +3,41 @@
     <el-row>
       <el-col class="title" :span="24">
         <div class="title-botton" @click="toggleStatus('start')">
-          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
-          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
+          <img
+            v-show="buttonMun.start"
+            src="../../../assets/img/start_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.start"
+            src="../../../assets/img/start_default.png"
+          />
         </div>
         <!-- <div class="title-botton" @click="toggleStatus('step')">
           <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
           <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
         </div> -->
         <div class="title-botton" @click="toggleStatus('pause')">
-          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
-          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
+          <img
+            v-show="buttonMun.pause"
+            src="../../../assets/img/pause_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.pause"
+            src="../../../assets/img/pause_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('stop')">
-          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
-          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
+          <img
+            v-show="buttonMun.stop"
+            src="../../../assets/img/stop_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.stop"
+            src="../../../assets/img/stop_default.png"
+          />
         </div>
       </el-col>
       <el-col class="content" :span="24">
@@ -99,15 +120,26 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button class="page-button" @click="() => (this.currentPage > 1 ? this.currentPage-- : '')">
+        <button
+          class="page-button"
+          @click="() => (currentPage > 1 ? currentPage-- : '')"
+        >
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="18" layout="pager" :current-page="this.currentPage" :total="total"
-          @current-change="handleCurrentChange">
+        <el-pagination
+          class="page-list"
+          :page-size="18"
+          layout="pager"
+          :current-page="currentPage"
+          :total="total"
+          @current-change="handleCurrentChange"
+        >
         </el-pagination>
-        <button class="page-button" @click="() => (this.currentPage < this.pages ? this.currentPage++ : '')
-          ">
+        <button
+          class="page-button"
+          @click="() => (currentPage < pages ? currentPage++ : '')"
+        >
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -129,6 +161,25 @@ export default {
         pause: false,
         stop: true,
       },
+      //表格表头列表
+      listTitles: [
+        "1_meterNo",
+        "2_meterNo",
+        "3_meterNo",
+        "4_meterNo",
+        "5_meterNo",
+        "6_meterNo",
+        "7_meterNo",
+        "8_meterNo",
+        "9_meterNo",
+        "10_meterNo",
+        "11_meterNo",
+        "12_meterNo",
+        "13_meterNo",
+        "14_meterNo",
+        "15_meterNo",
+        "16_meterNo",
+      ],
       //每页能显示18行
       initData: [],
       showData: [],
@@ -162,22 +213,41 @@ export default {
       this.tableLoad = true;
       //过程监测
       this.$request(
-        "post", "/bigScreen/processMonitor", {
-        equipNo: this.$route.query.equipNo,
-        taskNo: this.$route.query.taskNo,
-        equipType: this.$route.query.equipType,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
+        "post",
+        "/bigScreen/processMonitor",
+        {
+          equipNo: this.$route.query.equipNo,
+          taskNo: this.$route.query.taskNo,
+          equipType: this.$route.query.equipType,
         },
-      }
-      ).then((res) => {
-        console.log('标准表过程监测', res);
-      })
-      this.initData = normalMeterData;
-      this.total = normalMeterData.length;
-      this.showData = this.initData.slice(0, 18);
-      this.tableLoad = false;
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res1) => {
+          console.log("标准表过程监测", res1);
+          const res = [
+            {
+              itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+              itemId: "12",
+              1: "-0.0211|001|8928|87.111|980|111|222",
+              "1_meterNo": "00010021",
+              trialResult: "合格",
+            },
+          ];
+          this.initData = res;
+          this.total = this.initData.length;
+          this.showData = this.initData.slice(0, 20);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+      // this.initData = normalMeterData;
+      // this.total = normalMeterData.length;
+      // this.showData = this.initData.slice(0, 18);
+      // this.tableLoad = false;
     },
     //切换功能
     toggleStatus(bt) {
@@ -263,7 +333,7 @@ thead tr th {
   font-size: 1.2rem;
 }
 
-thead> :nth-child(2)> :first-child {
+thead > :nth-child(2) > :first-child {
   width: 12rem !important;
 }
 
@@ -304,11 +374,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer>* {
+.footer > * {
   margin-right: 0.5rem;
 }
 
-.footer> :first-child {
+.footer > :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
