@@ -3,20 +3,48 @@
     <el-row>
       <el-col class="title" :span="24">
         <div class="title-botton" @click="toggleStatus('start')">
-          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
-          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
+          <img
+            v-show="buttonMun.start"
+            src="../../../assets/img/start_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.start"
+            src="../../../assets/img/start_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('step')">
-          <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
-          <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
+          <img
+            v-show="buttonMun.step"
+            src="../../../assets/img/step_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.step"
+            src="../../../assets/img/step_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('pause')">
-          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
-          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
+          <img
+            v-show="buttonMun.pause"
+            src="../../../assets/img/pause_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.pause"
+            src="../../../assets/img/pause_default.png"
+          />
         </div>
         <div class="title-botton" @click="toggleStatus('stop')">
-          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
-          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
+          <img
+            v-show="buttonMun.stop"
+            src="../../../assets/img/stop_click.png"
+          />
+          <img
+            class="default"
+            v-show="!buttonMun.stop"
+            src="../../../assets/img/stop_default.png"
+          />
         </div>
       </el-col>
       <el-col class="content" :span="24">
@@ -25,8 +53,10 @@
           <thead>
             <tr>
               <th class="" rowspan="2">检定项目</th>
-              <th>表1</th>
-              <th>表2</th>
+              <th v-for="(item, index) in listTitles" :key="index">
+                表{{ index + 1 }}
+              </th>
+              <!-- <th>表2</th>
               <th>表3</th>
               <th>表4</th>
               <th>表5</th>
@@ -40,9 +70,13 @@
               <th>表13</th>
               <th>表14</th>
               <th>表15</th>
-              <th>表16</th>
+              <th>表16</th> -->
             </tr>
             <tr>
+              <th v-for="(item, index) in listTitles" :key="index">
+                {{ showData[0][item] }}
+              </th>
+              <!-- <th>123456</th>
               <th>123456</th>
               <th>123456</th>
               <th>123456</th>
@@ -56,63 +90,68 @@
               <th>123456</th>
               <th>123456</th>
               <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
+              <th>123456</th> -->
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
           <tbody v-loading="tableLoad">
             <tr v-for="(item, index) in showData" :key="index">
-              <td class="project">{{ item.project }}</td>
-              <td :class="item.epitope1 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope1 }}
+              <td class="project">{{ item.itemName }}</td>
+              <td
+                v-for="(it, i) in listTitles"
+                :key="i"
+                :class="item[i + 1] == '不合格' ? 'unqualified' : ''"
+              >
+                {{ item[i + 1] }}
               </td>
-              <td :class="item.epitope2 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope2 }}
+              <!-- <td :class="item['1'] == '不合格' ? 'unqualified' : ''">
+                {{ item["1"] }}
               </td>
-              <td :class="item.epitope3 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope3 }}
+              <td :class="item['2'] == '不合格' ? 'unqualified' : ''">
+                {{ item["2"] }}
               </td>
-              <td :class="item.epitope4 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope4 }}
+              <td :class="item['3'] == '不合格' ? 'unqualified' : ''">
+                {{ item["3"] }}
               </td>
-              <td :class="item.epitope5 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope5 }}
+              <td :class="item['4'] == '不合格' ? 'unqualified' : ''">
+                {{ item["4"] }}
               </td>
-              <td :class="item.epitope6 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope6 }}
+              <td :class="item['5'] == '不合格' ? 'unqualified' : ''">
+                {{ item["5"] }}
               </td>
-              <td :class="item.epitope7 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope7 }}
+              <td :class="item['6'] == '不合格' ? 'unqualified' : ''">
+                {{ item["6"] }}
               </td>
-              <td :class="item.epitope8 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope8 }}
+              <td :class="item['7'] == '不合格' ? 'unqualified' : ''">
+                {{ item["7"] }}
               </td>
-              <td :class="item.epitope9 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope9 }}
+              <td :class="item['8'] == '不合格' ? 'unqualified' : ''">
+                {{ item["8"] }}
               </td>
-              <td :class="item.epitope10 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope10 }}
+              <td :class="item['9'] == '不合格' ? 'unqualified' : ''">
+                {{ item["9"] }}
               </td>
-              <td :class="item.epitope11 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope11 }}
+              <td :class="item['10'] == '不合格' ? 'unqualified' : ''">
+                {{ item["10"] }}
               </td>
-              <td :class="item.epitope12 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope12 }}
+              <td :class="item['11'] == '不合格' ? 'unqualified' : ''">
+                {{ item["11"] }}
               </td>
-              <td :class="item.epitope13 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope13 }}
+              <td :class="item['12'] == '不合格' ? 'unqualified' : ''">
+                {{ item["12"] }}
               </td>
-              <td :class="item.epitope14 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope14 }}
+              <td :class="item['13'] == '不合格' ? 'unqualified' : ''">
+                {{ item["13"] }}
               </td>
-              <td :class="item.epitope15 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope15 }}
+              <td :class="item['14'] == '不合格' ? 'unqualified' : ''">
+                {{ item["14"] }}
               </td>
-              <td :class="item.epitope16 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope16 }}
+              <td :class="item['15'] == '不合格' ? 'unqualified' : ''">
+                {{ item["15"] }}
               </td>
+              <td :class="item['16'] == '不合格' ? 'unqualified' : ''">
+                {{ item["16"] }}
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -122,15 +161,26 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button class="page-button" @click="() => (this.currentPage > 1 ? this.currentPage-- : '')">
+        <button
+          class="page-button"
+          @click="() => (currentPage > 1 ? currentPage-- : '')"
+        >
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="20" layout="pager" :current-page="this.currentPage" :total="total"
-          @current-change="handleCurrentChange">
+        <el-pagination
+          class="page-list"
+          :page-size="20"
+          layout="pager"
+          :current-page="currentPage"
+          :total="total"
+          @current-change="handleCurrentChange"
+        >
         </el-pagination>
-        <button class="page-button" @click="() => (this.currentPage < this.pages ? this.currentPage++ : '')
-          ">
+        <button
+          class="page-button"
+          @click="() => (currentPage < pages ? currentPage++ : '')"
+        >
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -152,6 +202,25 @@ export default {
         pause: false,
         stop: true,
       },
+      //表格表头列表
+      listTitles: [
+        "1_meterNo",
+        "2_meterNo",
+        "3_meterNo",
+        "4_meterNo",
+        "5_meterNo",
+        "6_meterNo",
+        "7_meterNo",
+        "8_meterNo",
+        "9_meterNo",
+        "10_meterNo",
+        "11_meterNo",
+        "12_meterNo",
+        "13_meterNo",
+        "14_meterNo",
+        "15_meterNo",
+        "16_meterNo",
+      ],
       //每页能显示20行
       initData: [],
       showData: [],
@@ -185,22 +254,141 @@ export default {
       this.tableLoad = true;
       //过程监测
       this.$request(
-        "post", "/bigScreen/processMonitor", {
-        equipNo: this.$route.query.equipNo,
-        taskNo: this.$route.query.taskNo,
-        equipType: this.$route.query.equipType,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
+        "post",
+        "/bigScreen/processMonitor",
+        {
+          equipNo: this.$route.query.equipNo,
+          taskNo: this.$route.query.taskNo,
+          equipType: this.$route.query.equipType,
         },
-      }
-      ).then((res) => {
-        console.log('电能表过程监测', res);
-      })
-      this.initData = electricMeterData;
-      this.total = electricMeterData.length;
-      this.showData = this.initData.slice(0, 20);
-      this.tableLoad = false;
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res1) => {
+          console.log("电能表过程监测", res1);
+          const res = [
+            {
+              1: "-0.0211",
+              2: "+0.0395",
+              3: "+0.1001",
+              4: "-0.0002",
+              5: "-0.0351",
+              6: "-0.0072",
+              7: "-0.0748",
+              8: "+0.0576",
+              9: "-0.1145",
+              10: "+0.1135",
+              11: "+0.0131",
+              12: "+0.1218",
+              13: "+0.1218",
+              14: "-0.0002",
+              15: "-0.0211",
+              16: "+0.0395",
+              "1_meterNo": "00010021",
+              "2_meterNo": "00010022",
+              "3_meterNo": "00010023",
+              "4_meterNo": "00010024",
+              "5_meterNo": "00010025",
+              "6_meterNo": "00010026",
+              "7_meterNo": "00010027",
+              "8_meterNo": "00010028",
+              "9_meterNo": "00010029",
+              "10_meterNo": "000100210",
+              "11_meterNo": "000100211",
+              "12_meterNo": "000100212",
+              "13_meterNo": "000100213",
+              "14_meterNo": "000100214",
+              "15_meterNo": "000100215",
+              "16_meterNo": "000100216",
+              itemName: "基本误差1",
+              itemId: "12",
+            },
+            {
+              1: "-0.0211",
+              2: "+0.0395",
+              3: "+0.1001",
+              4: "-0.0002",
+              5: "-0.0351",
+              6: "-0.0072",
+              7: "-0.0748",
+              8: "+0.0576",
+              9: "-0.1145",
+              10: "+0.1135",
+              11: "+0.0131",
+              12: "+0.1218",
+              13: "不合格",
+              14: "不合格",
+              15: "不合格",
+              16: "+0.1218",
+              "1_meterNo": "00010021",
+              "2_meterNo": "00010022",
+              "3_meterNo": "00010023",
+              "4_meterNo": "00010024",
+              "5_meterNo": "00010025",
+              "6_meterNo": "00010026",
+              "7_meterNo": "00010027",
+              "8_meterNo": "00010028",
+              "9_meterNo": "00010029",
+              "10_meterNo": "000100210",
+              "11_meterNo": "000100211",
+              "12_meterNo": "000100212",
+              "13_meterNo": "000100213",
+              "14_meterNo": "000100214",
+              "15_meterNo": "000100215",
+              "16_meterNo": "000100216",
+              itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
+              itemId: "12",
+            },
+            {
+              1: "-0.0211",
+              2: "+0.0395",
+              3: "+0.1001",
+              4: "-0.0002",
+              5: "-0.0351",
+              6: "-0.0072",
+              7: "-0.0748",
+              8: "+0.0576",
+              9: "-0.1145",
+              10: "+0.1135",
+              11: "+0.0131",
+              12: "+0.1218",
+              13: "不合格",
+              14: "不合格",
+              15: "不合格",
+              16: "不合格",
+              "1_meterNo": "00010021",
+              "2_meterNo": "00010022",
+              "3_meterNo": "00010023",
+              "4_meterNo": "00010024",
+              "5_meterNo": "00010025",
+              "6_meterNo": "00010026",
+              "7_meterNo": "00010027",
+              "8_meterNo": "00010028",
+              "9_meterNo": "00010029",
+              "10_meterNo": "000100210",
+              "11_meterNo": "000100211",
+              "12_meterNo": "000100212",
+              "13_meterNo": "000100213",
+              "14_meterNo": "000100214",
+              "15_meterNo": "000100215",
+              "16_meterNo": "000100216",
+              itemName: "基本误差3|正向无功|ABC|0.5L|1.0Ib",
+              itemId: "12",
+            },
+          ];
+          this.initData = res;
+          this.total = this.initData.length;
+          this.showData = this.initData.slice(0, 20);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+      // this.initData = electricMeterData;
+      // this.total = electricMeterData.length;
+      // this.showData = this.initData.slice(0, 20);
     },
     //切换功能
     toggleStatus(bt) {
@@ -208,6 +396,27 @@ export default {
       for (const key in this.buttonMun) {
         this.buttonMun[key] = key == bt ? true : false;
       }
+      //过程监测
+      this.$request(
+        "post",
+        "/bigScreen/processMonitor",
+        {
+          equipNo: this.$route.query.equipNo,
+          taskNo: this.$route.query.taskNo,
+          equipType: this.$route.query.equipType,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res1) => {
+          console.log("单步", res1);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
     },
     //返回上一级
     goBack() {
@@ -277,7 +486,7 @@ th,
 td {
   border: 1px solid #77c1f3;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
 }
 
@@ -285,8 +494,8 @@ thead tr {
   height: 2rem;
 }
 
-thead> :first-child> :first-child {
-  width: 20rem !important;
+thead > :first-child > :first-child {
+  width: 18rem !important;
 }
 
 tbody tr {
@@ -326,11 +535,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer>* {
+.footer > * {
   margin-right: 0.5rem;
 }
 
-.footer> :first-child {
+.footer > :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
