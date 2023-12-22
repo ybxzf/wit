@@ -53,23 +53,30 @@
           <thead>
             <tr>
               <th rowspan="3">检定项目</th>
-              <th colspan="2">表1</th>
-              <th colspan="2">表2</th>
+              <th colspan="2" v-for="(item, index) in listTitles" :key="index">
+                表{{ index + 1 }}
+              </th>
+              <!-- <th colspan="2">表2</th>
               <th colspan="2">表3</th>
               <th colspan="2">表4</th>
               <th colspan="2">表5</th>
-              <th colspan="2">表6</th>
+              <th colspan="2">表6</th> -->
             </tr>
             <tr>
-              <th colspan="2">000001</th>
-              <th colspan="2">000002</th>
+              <th colspan="2" v-for="(item, index) in listTitles" :key="index">
+                {{ item }}
+              </th>
+              <!-- <th colspan="2">000002</th>
               <th colspan="2">000003</th>
               <th colspan="2">000004</th>
               <th colspan="2">000005</th>
-              <th colspan="2">000006</th>
+              <th colspan="2">000006</th> -->
             </tr>
             <tr>
-              <th>比角</th>
+              <th v-for="(item, index) in listTitles.length * 2" :key="index">
+                {{ index % 2 == 0 ? "比角" : "角差" }}
+              </th>
+              <!-- <th>比角</th>
               <th>角差</th>
               <th>比角</th>
               <th>角差</th>
@@ -80,48 +87,48 @@
               <th>比角</th>
               <th>角差</th>
               <th>比角</th>
-              <th>角差</th>
+              <th>角差</th> -->
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
           <tbody v-loading="tableLoad">
             <tr v-for="(item, index) in showData" :key="index">
-              <td class="project">{{ item.project }}</td>
-              <td :class="item.epitope1 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope1 }}
+              <td class="project">{{ item.itemName }}</td>
+              <td :class="item['1b'] == '不合格' ? 'unqualified' : ''">
+                {{ item["1b"] }}
               </td>
-              <td :class="item.epitope2 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope2 }}
+              <td :class="item['1j'] == '不合格' ? 'unqualified' : ''">
+                {{ item["1j"] }}
               </td>
-              <td :class="item.epitope3 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope3 }}
+              <td :class="item['2b'] == '不合格' ? 'unqualified' : ''">
+                {{ item["2b"] }}
               </td>
-              <td :class="item.epitope4 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope4 }}
+              <td :class="item['2j'] == '不合格' ? 'unqualified' : ''">
+                {{ item["2j"] }}
               </td>
-              <td :class="item.epitope5 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope5 }}
+              <td :class="item['3b'] == '不合格' ? 'unqualified' : ''">
+                {{ item["3b"] }}
               </td>
-              <td :class="item.epitope6 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope6 }}
+              <td :class="item['3j'] == '不合格' ? 'unqualified' : ''">
+                {{ item["3j"] }}
               </td>
-              <td :class="item.epitope7 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope7 }}
+              <td :class="item['4b'] == '不合格' ? 'unqualified' : ''">
+                {{ item["4b"] }}
               </td>
-              <td :class="item.epitope8 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope8 }}
+              <td :class="item['4j'] == '不合格' ? 'unqualified' : ''">
+                {{ item["4j"] }}
               </td>
-              <td :class="item.epitope9 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope9 }}
+              <td :class="item['5b'] == '不合格' ? 'unqualified' : ''">
+                {{ item["5b"] }}
               </td>
-              <td :class="item.epitope10 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope10 }}
+              <td :class="item['5j'] == '不合格' ? 'unqualified' : ''">
+                {{ item["5j"] }}
               </td>
-              <td :class="item.epitope11 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope11 }}
+              <td :class="item['6b'] == '不合格' ? 'unqualified' : ''">
+                {{ item["6b"] }}
               </td>
-              <td :class="item.epitope12 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope12 }}
+              <td :class="item['6j'] == '不合格' ? 'unqualified' : ''">
+                {{ item["6j"] }}
               </td>
             </tr>
           </tbody>
@@ -132,15 +139,26 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button class="page-button" @click="() => (this.currentPage > 1 ? this.currentPage-- : '')">
+        <button
+          class="page-button"
+          @click="() => (currentPage > 1 ? currentPage-- : '')"
+        >
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="19" layout="pager" :current-page="this.currentPage" :total="total"
-          @current-change="handleCurrentChange">
+        <el-pagination
+          class="page-list"
+          :page-size="19"
+          layout="pager"
+          :current-page="currentPage"
+          :total="total"
+          @current-change="handleCurrentChange"
+        >
         </el-pagination>
-        <button class="page-button" @click="() => (this.currentPage < this.pages ? this.currentPage++ : '')
-          ">
+        <button
+          class="page-button"
+          @click="() => (currentPage < pages ? currentPage++ : '')"
+        >
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -162,6 +180,15 @@ export default {
       //   pause: false,
       //   stop: true,
       // },
+      //表格表头列表
+      listTitles: [
+        "1_meterNo",
+        "2_meterNo",
+        "3_meterNo",
+        "4_meterNo",
+        "5_meterNo",
+        "6_meterNo",
+      ],
       //每页能显示19行
       initData: [],
       showData: [],
@@ -195,34 +222,100 @@ export default {
       this.tableLoad = true;
       //过程监测
       this.$request(
-        "post", "/bigScreen/processMonitor", {
-        equipNo: this.$route.query.equipNo,
-        taskNo: this.$route.query.taskNo,
-        equipType: this.$route.query.equipType,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
+        "post",
+        "/bigScreen/processMonitor",
+        {
+          equipNo: this.$route.query.equipNo,
+          taskNo: this.$route.query.taskNo,
+          equipType: this.$route.query.equipType,
         },
-      }
-      ).then((res) => {
-        console.log('互感器过程监测', res);
-        [
-          {
-            "itemName": "基本误差|正向无功|ABC|0.5L|1.0Ib",
-            "itemId": "12",
-            "1b": "-0.0211",
-            "1j": "+0.0395",
-            "1_meterNo": "00010223",
-            "2b": "-0.0211",
-            "2j": "+0.0395",
-            "2_meterNo": "00010224",
-          }
-        ]
-      })
-      this.initData = transformerData;
-      this.total = transformerData.length;
-      this.showData = this.initData.slice(0, 19);
-      this.tableLoad = false;
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res1) => {
+          console.log("互感器过程监测", res1);
+          const res = [
+            {
+              itemName: "基本误差|正向无功|ABC|0.5L|1.0Ib",
+              itemId: "12",
+              "1b": "-0.0211",
+              "1j": "+0.0395",
+              "1_meterNo": "00010223",
+              "2b": "-0.0211",
+              "2j": "+0.0395",
+              "2_meterNo": "00010224",
+              "3b": "-0.0211",
+              "3j": "+0.0395",
+              "3_meterNo": "00010225",
+              "4b": "-0.0211",
+              "4j": "+0.0395",
+              "4_meterNo": "00010226",
+              "5b": "-0.0211",
+              "5j": "+0.0395",
+              "5_meterNo": "00010227",
+              "6b": "-0.0211",
+              "6j": "+0.0395",
+              "6_meterNo": "00010228",
+            },
+            {
+              itemName: "基本误差1|正向无功|ABC|0.5L|1.0Ib",
+              itemId: "12",
+              "1b": "-0.0211",
+              "1j": "+0.0395",
+              "1_meterNo": "00010223",
+              "2b": "-0.0211",
+              "2j": "+0.0395",
+              "2_meterNo": "00010224",
+              "3b": "-0.0211",
+              "3j": "+0.0395",
+              "3_meterNo": "00010225",
+              "4b": "-0.0211",
+              "4j": "+0.0395",
+              "4_meterNo": "00010226",
+              "5b": "-0.0211",
+              "5j": "+0.0395",
+              "5_meterNo": "00010227",
+              "6b": "-0.0211",
+              "6j": "+0.0395",
+              "6_meterNo": "00010228",
+            },
+            {
+              itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
+              itemId: "12",
+              "1b": "-0.0211",
+              "1j": "+0.0395",
+              "1_meterNo": "00010223",
+              "2b": "-0.0211",
+              "2j": "+0.0395",
+              "2_meterNo": "00010224",
+              "3b": "-0.0211",
+              "3j": "+0.0395",
+              "3_meterNo": "00010225",
+              "4b": "-0.0211",
+              "4j": "+0.0395",
+              "4_meterNo": "00010226",
+              "5b": "-0.0211",
+              "5j": "+0.0395",
+              "5_meterNo": "00010227",
+              "6b": "-0.0211",
+              "6j": "+0.0395",
+              "6_meterNo": "00010228",
+            },
+          ];
+          this.initData = res;
+          this.total = this.initData.length;
+          this.showData = this.initData.slice(0, 19);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+      // this.initData = transformerData;
+      // this.total = transformerData.length;
+      // this.showData = this.initData.slice(0, 19);
+      // this.tableLoad = false;
     },
     //切换功能
     // toggleStatus(bt) {
@@ -307,7 +400,7 @@ thead tr {
   height: 2rem;
 }
 
-thead> :first-child> :first-child {
+thead > :first-child > :first-child {
   width: 16rem !important;
 }
 
@@ -348,11 +441,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer>* {
+.footer > * {
   margin-right: 0.5rem;
 }
 
-.footer> :first-child {
+.footer > :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
