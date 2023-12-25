@@ -211,7 +211,7 @@
 
 .indexBox .check .bodyInfo .info .name div {
 	color: rgb(255, 255, 255, 1);
-	font-size: 1.8rem;
+	font-size: 1.3rem;
 	font-weight: bold;
 	opacity: 0.89;
 	line-height: 2.05rem;
@@ -220,8 +220,8 @@
 
 .indexBox .check .bodyInfo .info .name p {
 	color: #fff;
-	font-size: 0.96rem;
-	line-height: 3.55rem;
+	font-size: 1.2rem;
+	line-height: 2.55rem;
 }
 
 /* .indexBox .check .bodyInfo .info .name p span {

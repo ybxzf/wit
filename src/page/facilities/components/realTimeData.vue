@@ -126,7 +126,7 @@ export default {
   line-height: 1.66rem;
   display: flex;
   align-items: center;
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: #fff;
 }
 
@@ -139,6 +139,6 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
-  margin: 0 0 0 0.5rem;
+  margin: 0 0 0 0.3rem;
 }
 </style>

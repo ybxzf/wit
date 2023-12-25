@@ -49,13 +49,16 @@
               <th colspan="8">表位1</th>
             </tr>
             <tr>
+              <th colspan="6">基本误差</th>
+              <th colspan="8">表条码1234567891011</th>
+            </tr>
+            <tr>
               <th rowspan="2">电量</th>
               <th rowspan="2">限量</th>
               <th rowspan="2">摘要</th>
               <th rowspan="2">测试点</th>
               <th rowspan="2">计量单位</th>
               <th rowspan="2">检定值</th>
-              <th colspan="8">表条码1234567891011</th>
             </tr>
             <tr>
               <th>标准示值</th>
@@ -71,9 +74,9 @@
           <!-- 表格体，使用 v-for 渲染数据 -->
           <tbody v-loading="tableLoad">
             <tr v-for="(item, index) in showData" :key="index">
-              <td class="project">{{ item.project }}</td>
+              <td class="project">{{ item.itemName }}</td>
               <td>
-                {{ item.epitope1 }}
+                {{ item['1_meterNo'] }}
               </td>
               <td>
                 {{ item.epitope2 }}

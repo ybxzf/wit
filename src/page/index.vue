@@ -187,7 +187,7 @@
 							<li>检定人员</li>
 						</ul>
 						<div class="swiper">
-							<div v-loading="!onLineLoad" class="swiper-wrapper" id="onLineSwiper">
+							<div v-if="onLineLoad" class="swiper-wrapper" id="onLineSwiper">
 								<div class="swiper-slide">
 									<ul class="swiperBody row" :class="item.errNum ? 'red_warn' : ''"
 										v-for="(item, idx) in onLine.rows" @click="clickJump(item, idx)">
@@ -221,7 +221,7 @@
 					<div class="roomTxt">
 						{{ room && room[roomIdx] ? room[roomIdx].labName : "--" }}
 					</div>
-					<div v-loading="!watchLoad" id="dataWatch">
+					<div v-if="watchLoad" id="dataWatch">
 						<div class="box" v-for="item in dataList">
 							<div class="tag">
 								<p>{{ item.equipName }}</p>

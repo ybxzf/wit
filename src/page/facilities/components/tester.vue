@@ -67,13 +67,13 @@ export default {
   /* 添加兼容性前缀 */
   -webkit-background-clip: text;
   color: transparent;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: bolder;
   margin: 0.5rem;
 }
 
 .tester-content .text_2 {
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: bolder;
   margin: 0.5rem;
   color: #b9b8b8;

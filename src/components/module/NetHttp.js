@@ -9,7 +9,7 @@ import {
 } from 'ant-design-vue';
 axios.defaults.timeout = 5000;
 // axios.defaults.baseURL = "/base/";
-axios.defaults.baseURL = GlobalInfo.HTTPURL;
+
 /**
  * 正常请求
  * @param {*请求类型:post、get、put、del} type 
@@ -17,6 +17,28 @@ axios.defaults.baseURL = GlobalInfo.HTTPURL;
  * @param {*数据} data 
  */
 export function request(type, url, data = {},headrs) {
+	axios.defaults.baseURL = GlobalInfo.HTTPURL;
+	return new Promise((resolve, reject) => {
+		axios[type](url, data,headrs).then(res => {
+			if (res.data.code != 0) {
+				message.error(res.data.message)
+			} else {
+				resolve(res.data)
+			}
+		}, err => {
+			resolve(err)
+		})
+	})
+};
+
+/**
+ * 正常请求
+ * @param {*请求类型:post、get、put、del} type 
+ * @param {*请求URL地址} url 
+ * @param {*数据} data 
+ */
+export function requestSys(type, url, data = {},headrs) {
+	axios.defaults.baseURL = GlobalInfo.BaseExecUrl;
 	return new Promise((resolve, reject) => {
 		axios[type](url, data,headrs).then(res => {
 			if (res.data.code != 0) {

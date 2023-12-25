@@ -3,48 +3,20 @@
     <el-row>
       <el-col class="title" :span="24">
         <div class="title-botton" @click="toggleStatus('start')">
-          <img
-            v-show="buttonMun.start"
-            src="../../../assets/img/start_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.start"
-            src="../../../assets/img/start_default.png"
-          />
+          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
+          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
         </div>
         <div class="title-botton" @click="toggleStatus('step')">
-          <img
-            v-show="buttonMun.step"
-            src="../../../assets/img/step_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.step"
-            src="../../../assets/img/step_default.png"
-          />
+          <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
+          <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
         </div>
         <div class="title-botton" @click="toggleStatus('pause')">
-          <img
-            v-show="buttonMun.pause"
-            src="../../../assets/img/pause_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.pause"
-            src="../../../assets/img/pause_default.png"
-          />
+          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
+          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
         </div>
         <div class="title-botton" @click="toggleStatus('stop')">
-          <img
-            v-show="buttonMun.stop"
-            src="../../../assets/img/stop_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.stop"
-            src="../../../assets/img/stop_default.png"
-          />
+          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
+          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
         </div>
       </el-col>
       <el-col class="content" :span="24">
@@ -95,13 +67,10 @@
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
           <tbody v-loading="tableLoad">
-            <tr v-for="(item, index) in showData" :key="index">
+            <tr v-for="(item, index) in showData" :key="index" @click="selectRow(item)"
+              :class="{ 'selected': selectedName === item.itemName }">
               <td class="project">{{ item.itemName }}</td>
-              <td
-                v-for="(it, i) in listTitles"
-                :key="i"
-                :class="item[i + 1] == '不合格' ? 'unqualified' : ''"
-              >
+              <td v-for="(it, i) in listTitles" :key="i" :class="item[i + 1] == '不合格' ? 'unqualified' : ''">
                 {{ item[i + 1] }}
               </td>
               <!-- <td :class="item['1'] == '不合格' ? 'unqualified' : ''">
@@ -161,26 +130,14 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button
-          class="page-button"
-          @click="() => (currentPage > 1 ? currentPage-- : '')"
-        >
+        <button class="page-button" @click="() => (currentPage > 1 ? currentPage-- : '')">
           上一页
         </button>
 
-        <el-pagination
-          class="page-list"
-          :page-size="20"
-          layout="pager"
-          :current-page="currentPage"
-          :total="total"
-          @current-change="handleCurrentChange"
-        >
+        <el-pagination class="page-list" :page-size="20" layout="pager" :current-page="currentPage" :total="total"
+          @current-change="handleCurrentChange">
         </el-pagination>
-        <button
-          class="page-button"
-          @click="() => (currentPage < pages ? currentPage++ : '')"
-        >
+        <button class="page-button" @click="() => (currentPage < pages ? currentPage++ : '')">
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -192,6 +149,7 @@
 </template>
 <script>
 import { electricMeterData } from "../virtualData.js";
+import { Message } from 'element-ui';
 
 export default {
   data() {
@@ -221,6 +179,7 @@ export default {
         "15_meterNo",
         "16_meterNo",
       ],
+      selectedName: '',
       //每页能显示20行
       initData: [],
       showData: [],
@@ -233,6 +192,9 @@ export default {
     pages() {
       return Math.ceil(this.total / 20);
     },
+    deviceStatus() {
+      return window.localStorage.getItem('deviceStatus');
+    }
   },
   watch: {
     currentPage(newValue, oldValue) {
@@ -244,6 +206,24 @@ export default {
       );
       this.tableLoad = false;
     },
+    selectedName(newValue, oldValue) {
+      if (newValue == '') {
+        window.localStorage.removeItem('selectedItemName');
+        window.localStorage.removeItem('selectedItemID');
+      }
+      // if (this.deviceStatus == '空闲') {
+      //   this.buttonMun.start = false
+      //   this.buttonMun.step = false
+      //   this.buttonMun.pause = false
+      //   this.buttonMun.stop = true
+      // }
+      // if (this.deviceStatus == '运行') {
+      //   this.buttonMun.start = true
+      //   this.buttonMun.step = false
+      //   this.buttonMun.pause = false
+      //   this.buttonMun.stop = false
+      // }
+    },
   },
   mounted() {
     this.init();
@@ -252,6 +232,18 @@ export default {
     //初始化
     init() {
       this.tableLoad = true;
+      if (this.deviceStatus == '空闲') {
+        this.buttonMun.start = false
+        this.buttonMun.step = false
+        this.buttonMun.pause = false
+        this.buttonMun.stop = true
+      }
+      if (this.deviceStatus == '运行') {
+        this.buttonMun.start = true
+        this.buttonMun.step = false
+        this.buttonMun.pause = false
+        this.buttonMun.stop = false
+      }
       //过程监测
       this.$request(
         "post",
@@ -304,7 +296,7 @@ export default {
               "15_meterNo": "000100215",
               "16_meterNo": "000100216",
               itemName: "基本误差1",
-              itemId: "12",
+              itemId: "1",
             },
             {
               1: "-0.0211",
@@ -340,7 +332,7 @@ export default {
               "15_meterNo": "000100215",
               "16_meterNo": "000100216",
               itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "12",
+              itemId: "2",
             },
             {
               1: "-0.0211",
@@ -376,7 +368,7 @@ export default {
               "15_meterNo": "000100215",
               "16_meterNo": "000100216",
               itemName: "基本误差3|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "12",
+              itemId: "3",
             },
           ];
           this.initData = res;
@@ -392,31 +384,169 @@ export default {
     },
     //切换功能
     toggleStatus(bt) {
-      // console.log(bt);
-      for (const key in this.buttonMun) {
-        this.buttonMun[key] = key == bt ? true : false;
-      }
-      //过程监测
-      this.$request(
-        "post",
-        "/bigScreen/processMonitor",
-        {
-          equipNo: this.$route.query.equipNo,
-          taskNo: this.$route.query.taskNo,
-          equipType: this.$route.query.equipType,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((res1) => {
-          console.log("单步", res1);
-        })
-        .finally(() => {
+      console.log(bt);
+      this.tableLoad = true;
+      if (bt == 'step') {
+        if (this.selectedName == '') {
+          Message({
+            showClose: true,
+            message: '请先选择一行数据！',
+            type: 'warning',
+          });
           this.tableLoad = false;
-        });
+        } else {
+          //(单步)
+          this.$requestSys(
+            "post",
+            "/equipDetailInfoNew/checkEquipStepControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              itemName: window.localStorage.getItem('selectedItemName'),
+              itemID: window.localStorage.getItem('selectedItemID'),
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res1) => {
+              console.log("单步", res1);
+              Message({
+                showClose: true,
+                message: '单步成功！',
+                type: 'success',
+              });
+            })
+            .finally(() => {
+              this.tableLoad = false;
+              for (const key in this.buttonMun) {
+                this.buttonMun[key] = key == bt ? true : false;
+              }
+              return;
+            });
+        }
+        return;
+      }
+      this.selectedName = '';
+      if (bt == 'stop') {
+        this.$requestSys(
+          "post",
+          "/meterInfo/equipStateControl",
+          {
+            equipNo: this.$route.query.equipNo,
+            checkState: 2
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res1) => {
+            console.log("停止", res1);
+            Message({
+              showClose: true,
+              message: '停止成功！',
+              type: 'success',
+            });
+          })
+          .finally(() => {
+            this.tableLoad = false;
+            for (const key in this.buttonMun) {
+              this.buttonMun[key] = key == bt ? true : false;
+            }
+            return;
+          });
+        return;
+      }
+      if (bt == 'start') {
+        if (this.deviceStatus == '空闲' || this.buttonMun.start == false) {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 0
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res1) => {
+              console.log("启动", res1);
+              Message({
+                showClose: true,
+                message: '启动成功！',
+                type: 'success',
+              });
+            })
+            .finally(() => {
+              this.tableLoad = false;
+              for (const key in this.buttonMun) {
+                this.buttonMun[key] = key == bt ? true : false;
+              }
+              return;
+            });
+        }
+        this.tableLoad = false;
+        return;
+      }
+      if (bt == 'pause') {
+        if (this.buttonMun.start == true) {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 1
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res1) => {
+              console.log("暂停", res1);
+              Message({
+                showClose: true,
+                message: '暂停成功！',
+                type: 'success',
+              });
+            })
+            .finally(() => {
+              this.tableLoad = false;
+              for (const key in this.buttonMun) {
+                this.buttonMun[key] = key == bt ? true : false;
+              }
+              return;
+            });
+          return;
+        } else {
+          Message({
+            showClose: true,
+            message: '请先点击启动！',
+            type: 'warning',
+          });
+          this.tableLoad = false;
+          return;
+        }
+      }
+
+    },
+    //选中行
+    selectRow(item) {
+      if (this.selectedName == item.itemName) {
+        this.selectedName = '';
+
+      } else {
+        this.selectedName = item.itemName;
+        window.localStorage.setItem('selectedItemName', item.itemName)
+        window.localStorage.setItem('selectedItemID', item.itemId)
+      }
     },
     //返回上一级
     goBack() {
@@ -494,7 +624,7 @@ thead tr {
   height: 2rem;
 }
 
-thead > :first-child > :first-child {
+thead> :first-child> :first-child {
   width: 18rem !important;
 }
 
@@ -507,6 +637,11 @@ tbody td {
 }
 
 tbody tr:hover {
+  /* 边框颜色向内发散 */
+  box-shadow: inset 0 0 15px #00f7ff;
+}
+
+tbody tr.selected {
   /* 边框颜色向内发散 */
   box-shadow: inset 0 0 15px #00f7ff;
 }
@@ -535,11 +670,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer > * {
+.footer>* {
   margin-right: 0.5rem;
 }
 
-.footer > :first-child {
+.footer> :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }

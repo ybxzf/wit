@@ -76,6 +76,7 @@ export default {
       }
       ).then(res => {
         this.deviceList.length = 0
+        console.log(res);
         // const res = {
         //   "msg": "操作成功",
         //   "code": 0,
@@ -104,6 +105,7 @@ export default {
         this.deviceList.push({ name: "设备检定日期", value: res.data.checkTime })
         this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
         this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
+        window.localStorage.setItem('deviceStatus', res.data.isDetail)
       });
       //检定人员
       this.$request(
@@ -192,6 +194,10 @@ export default {
       });
     },
   },
+  beforeDestroy(){
+    // 清空 localStorage
+    // localStorage.clear();
+  }
 };
 </script>
 <style scoped>

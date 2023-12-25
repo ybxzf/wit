@@ -21,8 +21,9 @@ import myCharts from './components/module/charts.vue';
 Vue.prototype.$myCharts = myCharts;
 
 /**工具类*/
-import {request} from './components/module/NetHttp.js';
+import {request, requestSys} from './components/module/NetHttp.js';
 Vue.prototype.$request = request;
+Vue.prototype.$requestSys = requestSys;
 
 //rem 适配  1rem = 14px
 import './components/module/fontSize.js';
