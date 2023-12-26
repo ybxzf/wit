@@ -628,6 +628,10 @@ thead> :first-child> :first-child {
   width: 18rem !important;
 }
 
+thead> :nth-child(2)>* {
+  color: #FFE117;
+}
+
 tbody tr {
   height: 3rem;
 }
