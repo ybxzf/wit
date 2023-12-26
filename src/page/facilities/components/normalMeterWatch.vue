@@ -72,7 +72,12 @@
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody v-loading="tableLoad">
+          <tbody 
+            v-loading="tableLoad"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
+          >
             <tr v-for="(item, index) in showData" :key="index">
               <td class="project">{{ item.itemName }}</td>
               <td>
@@ -196,6 +201,9 @@ export default {
     pages() {
       return Math.ceil(this.total / 18);
     },
+    deviceStatus() {
+      return window.localStorage.getItem('deviceStatus');
+    }
   },
   watch: {
     currentPage(newValue, oldValue) {
@@ -215,6 +223,16 @@ export default {
     //初始化
     init() {
       this.tableLoad = true;
+      if (this.deviceStatus == '空闲') {
+        this.buttonMun.start = false
+        this.buttonMun.pause = false
+        this.buttonMun.stop = true
+      }
+      if (this.deviceStatus == '运行') {
+        this.buttonMun.start = true
+        this.buttonMun.pause = false
+        this.buttonMun.stop = false
+      }
       //过程监测
       this.$request(
         "post",
@@ -257,7 +275,7 @@ export default {
     toggleStatus(bt) {
       console.log(bt);
       this.tableLoad = true;
-      if (bt == 'stop') {
+      if (bt == 'stop' && !this.buttonMun.stop) {
         this.$requestSys(
           "post",
           "/meterInfo/equipStateControl",
@@ -267,7 +285,7 @@ export default {
           },
           {
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'multipart/form-data',
             },
           }
         )
@@ -288,7 +306,7 @@ export default {
           });
         return;
       }
-      if (bt == 'start') {
+      if (bt == 'start' && !this.buttonMun.start) {
         if (this.deviceStatus == '空闲' || this.buttonMun.start == false) {
           this.$requestSys(
             "post",
@@ -299,7 +317,7 @@ export default {
             },
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'multipart/form-data',
               },
             }
           )
@@ -322,7 +340,7 @@ export default {
         this.tableLoad = false;
         return;
       }
-      if (bt == 'pause') {
+      if (bt == 'pause' && !this.buttonMun.pause) {
         if (this.buttonMun.start == true) {
           this.$requestSys(
             "post",
@@ -333,7 +351,7 @@ export default {
             },
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'multipart/form-data',
               },
             }
           )
@@ -363,7 +381,7 @@ export default {
           return;
         }
       }
-
+      this.tableLoad = false;
     },
     //返回上一级
     goBack() {

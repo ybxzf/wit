@@ -66,7 +66,12 @@
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody v-loading="tableLoad">
+          <tbody 
+            v-loading="tableLoad" 
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
+          >
             <tr v-for="(item, index) in showData" :key="index" @click="selectRow(item)"
               :class="{ 'selected': selectedName === item.itemName }">
               <td class="project">{{ item.itemName }}</td>
@@ -210,19 +215,19 @@ export default {
       if (newValue == '') {
         window.localStorage.removeItem('selectedItemName');
         window.localStorage.removeItem('selectedItemID');
+        if (this.deviceStatus == '空闲') {
+          this.buttonMun.start = false
+          this.buttonMun.step = false
+          this.buttonMun.pause = false
+          this.buttonMun.stop = true
+        }
+        if (this.deviceStatus == '运行') {
+          this.buttonMun.start = true
+          this.buttonMun.step = false
+          this.buttonMun.pause = false
+          this.buttonMun.stop = false
+        }
       }
-      // if (this.deviceStatus == '空闲') {
-      //   this.buttonMun.start = false
-      //   this.buttonMun.step = false
-      //   this.buttonMun.pause = false
-      //   this.buttonMun.stop = true
-      // }
-      // if (this.deviceStatus == '运行') {
-      //   this.buttonMun.start = true
-      //   this.buttonMun.step = false
-      //   this.buttonMun.pause = false
-      //   this.buttonMun.stop = false
-      // }
     },
   },
   mounted() {
@@ -386,7 +391,7 @@ export default {
     toggleStatus(bt) {
       console.log(bt);
       this.tableLoad = true;
-      if (bt == 'step') {
+      if (bt == 'step' && !this.buttonMun.step) {
         if (this.selectedName == '') {
           Message({
             showClose: true,
@@ -406,7 +411,7 @@ export default {
             },
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'multipart/form-data',
               },
             }
           )
@@ -429,7 +434,7 @@ export default {
         return;
       }
       this.selectedName = '';
-      if (bt == 'stop') {
+      if (bt == 'stop' && !this.buttonMun.stop) {
         this.$requestSys(
           "post",
           "/meterInfo/equipStateControl",
@@ -439,7 +444,7 @@ export default {
           },
           {
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'multipart/form-data',
             },
           }
         )
@@ -460,7 +465,7 @@ export default {
           });
         return;
       }
-      if (bt == 'start') {
+      if (bt == 'start' && !this.buttonMun.start) {
         if (this.deviceStatus == '空闲' || this.buttonMun.start == false) {
           this.$requestSys(
             "post",
@@ -471,7 +476,7 @@ export default {
             },
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'multipart/form-data',
               },
             }
           )
@@ -494,7 +499,7 @@ export default {
         this.tableLoad = false;
         return;
       }
-      if (bt == 'pause') {
+      if (bt == 'pause' && !this.buttonMun.pause) {
         if (this.buttonMun.start == true) {
           this.$requestSys(
             "post",
@@ -505,7 +510,7 @@ export default {
             },
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'multipart/form-data',
               },
             }
           )
@@ -535,13 +540,24 @@ export default {
           return;
         }
       }
-
+      this.tableLoad = false;
     },
     //选中行
     selectRow(item) {
+      if (this.deviceStatus == '空闲') {
+        this.buttonMun.start = false
+        this.buttonMun.step = false
+        this.buttonMun.pause = false
+        this.buttonMun.stop = true
+      }
+      if (this.deviceStatus == '运行') {
+        this.buttonMun.start = true
+        this.buttonMun.step = false
+        this.buttonMun.pause = false
+        this.buttonMun.stop = false
+      }
       if (this.selectedName == item.itemName) {
         this.selectedName = '';
-
       } else {
         this.selectedName = item.itemName;
         window.localStorage.setItem('selectedItemName', item.itemName)

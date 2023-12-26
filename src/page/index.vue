@@ -796,7 +796,6 @@ export default {
 					equipNo: item.equipNo,
 					taskNo:item.taskName,
 					equipType:item.equipType,
-					laboratoryNo:item.item
 				}
 			});
 		},

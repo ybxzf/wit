@@ -91,7 +91,12 @@
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody v-loading="tableLoad">
+          <tbody 
+            v-loading="tableLoad"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
+          >
             <tr v-for="(item, index) in showData" :key="index">
               <td class="project">{{ item.itemName }}</td>
               <td :class="item['1b'] == '不合格' ? 'unqualified' : ''">
