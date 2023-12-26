@@ -154,6 +154,7 @@
 </template>
 <script>
 import { normalMeterData } from "../virtualData.js";
+import { Message } from 'element-ui';
 
 export default {
   data() {
@@ -254,10 +255,115 @@ export default {
     },
     //切换功能
     toggleStatus(bt) {
-      // console.log(bt);
-      for (const key in this.buttonMun) {
-        this.buttonMun[key] = key == bt ? true : false;
+      console.log(bt);
+      this.tableLoad = true;
+      if (bt == 'stop') {
+        this.$requestSys(
+          "post",
+          "/meterInfo/equipStateControl",
+          {
+            equipNo: this.$route.query.equipNo,
+            checkState: 2
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res1) => {
+            console.log("停止", res1);
+            Message({
+              showClose: true,
+              message: '停止成功！',
+              type: 'success',
+            });
+          })
+          .finally(() => {
+            this.tableLoad = false;
+            for (const key in this.buttonMun) {
+              this.buttonMun[key] = key == bt ? true : false;
+            }
+            return;
+          });
+        return;
       }
+      if (bt == 'start') {
+        if (this.deviceStatus == '空闲' || this.buttonMun.start == false) {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 0
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res1) => {
+              console.log("启动", res1);
+              Message({
+                showClose: true,
+                message: '启动成功！',
+                type: 'success',
+              });
+            })
+            .finally(() => {
+              this.tableLoad = false;
+              for (const key in this.buttonMun) {
+                this.buttonMun[key] = key == bt ? true : false;
+              }
+              return;
+            });
+        }
+        this.tableLoad = false;
+        return;
+      }
+      if (bt == 'pause') {
+        if (this.buttonMun.start == true) {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 1
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res1) => {
+              console.log("暂停", res1);
+              Message({
+                showClose: true,
+                message: '暂停成功！',
+                type: 'success',
+              });
+            })
+            .finally(() => {
+              this.tableLoad = false;
+              for (const key in this.buttonMun) {
+                this.buttonMun[key] = key == bt ? true : false;
+              }
+              return;
+            });
+          return;
+        } else {
+          Message({
+            showClose: true,
+            message: '请先点击启动！',
+            type: 'warning',
+          });
+          this.tableLoad = false;
+          return;
+        }
+      }
+
     },
     //返回上一级
     goBack() {
@@ -336,8 +442,12 @@ thead tr th {
   font-size: 1.2rem;
 }
 
-thead > :nth-child(2) > :first-child {
+thead > :nth-child(3) > :first-child {
   width: 12rem !important;
+}
+
+thead> :nth-child(2)>* {
+  color: #FFE117;
 }
 
 tbody tr {
