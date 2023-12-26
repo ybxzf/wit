@@ -64,7 +64,7 @@
             </tr>
             <tr>
               <th colspan="2" v-for="(item, index) in listTitles" :key="index">
-                {{ item }}
+                {{ showData.length > 0 ? showData[0][item] : '--' }}
               </th>
               <!-- <th colspan="2">000002</th>
               <th colspan="2">000003</th>
@@ -402,6 +402,10 @@ thead tr {
 
 thead > :first-child > :first-child {
   width: 16rem !important;
+}
+
+thead> :nth-child(2)>* {
+  color: #FFE117;
 }
 
 tbody tr {
