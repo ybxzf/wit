@@ -589,20 +589,23 @@ export default {
 			}, 1000);
 		},
 		updateCapacity(val, data) {
-			// data = [
-			// 	{
-			// 		"equipType": "互感器",
-			// 		"num": 48
-			// 	},
-			// 	{
-			// 		"equipType": "标准表",
-			// 		"num": 24
-			// 	},
-			// 	{
-			// 		"equipType": "电能表",
-			// 		"num": 108
-			// 	}
-			// ];
+			console.log(data);
+			if (data.length == 0) {
+				data = [
+					{
+						"equipType": "电能表鉴定装置",
+						"num": 0
+					},
+					{
+						"equipType": "标准表鉴定装置",
+						"num": 0
+					},
+					{
+						"equipType": "互感器鉴定装置",
+						"num": 0
+					},
+				];
+			}
 			if (this.tempObj[val] == undefined) {
 				this.tempObj[val] = this.$echarts.init(document.getElementById(val));
 			}
@@ -623,9 +626,9 @@ export default {
 		},
 		updateQuality(name, data) {
 			// data = {
-			// 	"qualified": 50,
-			// 	"unqualified": 23,
-			// 	"passRate": "68.49"
+			// 	"qualified": 0,
+			// 	"unqualified": 0,
+			// 	"passRate": "100.00"
 			// };
 			if (this.tempObj[name] == undefined) {
 				this.tempObj[name] = this.$echarts.init(document.getElementById(name));
@@ -747,15 +750,17 @@ export default {
 					},
 				}
 			).then((res) => {
-				console.log(msg.labNo);
-				this.dataList.length = 0;
-				res.data.forEach(item => {
-					if (item.projectName) {
-						if (this.dataList.length < 2) {
-							this.dataList.push(item);
-						}
-					}
-				})
+				this.dataList.length = 2;
+				for (let i = 0; i < 2; i++) {
+					this.dataList[i] = res.data[i]
+				}
+				// res.data.forEach(item => {
+				// 	if (item.projectName) {
+				// 		if (this.dataList.length < 2) {
+				// 			this.dataList.push(item);
+				// 		}
+				// 	}
+				// })
 				// this.dataList = [
 				// 	{
 				// 		"equipName": "直流电能表检定装置",
@@ -799,15 +804,15 @@ export default {
 			});
 		},
 		clickJump(item, idx) {
-			console.log(this.onLine.rows);
-			console.log(item,idx);
+			// console.log(this.onLine.rows);
+			// console.log(item,idx);
 			this.$router.push({
 				path: "/facilities",
 				// path: "/facilities-model",
 				query: {
-					equipNo: item.equipNo,
-					taskNo:item.taskName,
-					equipType:item.equipType,
+					equipNo: item.equipNo || "",
+					taskNo:item.taskName || "",
+					equipType:item.equipType || "",
 				}
 			});
 		},

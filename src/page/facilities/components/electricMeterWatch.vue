@@ -46,7 +46,7 @@
             </tr>
             <tr>
               <th v-for="(item, index) in listTitles" :key="index">
-                {{ showData[0][item] }}
+                {{ showData.length > 0 ? (showData[0][item] || '--') : '--' }}
               </th>
               <!-- <th>123456</th>
               <th>123456</th>
@@ -66,66 +66,62 @@
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody 
-            v-loading="tableLoad" 
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
-          >
+          <tbody v-loading="tableLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)">
             <tr v-for="(item, index) in showData" :key="index" @click="selectRow(item)"
               :class="{ 'selected': selectedName === item.itemName }">
               <td class="project">{{ item.itemName }}</td>
-              <td v-for="(it, i) in listTitles" :key="i" :class="item[i + 1] == '不合格' ? 'unqualified' : ''">
-                {{ item[i + 1] }}
-              </td>
-              <!-- <td :class="item['1'] == '不合格' ? 'unqualified' : ''">
-                {{ item["1"] }}
+              <!-- <td v-for="(it, i) in listTitles" :key="i" :class="item[i + 1] == '不合格' ? 'unqualified' : ''">
+                {{ item[i + 1] || '--' }}
+              </td> -->
+              <td :class="item['1'] == '不合格' ? 'unqualified' : ''">
+                {{ item["1"] || '--' }}
               </td>
               <td :class="item['2'] == '不合格' ? 'unqualified' : ''">
-                {{ item["2"] }}
+                {{ item["2"] || '--' }}
               </td>
               <td :class="item['3'] == '不合格' ? 'unqualified' : ''">
-                {{ item["3"] }}
+                {{ item["3"] || '--' }}
               </td>
               <td :class="item['4'] == '不合格' ? 'unqualified' : ''">
-                {{ item["4"] }}
+                {{ item["4"] || '--' }}
               </td>
               <td :class="item['5'] == '不合格' ? 'unqualified' : ''">
-                {{ item["5"] }}
+                {{ item["5"] || '--' }}
               </td>
               <td :class="item['6'] == '不合格' ? 'unqualified' : ''">
-                {{ item["6"] }}
+                {{ item["6"] || '--' }}
               </td>
               <td :class="item['7'] == '不合格' ? 'unqualified' : ''">
-                {{ item["7"] }}
+                {{ item["7"] || '--' }}
               </td>
               <td :class="item['8'] == '不合格' ? 'unqualified' : ''">
-                {{ item["8"] }}
+                {{ item["8"] || '--' }}
               </td>
               <td :class="item['9'] == '不合格' ? 'unqualified' : ''">
-                {{ item["9"] }}
+                {{ item["9"] || '--' }}
               </td>
               <td :class="item['10'] == '不合格' ? 'unqualified' : ''">
-                {{ item["10"] }}
+                {{ item["10"] || '--' }}
               </td>
               <td :class="item['11'] == '不合格' ? 'unqualified' : ''">
-                {{ item["11"] }}
+                {{ item["11"] || '--' }}
               </td>
               <td :class="item['12'] == '不合格' ? 'unqualified' : ''">
-                {{ item["12"] }}
+                {{ item["12"] || '--' }}
               </td>
               <td :class="item['13'] == '不合格' ? 'unqualified' : ''">
-                {{ item["13"] }}
+                {{ item["13"] || '--' }}
               </td>
               <td :class="item['14'] == '不合格' ? 'unqualified' : ''">
-                {{ item["14"] }}
+                {{ item["14"] || '--' }}
               </td>
               <td :class="item['15'] == '不合格' ? 'unqualified' : ''">
-                {{ item["15"] }}
+                {{ item["15"] || '--' }}
               </td>
               <td :class="item['16'] == '不合格' ? 'unqualified' : ''">
-                {{ item["16"] }}
-              </td> -->
+                {{ item["16"] || '--' }}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -139,7 +135,7 @@
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="20" layout="pager" :current-page="currentPage" :total="total"
+        <el-pagination class="page-list" :page-size="19" layout="pager" :current-page="currentPage" :total="total"
           @current-change="handleCurrentChange">
         </el-pagination>
         <button class="page-button" @click="() => (currentPage < pages ? currentPage++ : '')">
@@ -159,6 +155,7 @@ import { Message } from 'element-ui';
 export default {
   data() {
     return {
+      interval: null,
       buttonMun: {
         start: false,
         step: false,
@@ -195,7 +192,7 @@ export default {
   },
   computed: {
     pages() {
-      return Math.ceil(this.total / 20);
+      return Math.ceil(this.total / 19);
     },
     deviceStatus() {
       return window.localStorage.getItem('deviceStatus');
@@ -203,11 +200,11 @@ export default {
   },
   watch: {
     currentPage(newValue, oldValue) {
-      console.log(newValue, oldValue);
+      // console.log(newValue, oldValue);
       this.tableLoad = true;
       this.showData = this.initData.slice(
-        20 * (newValue - 1),
-        20 * (newValue - 1) + 20
+        19 * (newValue - 1),
+        19 * (newValue - 1) + 19
       );
       this.tableLoad = false;
     },
@@ -215,13 +212,13 @@ export default {
       if (newValue == '') {
         window.localStorage.removeItem('selectedItemName');
         window.localStorage.removeItem('selectedItemID');
-        if (this.deviceStatus == '空闲') {
+        if (this.deviceStatus.trim() == '空闲') {
           this.buttonMun.start = false
           this.buttonMun.step = false
           this.buttonMun.pause = false
           this.buttonMun.stop = true
         }
-        if (this.deviceStatus == '运行') {
+        if (this.deviceStatus.trim() == '运行') {
           this.buttonMun.start = true
           this.buttonMun.step = false
           this.buttonMun.pause = false
@@ -232,18 +229,22 @@ export default {
   },
   mounted() {
     this.init();
+    this.interval = setInterval(() => {
+      this.init();
+    }, 15000);
   },
   methods: {
     //初始化
     init() {
       this.tableLoad = true;
-      if (this.deviceStatus == '空闲') {
+      console.log(this.deviceStatus);
+      if (this.deviceStatus.trim() == '空闲') {
         this.buttonMun.start = false
         this.buttonMun.step = false
         this.buttonMun.pause = false
         this.buttonMun.stop = true
       }
-      if (this.deviceStatus == '运行') {
+      if (this.deviceStatus.trim() == '运行') {
         this.buttonMun.start = true
         this.buttonMun.step = false
         this.buttonMun.pause = false
@@ -264,128 +265,130 @@ export default {
           },
         }
       )
-        .then((res1) => {
-          console.log("电能表过程监测", res1);
-          const res = [
-            {
-              1: "-0.0211",
-              2: "+0.0395",
-              3: "+0.1001",
-              4: "-0.0002",
-              5: "-0.0351",
-              6: "-0.0072",
-              7: "-0.0748",
-              8: "+0.0576",
-              9: "-0.1145",
-              10: "+0.1135",
-              11: "+0.0131",
-              12: "+0.1218",
-              13: "+0.1218",
-              14: "-0.0002",
-              15: "-0.0211",
-              16: "+0.0395",
-              "1_meterNo": "00010021",
-              "2_meterNo": "00010022",
-              "3_meterNo": "00010023",
-              "4_meterNo": "00010024",
-              "5_meterNo": "00010025",
-              "6_meterNo": "00010026",
-              "7_meterNo": "00010027",
-              "8_meterNo": "00010028",
-              "9_meterNo": "00010029",
-              "10_meterNo": "000100210",
-              "11_meterNo": "000100211",
-              "12_meterNo": "000100212",
-              "13_meterNo": "000100213",
-              "14_meterNo": "000100214",
-              "15_meterNo": "000100215",
-              "16_meterNo": "000100216",
-              itemName: "基本误差1",
-              itemId: "1",
-            },
-            {
-              1: "-0.0211",
-              2: "+0.0395",
-              3: "+0.1001",
-              4: "-0.0002",
-              5: "-0.0351",
-              6: "-0.0072",
-              7: "-0.0748",
-              8: "+0.0576",
-              9: "-0.1145",
-              10: "+0.1135",
-              11: "+0.0131",
-              12: "+0.1218",
-              13: "不合格",
-              14: "不合格",
-              15: "不合格",
-              16: "+0.1218",
-              "1_meterNo": "00010021",
-              "2_meterNo": "00010022",
-              "3_meterNo": "00010023",
-              "4_meterNo": "00010024",
-              "5_meterNo": "00010025",
-              "6_meterNo": "00010026",
-              "7_meterNo": "00010027",
-              "8_meterNo": "00010028",
-              "9_meterNo": "00010029",
-              "10_meterNo": "000100210",
-              "11_meterNo": "000100211",
-              "12_meterNo": "000100212",
-              "13_meterNo": "000100213",
-              "14_meterNo": "000100214",
-              "15_meterNo": "000100215",
-              "16_meterNo": "000100216",
-              itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "2",
-            },
-            {
-              1: "-0.0211",
-              2: "+0.0395",
-              3: "+0.1001",
-              4: "-0.0002",
-              5: "-0.0351",
-              6: "-0.0072",
-              7: "-0.0748",
-              8: "+0.0576",
-              9: "-0.1145",
-              10: "+0.1135",
-              11: "+0.0131",
-              12: "+0.1218",
-              13: "不合格",
-              14: "不合格",
-              15: "不合格",
-              16: "不合格",
-              "1_meterNo": "00010021",
-              "2_meterNo": "00010022",
-              "3_meterNo": "00010023",
-              "4_meterNo": "00010024",
-              "5_meterNo": "00010025",
-              "6_meterNo": "00010026",
-              "7_meterNo": "00010027",
-              "8_meterNo": "00010028",
-              "9_meterNo": "00010029",
-              "10_meterNo": "000100210",
-              "11_meterNo": "000100211",
-              "12_meterNo": "000100212",
-              "13_meterNo": "000100213",
-              "14_meterNo": "000100214",
-              "15_meterNo": "000100215",
-              "16_meterNo": "000100216",
-              itemName: "基本误差3|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "3",
-            },
-          ];
-          this.initData = res;
+        .then((res) => {
+          // console.log("电能表过程监测", res);
+          this.initData = res.data;
+          // const res = [
+          //   {
+          //     1: "-0.0211",
+          //     2: "+0.0395",
+          //     3: "+0.1001",
+          //     4: "-0.0002",
+          //     5: "-0.0351",
+          //     6: "-0.0072",
+          //     7: "-0.0748",
+          //     8: "+0.0576",
+          //     9: "-0.1145",
+          //     10: "+0.1135",
+          //     11: "+0.0131",
+          //     12: "+0.1218",
+          //     13: "+0.1218",
+          //     14: "-0.0002",
+          //     15: "-0.0211",
+          //     16: "+0.0395",
+          //     "1_meterNo": "00010021",
+          //     "2_meterNo": "00010022",
+          //     "3_meterNo": "00010023",
+          //     "4_meterNo": "00010024",
+          //     "5_meterNo": "00010025",
+          //     "6_meterNo": "00010026",
+          //     "7_meterNo": "00010027",
+          //     "8_meterNo": "00010028",
+          //     "9_meterNo": "00010029",
+          //     "10_meterNo": "000100210",
+          //     "11_meterNo": "000100211",
+          //     "12_meterNo": "000100212",
+          //     "13_meterNo": "000100213",
+          //     "14_meterNo": "000100214",
+          //     "15_meterNo": "000100215",
+          //     "16_meterNo": "000100216",
+          //     itemName: "基本误差1",
+          //     itemId: "1",
+          //   },
+          //   {
+          //     1: "-0.0211",
+          //     2: "+0.0395",
+          //     3: "+0.1001",
+          //     4: "-0.0002",
+          //     5: "-0.0351",
+          //     6: "-0.0072",
+          //     7: "-0.0748",
+          //     8: "+0.0576",
+          //     9: "-0.1145",
+          //     10: "+0.1135",
+          //     11: "+0.0131",
+          //     12: "+0.1218",
+          //     13: "不合格",
+          //     14: "不合格",
+          //     15: "不合格",
+          //     16: "+0.1218",
+          //     "1_meterNo": "00010021",
+          //     "2_meterNo": "00010022",
+          //     "3_meterNo": "00010023",
+          //     "4_meterNo": "00010024",
+          //     "5_meterNo": "00010025",
+          //     "6_meterNo": "00010026",
+          //     "7_meterNo": "00010027",
+          //     "8_meterNo": "00010028",
+          //     "9_meterNo": "00010029",
+          //     "10_meterNo": "000100210",
+          //     "11_meterNo": "000100211",
+          //     "12_meterNo": "000100212",
+          //     "13_meterNo": "000100213",
+          //     "14_meterNo": "000100214",
+          //     "15_meterNo": "000100215",
+          //     "16_meterNo": "000100216",
+          //     itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "2",
+          //   },
+          //   {
+          //     1: "-0.0211",
+          //     2: "+0.0395",
+          //     3: "+0.1001",
+          //     4: "-0.0002",
+          //     5: "-0.0351",
+          //     6: "-0.0072",
+          //     7: "-0.0748",
+          //     8: "+0.0576",
+          //     9: "-0.1145",
+          //     10: "+0.1135",
+          //     11: "+0.0131",
+          //     12: "+0.1218",
+          //     13: "不合格",
+          //     14: "不合格",
+          //     15: "不合格",
+          //     16: "不合格",
+          //     "1_meterNo": "00010021",
+          //     "2_meterNo": "00010022",
+          //     "3_meterNo": "00010023",
+          //     "4_meterNo": "00010024",
+          //     "5_meterNo": "00010025",
+          //     "6_meterNo": "00010026",
+          //     "7_meterNo": "00010027",
+          //     "8_meterNo": "00010028",
+          //     "9_meterNo": "00010029",
+          //     "10_meterNo": "000100210",
+          //     "11_meterNo": "000100211",
+          //     "12_meterNo": "000100212",
+          //     "13_meterNo": "000100213",
+          //     "14_meterNo": "000100214",
+          //     "15_meterNo": "000100215",
+          //     "16_meterNo": "000100216",
+          //     itemName: "基本误差3|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "3",
+          //   },
+          // ];
           this.total = this.initData.length;
-          this.showData = this.initData.slice(0, 20);
+          this.showData = this.initData.slice(0, 19);
         })
         .finally(() => {
           this.tableLoad = false;
         });
-      // this.initData = electricMeterData;
-      // this.total = electricMeterData.length;
-      // this.showData = this.initData.slice(0, 20);
+      // console.log('this.watchList',this.watchList);
+      // this.initData = this.watchList;
+      // this.total = this.watchList.length;
+      // this.showData = this.initData.slice(0, 19);
+      // this.tableLoad = false;
     },
     //切换功能
     toggleStatus(bt) {
@@ -415,19 +418,34 @@ export default {
               },
             }
           )
-            .then((res1) => {
-              console.log("单步", res1);
+            .then((res) => {
+              console.log("单步", res);
+              if (res.code == 0) {
+                Message({
+                  showClose: true,
+                  message: '单步成功！',
+                  type: 'success',
+                });
+                for (const key in this.buttonMun) {
+                  this.buttonMun[key] = key == bt ? true : false;
+                }
+              } else {
+                Message({
+                  showClose: true,
+                  message: '单步失败！',
+                  type: 'error',
+                });
+              }
+            })
+            .catch(() => {
               Message({
                 showClose: true,
-                message: '单步成功！',
-                type: 'success',
+                message: '单步失败！',
+                type: 'error',
               });
             })
             .finally(() => {
               this.tableLoad = false;
-              for (const key in this.buttonMun) {
-                this.buttonMun[key] = key == bt ? true : false;
-              }
               return;
             });
         }
@@ -448,19 +466,35 @@ export default {
             },
           }
         )
-          .then((res1) => {
-            console.log("停止", res1);
+          .then((res) => {
+            console.log("停止", res);
+            if (res.code == 0) {
+              Message({
+                showClose: true,
+                message: '停止成功！',
+                type: 'success',
+              });
+
+              for (const key in this.buttonMun) {
+                this.buttonMun[key] = key == bt ? true : false;
+              }
+            } else {
+              Message({
+                showClose: true,
+                message: '停止失败！',
+                type: 'error',
+              });
+            }
+          })
+          .catch(() => {
             Message({
               showClose: true,
-              message: '停止成功！',
-              type: 'success',
+              message: '停止失败！',
+              type: 'error',
             });
           })
           .finally(() => {
             this.tableLoad = false;
-            for (const key in this.buttonMun) {
-              this.buttonMun[key] = key == bt ? true : false;
-            }
             return;
           });
         return;
@@ -480,23 +514,38 @@ export default {
               },
             }
           )
-            .then((res1) => {
-              console.log("启动", res1);
+            .then((res) => {
+              console.log("启动", res);
+              if (res.code == 0) {
+                Message({
+                  showClose: true,
+                  message: '启动成功！',
+                  type: 'success',
+                });
+                for (const key in this.buttonMun) {
+                  this.buttonMun[key] = key == bt ? true : false;
+                }
+              } else {
+                Message({
+                  showClose: true,
+                  message: '启动失败！',
+                  type: 'error',
+                });
+              }
+            })
+            .catch(() => {
               Message({
                 showClose: true,
-                message: '启动成功！',
-                type: 'success',
+                message: '启动失败！',
+                type: 'error',
               });
             })
             .finally(() => {
               this.tableLoad = false;
-              for (const key in this.buttonMun) {
-                this.buttonMun[key] = key == bt ? true : false;
-              }
               return;
             });
         }
-        this.tableLoad = false;
+        // this.tableLoad = false;
         return;
       }
       if (bt == 'pause' && !this.buttonMun.pause) {
@@ -514,19 +563,34 @@ export default {
               },
             }
           )
-            .then((res1) => {
-              console.log("暂停", res1);
+            .then((res) => {
+              console.log("暂停", res);
+              if (res.code == 0) {
+                Message({
+                  showClose: true,
+                  message: '暂停成功！',
+                  type: 'success',
+                });
+                for (const key in this.buttonMun) {
+                  this.buttonMun[key] = key == bt ? true : false;
+                }
+              } else {
+                Message({
+                  showClose: true,
+                  message: '暂停失败！',
+                  type: 'error',
+                });
+              }
+            })
+            .catch(() => {
               Message({
                 showClose: true,
-                message: '暂停成功！',
-                type: 'success',
+                message: '暂停失败！',
+                type: 'error',
               });
             })
             .finally(() => {
               this.tableLoad = false;
-              for (const key in this.buttonMun) {
-                this.buttonMun[key] = key == bt ? true : false;
-              }
               return;
             });
           return;
@@ -581,6 +645,9 @@ export default {
       this.currentPage = val;
     },
   },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  }
 };
 </script>
 <style scoped>
@@ -633,19 +700,24 @@ td {
   border: 1px solid #77c1f3;
   text-align: center;
   font-size: 0.9rem;
+  width: 10rem !important;
   font-weight: bold;
 }
 
 thead tr {
-  height: 2rem;
+  height: 3rem;
 }
 
 thead> :first-child> :first-child {
-  width: 18rem !important;
+  width: 20rem !important;
 }
 
 thead> :nth-child(2)>* {
   color: #FFE117;
+  height: 3rem;
+  font-size: 0.65rem;
+  font-weight: bolder;
+
 }
 
 tbody tr {

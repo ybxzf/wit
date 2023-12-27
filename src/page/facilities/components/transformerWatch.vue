@@ -64,7 +64,7 @@
             </tr>
             <tr>
               <th colspan="2" v-for="(item, index) in listTitles" :key="index">
-                {{ showData.length > 0 ? showData[0][item] : '--' }}
+                {{ showData.length > 0 ? (showData[0][item] || '--') : '--' }}
               </th>
               <!-- <th colspan="2">000002</th>
               <th colspan="2">000003</th>
@@ -100,40 +100,40 @@
             <tr v-for="(item, index) in showData" :key="index">
               <td class="project">{{ item.itemName }}</td>
               <td :class="item['1b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["1b"] }}
+                {{ item["1b"] || '--'  }}
               </td>
               <td :class="item['1j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["1j"] }}
+                {{ item["1j"] || '--'  }}
               </td>
               <td :class="item['2b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["2b"] }}
+                {{ item["2b"] || '--'  }}
               </td>
               <td :class="item['2j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["2j"] }}
+                {{ item["2j"] || '--'  }}
               </td>
               <td :class="item['3b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["3b"] }}
+                {{ item["3b"] || '--'  }}
               </td>
               <td :class="item['3j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["3j"] }}
+                {{ item["3j"] || '--'  }}
               </td>
               <td :class="item['4b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["4b"] }}
+                {{ item["4b"] || '--'  }}
               </td>
               <td :class="item['4j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["4j"] }}
+                {{ item["4j"] || '--'  }}
               </td>
               <td :class="item['5b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["5b"] }}
+                {{ item["5b"] || '--'  }}
               </td>
               <td :class="item['5j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["5j"] }}
+                {{ item["5j"] || '--'  }}
               </td>
               <td :class="item['6b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["6b"] }}
+                {{ item["6b"] || '--'  }}
               </td>
               <td :class="item['6j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["6j"] }}
+                {{ item["6j"] || '--'  }}
               </td>
             </tr>
           </tbody>
@@ -194,6 +194,7 @@ export default {
         "5_meterNo",
         "6_meterNo",
       ],
+      interval: null,
       //每页能显示19行
       initData: [],
       showData: [],
@@ -209,7 +210,6 @@ export default {
   },
   watch: {
     currentPage(newValue, oldValue) {
-      console.log(newValue, oldValue);
       this.tableLoad = true;
       this.showData = this.initData.slice(
         19 * (newValue - 1),
@@ -220,6 +220,9 @@ export default {
   },
   mounted() {
     this.init();
+    this.interval = setInterval(() => {
+      this.init();
+    }, 15000);
   },
   methods: {
     //初始化
@@ -240,77 +243,77 @@ export default {
           },
         }
       )
-        .then((res1) => {
-          console.log("互感器过程监测", res1);
-          const res = [
-            {
-              itemName: "基本误差|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "12",
-              "1b": "-0.0211",
-              "1j": "+0.0395",
-              "1_meterNo": "00010223",
-              "2b": "-0.0211",
-              "2j": "+0.0395",
-              "2_meterNo": "00010224",
-              "3b": "-0.0211",
-              "3j": "+0.0395",
-              "3_meterNo": "00010225",
-              "4b": "-0.0211",
-              "4j": "+0.0395",
-              "4_meterNo": "00010226",
-              "5b": "-0.0211",
-              "5j": "+0.0395",
-              "5_meterNo": "00010227",
-              "6b": "-0.0211",
-              "6j": "+0.0395",
-              "6_meterNo": "00010228",
-            },
-            {
-              itemName: "基本误差1|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "12",
-              "1b": "-0.0211",
-              "1j": "+0.0395",
-              "1_meterNo": "00010223",
-              "2b": "-0.0211",
-              "2j": "+0.0395",
-              "2_meterNo": "00010224",
-              "3b": "-0.0211",
-              "3j": "+0.0395",
-              "3_meterNo": "00010225",
-              "4b": "-0.0211",
-              "4j": "+0.0395",
-              "4_meterNo": "00010226",
-              "5b": "-0.0211",
-              "5j": "+0.0395",
-              "5_meterNo": "00010227",
-              "6b": "-0.0211",
-              "6j": "+0.0395",
-              "6_meterNo": "00010228",
-            },
-            {
-              itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "12",
-              "1b": "-0.0211",
-              "1j": "+0.0395",
-              "1_meterNo": "00010223",
-              "2b": "-0.0211",
-              "2j": "+0.0395",
-              "2_meterNo": "00010224",
-              "3b": "-0.0211",
-              "3j": "+0.0395",
-              "3_meterNo": "00010225",
-              "4b": "-0.0211",
-              "4j": "+0.0395",
-              "4_meterNo": "00010226",
-              "5b": "-0.0211",
-              "5j": "+0.0395",
-              "5_meterNo": "00010227",
-              "6b": "-0.0211",
-              "6j": "+0.0395",
-              "6_meterNo": "00010228",
-            },
-          ];
-          this.initData = res;
+        .then((res) => {
+          console.log(res);
+          // const res = [
+          //   {
+          //     itemName: "基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     "1b": "-0.0211",
+          //     "1j": "+0.0395",
+          //     "1_meterNo": "00010223",
+          //     "2b": "-0.0211",
+          //     "2j": "+0.0395",
+          //     "2_meterNo": "00010224",
+          //     "3b": "-0.0211",
+          //     "3j": "+0.0395",
+          //     "3_meterNo": "00010225",
+          //     "4b": "-0.0211",
+          //     "4j": "+0.0395",
+          //     "4_meterNo": "00010226",
+          //     "5b": "-0.0211",
+          //     "5j": "+0.0395",
+          //     "5_meterNo": "00010227",
+          //     "6b": "-0.0211",
+          //     "6j": "+0.0395",
+          //     "6_meterNo": "00010228",
+          //   },
+          //   {
+          //     itemName: "基本误差1|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     "1b": "-0.0211",
+          //     "1j": "+0.0395",
+          //     "1_meterNo": "00010223",
+          //     "2b": "-0.0211",
+          //     "2j": "+0.0395",
+          //     "2_meterNo": "00010224",
+          //     "3b": "-0.0211",
+          //     "3j": "+0.0395",
+          //     "3_meterNo": "00010225",
+          //     "4b": "-0.0211",
+          //     "4j": "+0.0395",
+          //     "4_meterNo": "00010226",
+          //     "5b": "-0.0211",
+          //     "5j": "+0.0395",
+          //     "5_meterNo": "00010227",
+          //     "6b": "-0.0211",
+          //     "6j": "+0.0395",
+          //     "6_meterNo": "00010228",
+          //   },
+          //   {
+          //     itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     "1b": "-0.0211",
+          //     "1j": "+0.0395",
+          //     "1_meterNo": "00010223",
+          //     "2b": "-0.0211",
+          //     "2j": "+0.0395",
+          //     "2_meterNo": "00010224",
+          //     "3b": "-0.0211",
+          //     "3j": "+0.0395",
+          //     "3_meterNo": "00010225",
+          //     "4b": "-0.0211",
+          //     "4j": "+0.0395",
+          //     "4_meterNo": "00010226",
+          //     "5b": "-0.0211",
+          //     "5j": "+0.0395",
+          //     "5_meterNo": "00010227",
+          //     "6b": "-0.0211",
+          //     "6j": "+0.0395",
+          //     "6_meterNo": "00010228",
+          //   },
+          // ];
+          this.initData = res.data;
           this.total = this.initData.length;
           this.showData = this.initData.slice(0, 19);
         })
@@ -346,6 +349,9 @@ export default {
       this.currentPage = val;
     },
   },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  }
 };
 </script>
 <style scoped>
@@ -411,6 +417,7 @@ thead > :first-child > :first-child {
 
 thead> :nth-child(2)>* {
   color: #FFE117;
+  width: 8rem !important;
 }
 
 tbody tr {

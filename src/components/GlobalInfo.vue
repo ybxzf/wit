@@ -8,6 +8,7 @@ export default {
 	 */
 	HTTPURL: "http://47.108.165.207:20088/api",
 	BaseExecUrl: "http://47.108.165.207:20088/system",
+	// BaseExecUrl: "http://bianyuan123.gnway.cc/system",
 	// HTTPURL: "http://bianyuan123.gnway.cc/api",
 	// HTTPURL: "http://47.108.165.207/api",
 	// HTTPURL: "http://192.168.100.199/api",

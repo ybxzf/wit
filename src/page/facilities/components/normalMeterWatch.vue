@@ -3,41 +3,20 @@
     <el-row>
       <el-col class="title" :span="24">
         <div class="title-botton" @click="toggleStatus('start')">
-          <img
-            v-show="buttonMun.start"
-            src="../../../assets/img/start_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.start"
-            src="../../../assets/img/start_default.png"
-          />
+          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
+          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
         </div>
         <!-- <div class="title-botton" @click="toggleStatus('step')">
           <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
           <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
         </div> -->
         <div class="title-botton" @click="toggleStatus('pause')">
-          <img
-            v-show="buttonMun.pause"
-            src="../../../assets/img/pause_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.pause"
-            src="../../../assets/img/pause_default.png"
-          />
+          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
+          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
         </div>
         <div class="title-botton" @click="toggleStatus('stop')">
-          <img
-            v-show="buttonMun.stop"
-            src="../../../assets/img/stop_click.png"
-          />
-          <img
-            class="default"
-            v-show="!buttonMun.stop"
-            src="../../../assets/img/stop_default.png"
-          />
+          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
+          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
         </div>
       </el-col>
       <el-col class="content" :span="24">
@@ -72,52 +51,48 @@
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody 
-            v-loading="tableLoad"
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
-          >
+          <tbody v-loading="tableLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)">
             <tr v-for="(item, index) in showData" :key="index">
               <td class="project">{{ item.itemName }}</td>
               <td>
-                {{ item['1_meterNo'] }}
+                {{ item['1_meterNo'] || '--' }}
               </td>
               <td>
-                {{ item.epitope2 }}
+                {{ item.epitope2 || '--' }}
               </td>
               <td>
-                {{ item.epitope3 }}
+                {{ item.epitope3 || '--' }}
               </td>
               <td>
-                {{ item.epitope4 }}
+                {{ item.epitope4 || '--' }}
               </td>
               <td>
-                {{ item.epitope5 }}
+                {{ item.epitope5 || '--' }}
               </td>
               <td>
-                {{ item.epitope6 }}
+                {{ item.epitope6 || '--' }}
               </td>
               <td>
-                {{ item.epitope7 }}
+                {{ item.epitope7 || '--' }}
               </td>
               <td>
-                {{ item.epitope8 }}
+                {{ item.epitope8 || '--' }}
               </td>
               <td>
-                {{ item.epitope9 }}
+                {{ item.epitope9 || '--' }}
               </td>
               <td>
-                {{ item.epitope10 }}
+                {{ item.epitope10 || '--' }}
               </td>
               <td>
-                {{ item.epitope11 }}
+                {{ item.epitope11 || '--' }}
               </td>
               <td>
-                {{ item.epitope12 }}
+                {{ item.epitope12 || '--' }}
               </td>
               <td :class="item.epitope13 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope13 }}
+                {{ item.epitope13 || '--' }}
               </td>
             </tr>
           </tbody>
@@ -128,26 +103,14 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button
-          class="page-button"
-          @click="() => (currentPage > 1 ? currentPage-- : '')"
-        >
+        <button class="page-button" @click="() => (currentPage > 1 ? currentPage-- : '')">
           上一页
         </button>
 
-        <el-pagination
-          class="page-list"
-          :page-size="18"
-          layout="pager"
-          :current-page="currentPage"
-          :total="total"
-          @current-change="handleCurrentChange"
-        >
+        <el-pagination class="page-list" :page-size="18" layout="pager" :current-page="currentPage" :total="total"
+          @current-change="handleCurrentChange">
         </el-pagination>
-        <button
-          class="page-button"
-          @click="() => (currentPage < pages ? currentPage++ : '')"
-        >
+        <button class="page-button" @click="() => (currentPage < pages ? currentPage++ : '')">
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -189,6 +152,7 @@ export default {
         "15_meterNo",
         "16_meterNo",
       ],
+      interval: null,
       //每页能显示18行
       initData: [],
       showData: [],
@@ -207,7 +171,6 @@ export default {
   },
   watch: {
     currentPage(newValue, oldValue) {
-      console.log(newValue, oldValue);
       this.tableLoad = true;
       this.showData = this.initData.slice(
         18 * (newValue - 1),
@@ -218,17 +181,20 @@ export default {
   },
   mounted() {
     this.init();
+    this.interval = setInterval(() => {
+      this.init();
+    }, 15000);
   },
   methods: {
     //初始化
     init() {
       this.tableLoad = true;
-      if (this.deviceStatus == '空闲') {
+      if (this.deviceStatus.trim() == '空闲') {
         this.buttonMun.start = false
         this.buttonMun.pause = false
         this.buttonMun.stop = true
       }
-      if (this.deviceStatus == '运行') {
+      if (this.deviceStatus.trim() == '运行') {
         this.buttonMun.start = true
         this.buttonMun.pause = false
         this.buttonMun.stop = false
@@ -248,20 +214,187 @@ export default {
           },
         }
       )
-        .then((res1) => {
-          console.log("标准表过程监测", res1);
-          const res = [
-            {
-              itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-              itemId: "12",
-              1: "-0.0211|001|8928|87.111|980|111|222",
-              "1_meterNo": "00010021",
-              trialResult: "合格",
-            },
-          ];
-          this.initData = res;
+        .then((res) => {
+          // const res = [
+          //   {
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },{
+          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
+          //     itemId: "12",
+          //     1: "-0.0211|001|8928|87.111|980|111|222",
+          //     "1_meterNo": "00010021",
+          //     trialResult: "合格",
+          //   },
+          // ];
+          this.initData = res.data;
           this.total = this.initData.length;
-          this.showData = this.initData.slice(0, 20);
+          this.showData = this.initData.slice(0, 18);
         })
         .finally(() => {
           this.tableLoad = false;
@@ -289,25 +422,41 @@ export default {
             },
           }
         )
-          .then((res1) => {
-            console.log("停止", res1);
+          .then((res) => {
+            console.log("停止", res);
+            if (res.code == 0) {
+              Message({
+                showClose: true,
+                message: '停止成功！',
+                type: 'success',
+              });
+
+              for (const key in this.buttonMun) {
+                this.buttonMun[key] = key == bt ? true : false;
+              }
+            } else {
+              Message({
+                showClose: true,
+                message: '停止失败！',
+                type: 'error',
+              });
+            }
+          })
+          .catch(() => {
             Message({
               showClose: true,
-              message: '停止成功！',
-              type: 'success',
+              message: '停止失败！',
+              type: 'error',
             });
           })
           .finally(() => {
             this.tableLoad = false;
-            for (const key in this.buttonMun) {
-              this.buttonMun[key] = key == bt ? true : false;
-            }
             return;
           });
         return;
       }
       if (bt == 'start' && !this.buttonMun.start) {
-        if (this.deviceStatus == '空闲' || this.buttonMun.start == false) {
+        if (this.deviceStatus.trim() == '空闲' || this.buttonMun.start == false) {
           this.$requestSys(
             "post",
             "/meterInfo/equipStateControl",
@@ -321,23 +470,38 @@ export default {
               },
             }
           )
-            .then((res1) => {
-              console.log("启动", res1);
+            .then((res) => {
+              console.log("启动", res);
+              if (res.code == 0) {
+                Message({
+                  showClose: true,
+                  message: '启动成功！',
+                  type: 'success',
+                });
+                for (const key in this.buttonMun) {
+                  this.buttonMun[key] = key == bt ? true : false;
+                }
+              } else {
+                Message({
+                  showClose: true,
+                  message: '启动失败！',
+                  type: 'error',
+                });
+              }
+            })
+            .catch(() => {
               Message({
                 showClose: true,
-                message: '启动成功！',
-                type: 'success',
+                message: '启动失败！',
+                type: 'error',
               });
             })
             .finally(() => {
               this.tableLoad = false;
-              for (const key in this.buttonMun) {
-                this.buttonMun[key] = key == bt ? true : false;
-              }
               return;
             });
         }
-        this.tableLoad = false;
+        // this.tableLoad = false;
         return;
       }
       if (bt == 'pause' && !this.buttonMun.pause) {
@@ -355,19 +519,34 @@ export default {
               },
             }
           )
-            .then((res1) => {
-              console.log("暂停", res1);
+            .then((res) => {
+              console.log("暂停", res);
+              if (res.code == 0) {
+                Message({
+                  showClose: true,
+                  message: '暂停成功！',
+                  type: 'success',
+                });
+                for (const key in this.buttonMun) {
+                  this.buttonMun[key] = key == bt ? true : false;
+                }
+              } else {
+                Message({
+                  showClose: true,
+                  message: '暂停失败！',
+                  type: 'error',
+                });
+              }
+            })
+            .catch(() => {
               Message({
                 showClose: true,
-                message: '暂停成功！',
-                type: 'success',
+                message: '暂停失败！',
+                type: 'error',
               });
             })
             .finally(() => {
               this.tableLoad = false;
-              for (const key in this.buttonMun) {
-                this.buttonMun[key] = key == bt ? true : false;
-              }
               return;
             });
           return;
@@ -400,6 +579,9 @@ export default {
       this.currentPage = val;
     },
   },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  }
 };
 </script>
 <style scoped>
@@ -460,12 +642,20 @@ thead tr th {
   font-size: 1.2rem;
 }
 
-thead > :nth-child(3) > :first-child {
-  width: 12rem !important;
-}
-
 thead> :nth-child(2)>* {
   color: #FFE117;
+}
+
+thead> :nth-child(3)>* {
+  width: 7rem !important;
+}
+
+thead> :nth-child(3)> :first-child {
+  width: 14rem !important;
+}
+
+thead> :nth-child(4)>* {
+  width: 7rem !important;
 }
 
 tbody tr {
@@ -505,11 +695,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer > * {
+.footer>* {
   margin-right: 0.5rem;
 }
 
-.footer > :first-child {
+.footer> :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }

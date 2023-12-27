@@ -1,5 +1,8 @@
 <template>
-  <div class="indexBox">
+  <div class="indexBox"  @mousemove="move">
+    <vue-particles v-if="isShow" color="#00C6FB" :particleOpacity="0.8" shapeType="circle" :particleSize="40"
+			:lineLinked="false" :moveSpeed="3" :hoverEffect="false" :clickEffect="false" class="particles">
+		</vue-particles>
     <el-row>
       <el-col :span="6" style=" height: 77rem; padding: 1rem 0 1rem 1rem">
         <el-row>
@@ -18,9 +21,10 @@
         </el-row>
       </el-col>
       <el-col :span="18">
-        <electric-meter-watch v-if="this.$route.query.equipType == '电能表'" />
+        <component :is="showComponent"></component>
+        <!-- <electric-meter-watch v-if="this.$route.query.equipType == '电能表'" />
         <normal-meter-watch v-if="this.$route.query.equipType == '标准表'" />
-        <transformer-watch v-if="this.$route.query.equipType == '互感器'" />
+        <transformer-watch v-if="this.$route.query.equipType == '互感器'" /> -->
       </el-col>
     </el-row>
   </div>
@@ -49,6 +53,13 @@ export default {
   name: "facilities",
   data() {
     return {
+      isShow: false,
+      showComponent:'',
+      processWatchList:{
+      '电能表': 'electricMeterWatch',
+      '标准表': 'normalMeterWatch',
+      '互感器': 'transformerWatch',
+      },
       deviceList: [
         // { name: "设备名称", value: "互感器鉴定装置" },
         // { name: "设备编号", value: "02031" },
@@ -61,14 +72,33 @@ export default {
       testerList: [],
       envList: {},
       realTimeList: {},
+      // watchList: [],
+      interval: null,
+      intervalSum: 0,
+      hideTime: 1,
+      tempObj: {},
     };
   },
   mounted() {
-    console.log(this.$route);
     this.init();
+    this.interval = setInterval(() => {
+      if (this.intervalSum > 100) {
+        location.reload();
+      }
+      this.init();
+      this.intervalSum++;
+    }, 5000);
   },
   methods: {
     init() {
+      // console.log('route', this.$route.query);
+      //定时器
+      this.$request("get", "/bigScreen/durationLock").then((res) => {
+				this.hideTime = res.data;
+				if (this.hideTime) {
+					this.updateHide();
+				}
+			});
       //设备信息API
       this.$request(
         "post", "/bigScreen/getEquipInfoByNo", {
@@ -76,7 +106,6 @@ export default {
       }
       ).then(res => {
         this.deviceList.length = 0
-        console.log(res);
         // const res = {
         //   "msg": "操作成功",
         //   "code": 0,
@@ -106,6 +135,7 @@ export default {
         this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
         this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
         window.localStorage.setItem('deviceStatus', res.data.isDetail)
+        this.showComponent = this.processWatchList[this.$route.query.equipType]
       });
       //检定人员
       this.$request(
@@ -114,12 +144,14 @@ export default {
       }
       ).then(res => {
         this.testerList = res.data
-        //   this.testerList = [
-        //   {
-        //     personnelName: "江正涛",
-        //     post: "电能，电阻",
-        //   },
-        // ]
+        if (this.testerList.length == 0) {
+          this.testerList = [
+            {
+              personnelName: "",
+              post: "",
+            },
+          ]
+        }
       })
       //环境监测
       this.$request(
@@ -132,16 +164,18 @@ export default {
       }
       ).then((res) => {
         this.envList = res.data.sensorInfo;
-        // this.envList = {
-        //   temperature: "50.5℃",
-        //   temperatureState: "异常",
-        //   humidity: "50.%RH",
-        //   humidityState: "异常",
-        //   illumination: "685lux",
-        //   illuminationState: "异常",
-        //   electromagnetism: "10mg/L",
-        //   electromagnetismState: "异常",
-        // }
+        if (!res.data.sensorInfo) {
+          this.envList = {
+            temperature: "",
+            temperatureState: "正常",
+            humidity: "",
+            humidityState: "正常",
+            illumination: "",
+            illuminationState: "正常",
+            electromagnetism: "",
+            electromagnetismState: "正常",
+          }
+        }
       });
       //实时数据
       this.$request(
@@ -192,9 +226,43 @@ export default {
         //   powerFactor: "123",
         // }
       });
+      //过程监测
+      // this.$request(
+      //   "post",
+      //   "/bigScreen/processMonitor",
+      //   {
+      //     equipNo: this.$route.query.equipNo,
+      //     taskNo: this.$route.query.taskNo,
+      //     equipType: this.$route.query.equipType,
+      //   },
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // )
+      //   .then((res) => {
+      //     this.watchList = res.data;
+      //   })
     },
+    move() {
+			if (this.isShow) {
+				this.isShow = false;
+				window.clearTimeout(this.tempObj.hide);
+				this.tempObj.hide = null;
+				this.updateHide();
+			}
+		},
+    updateHide() {
+			if (!this.tempObj.hide) {
+				this.tempObj.hide = setTimeout(() => {
+					this.isShow = true;
+				}, this.hideTime * 1000);
+			}
+		},
   },
-  beforeDestroy(){
+  beforeDestroy() {
+    clearInterval(this.interval);
     // 清空 localStorage
     // localStorage.clear();
   }

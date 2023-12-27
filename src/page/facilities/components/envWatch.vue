@@ -28,7 +28,7 @@
       </div>
       <div class="env-content-item">
         <img v-if="envList.electromagnetismState == '异常'" class="icon-avatar" src="@/assets/img/icon_5_new_warn.png" />
-        <img class="icon-avatar" src="@/assets/img/icon_5_new.png" />
+        <img v-else class="icon-avatar" src="@/assets/img/icon_5_new.png" />
         <span :class="envList.electromagnetismState == '异常' ? 'warn' : ''">
           <div class="value">{{ envList.electromagnetism }}</div>
           <div class="name">电磁</div>
@@ -70,7 +70,7 @@ export default {
 }
 
 .env-content-item {
-  width: 50%;
+  width: 45%;
   margin-top: 0.3rem;
   padding: 0.2rem 2rem;
   display: flex;
@@ -84,7 +84,7 @@ export default {
 }
 
 .env-content-item .value {
-  width: 9rem;
+  width: 10rem;
   color: #d6bd56;
   font-size: 1.4rem;
   font-weight: bolder;
