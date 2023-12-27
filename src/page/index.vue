@@ -187,7 +187,13 @@
 							<li>检定人员</li>
 						</ul>
 						<div class="swiper">
-							<div v-if="onLineLoad" class="swiper-wrapper" id="onLineSwiper">
+							<div v-loading="!onLineLoad" 
+								element-loading-text="拼命加载中"
+								element-loading-spinner="el-icon-loading"
+								element-loading-background="rgba(0, 0, 0, 0.6)" 
+								class="swiper-wrapper" 
+								id="onLineSwiper"
+							>
 								<div class="swiper-slide">
 									<ul class="swiperBody row" :class="item.errNum ? 'red_warn' : ''"
 										v-for="(item, idx) in onLine.rows" @click="clickJump(item, idx)">
@@ -221,7 +227,13 @@
 					<div class="roomTxt">
 						{{ room && room[roomIdx] ? room[roomIdx].labName : "--" }}
 					</div>
-					<div v-if="watchLoad" id="dataWatch">
+					<div 
+						v-loading="!watchLoad" 
+						element-loading-text="拼命加载中"
+						element-loading-spinner="el-icon-loading"
+						element-loading-background="rgba(0, 0, 0, 0.6)"
+						id="dataWatch"
+					>
 						<div class="box" v-for="item in dataList">
 							<div class="tag">
 								<p>{{ item.equipName }}</p>
@@ -610,11 +622,11 @@ export default {
 			this.$tools.updateEcharts(this.tempObj[val], option);
 		},
 		updateQuality(name, data) {
-			data = {
-				"qualified": 50,
-				"unqualified": 23,
-				"passRate": "68.49"
-			};
+			// data = {
+			// 	"qualified": 50,
+			// 	"unqualified": 23,
+			// 	"passRate": "68.49"
+			// };
 			if (this.tempObj[name] == undefined) {
 				this.tempObj[name] = this.$echarts.init(document.getElementById(name));
 			}
