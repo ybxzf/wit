@@ -222,7 +222,7 @@ export default {
     this.init();
     this.interval = setInterval(() => {
       this.init();
-    }, 15000);
+    }, 5000);
   },
   methods: {
     //初始化

@@ -180,25 +180,25 @@ export default {
     },
   },
   mounted() {
+    if (this.deviceStatus.trim() == '空闲') {
+      this.buttonMun.start = false
+      this.buttonMun.pause = false
+      this.buttonMun.stop = true
+    }
+    if (this.deviceStatus.trim() == '运行') {
+      this.buttonMun.start = true
+      this.buttonMun.pause = false
+      this.buttonMun.stop = false
+    }
     this.init();
     this.interval = setInterval(() => {
       this.init();
-    }, 15000);
+    }, 5000);
   },
   methods: {
     //初始化
     init() {
       this.tableLoad = true;
-      if (this.deviceStatus.trim() == '空闲') {
-        this.buttonMun.start = false
-        this.buttonMun.pause = false
-        this.buttonMun.stop = true
-      }
-      if (this.deviceStatus.trim() == '运行') {
-        this.buttonMun.start = true
-        this.buttonMun.pause = false
-        this.buttonMun.stop = false
-      }
       //过程监测
       this.$request(
         "post",
