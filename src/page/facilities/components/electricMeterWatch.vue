@@ -243,7 +243,7 @@ export default {
     this.init();
     this.interval = setInterval(() => {
       this.init();
-    }, 5000);
+    }, 10000);
   },
   methods: {
     //初始化
@@ -378,7 +378,15 @@ export default {
           //   },
           // ];
           this.total = this.initData.length;
-          this.showData = this.initData.slice(0, 19);
+          console.log(this.currentPage);
+          if (this.currentPage !== 1) {
+            this.showData = this.initData.slice(
+              19 * (newValue - 1),
+              19 * (newValue - 1) + 19
+            );
+          } else {
+            this.showData = this.initData.slice(0, 19);
+          }
         })
         .finally(() => {
           this.tableLoad = false;
