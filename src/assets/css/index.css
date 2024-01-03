@@ -188,6 +188,7 @@
 	display: flex;
 	align-items: center;
 	margin: 0 0 0 auto;
+	font-size: 1.1rem;
 }
 
 .indexBox .check .bodyInfo .info .status .work {
@@ -327,7 +328,12 @@
 
 .indexBox .frame .list li .badge {
 	padding: 0.6rem 0.5rem 0 0;
+	height: 6.3rem;
+	width: 2.35rem;
+}
 
+.indexBox .frame .list li .badge sup {
+	font-size: 1.28rem !important;
 }
 
 .indexBox .frame .list li .badge .el-badge__content {

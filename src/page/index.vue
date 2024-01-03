@@ -625,11 +625,13 @@ export default {
 			this.$tools.updateEcharts(this.tempObj[val], option);
 		},
 		updateQuality(name, data) {
-			// data = {
-			// 	"qualified": 0,
-			// 	"unqualified": 0,
-			// 	"passRate": "100.00"
-			// };
+			if (data.qualified === 0 && data.unqualified === 0) {
+				data = {
+					"qualified": 1,
+					"unqualified": 0,
+					"passRate": "100.00"
+				};
+			}
 			if (this.tempObj[name] == undefined) {
 				this.tempObj[name] = this.$echarts.init(document.getElementById(name));
 			}
