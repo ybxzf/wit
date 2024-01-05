@@ -9,7 +9,7 @@
           color: item.name == '设备运行状态' ?
             item.value == '运行' ? '#3DFFCF' : 'rgb(255, 0, 0)'
             : 'rgb(30, 128, 240)'
-        }">{{ item.value ? item.value : 'XXXXXX' }}</span>
+        }">{{ item.value ? item.value : '--' }}</span>
       </ol>
     </ul>
   </div>

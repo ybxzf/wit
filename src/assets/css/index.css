@@ -328,6 +328,7 @@
 
 .indexBox .frame .list li .badge {
 	padding: 0.6rem 0.5rem 0 0;
+	margin-right: 0.5rem;
 	height: 6.3rem;
 	width: 2.35rem;
 }

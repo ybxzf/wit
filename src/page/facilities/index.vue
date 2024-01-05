@@ -87,7 +87,7 @@ export default {
       }
       this.init();
       this.intervalSum++;
-    }, 5000);
+    }, 10000);
   },
   methods: {
     init() {

@@ -2,7 +2,8 @@
   <div class="page">
     <el-row>
       <el-col class="title" :span="24">
-        <div class="title-botton" @click="toggleStatus('start')">
+        <div class="title-botton" v-loading="buttonLoad.start" element-loading-background="rgba(0, 0, 0, 0.1)"
+          @click="toggleStatus('start')">
           <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
           <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
         </div>
@@ -10,11 +11,13 @@
           <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
           <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
         </div> -->
-        <div class="title-botton" @click="toggleStatus('pause')">
+        <div class="title-botton" v-loading="buttonLoad.pause" element-loading-background="rgba(0, 0, 0, 0.1)"
+          @click="toggleStatus('pause')">
           <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
           <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
         </div>
-        <div class="title-botton" @click="toggleStatus('stop')">
+        <div class="title-botton" v-loading="buttonLoad.stop" element-loading-background="rgba(0, 0, 0, 0.1)"
+          @click="toggleStatus('stop')">
           <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
           <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
         </div>
@@ -133,6 +136,11 @@ export default {
         pause: false,
         stop: true,
       },
+      buttonLoad: {
+        start: false,
+        pause: false,
+        stop: false,
+      },
       //表格表头列表
       listTitles: [
         "1_meterNo",
@@ -215,6 +223,7 @@ export default {
         }
       )
         .then((res) => {
+          console.log(res);
           // const res = [
           //   {
           //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
@@ -394,7 +403,14 @@ export default {
           // ];
           this.initData = res.data;
           this.total = this.initData.length;
-          this.showData = this.initData.slice(0, 18);
+          if (this.currentPage !== 1) {
+            this.showData = this.initData.slice(
+              18 * (this.currentPage - 1),
+              18 * (this.currentPage - 1) + 18
+            );
+          } else {
+            this.showData = this.initData.slice(0, 18);
+          }
         })
         .finally(() => {
           this.tableLoad = false;
@@ -406,7 +422,13 @@ export default {
     },
     //切换功能
     toggleStatus(bt) {
+      for (const key in this.buttonLoad) {
+        if (this.buttonLoad[key]) {
+          return
+        }
+      }
       console.log(bt);
+      this.buttonLoad[bt] = true;
       this.tableLoad = true;
       if (bt == 'stop' && !this.buttonMun.stop) {
         this.$requestSys(
@@ -451,6 +473,7 @@ export default {
           })
           .finally(() => {
             this.tableLoad = false;
+            this.buttonLoad[bt] = false;
             return;
           });
         return;
@@ -498,6 +521,7 @@ export default {
             })
             .finally(() => {
               this.tableLoad = false;
+              this.buttonLoad[bt] = false;
               return;
             });
         }
@@ -547,6 +571,7 @@ export default {
             })
             .finally(() => {
               this.tableLoad = false;
+              this.buttonLoad[bt] = false;
               return;
             });
           return;
@@ -557,10 +582,12 @@ export default {
             type: 'warning',
           });
           this.tableLoad = false;
+          this.buttonLoad[bt] = false;
           return;
         }
       }
       this.tableLoad = false;
+      this.buttonLoad[bt] = false;
     },
     //返回上一级
     goBack() {
@@ -614,6 +641,11 @@ export default {
 
 .title-botton .default {
   width: 9rem;
+}
+
+.title-botton>>>.circular {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .content {
@@ -672,6 +704,7 @@ tbody tr:hover {
 }
 
 .content-table .project {
+  font-size: 0.9rem;
   color: #26f0f7;
   /* text-shadow: 2px 2px 5px #6fa3ef, -2px -2px 5px #6fa3ef, 0 0 10px #6fa3ef; */
 }

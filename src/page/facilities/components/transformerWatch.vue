@@ -91,49 +91,45 @@
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody 
-            v-loading="tableLoad"
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
-          >
+          <tbody v-loading="tableLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)">
             <tr v-for="(item, index) in showData" :key="index">
               <td class="project">{{ item.itemName }}</td>
               <td :class="item['1b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["1b"] || '--'  }}
+                {{ item["1b"] || '--' }}
               </td>
               <td :class="item['1j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["1j"] || '--'  }}
+                {{ item["1j"] || '--' }}
               </td>
               <td :class="item['2b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["2b"] || '--'  }}
+                {{ item["2b"] || '--' }}
               </td>
               <td :class="item['2j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["2j"] || '--'  }}
+                {{ item["2j"] || '--' }}
               </td>
               <td :class="item['3b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["3b"] || '--'  }}
+                {{ item["3b"] || '--' }}
               </td>
               <td :class="item['3j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["3j"] || '--'  }}
+                {{ item["3j"] || '--' }}
               </td>
               <td :class="item['4b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["4b"] || '--'  }}
+                {{ item["4b"] || '--' }}
               </td>
               <td :class="item['4j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["4j"] || '--'  }}
+                {{ item["4j"] || '--' }}
               </td>
               <td :class="item['5b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["5b"] || '--'  }}
+                {{ item["5b"] || '--' }}
               </td>
               <td :class="item['5j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["5j"] || '--'  }}
+                {{ item["5j"] || '--' }}
               </td>
               <td :class="item['6b'] == '不合格' ? 'unqualified' : ''">
-                {{ item["6b"] || '--'  }}
+                {{ item["6b"] || '--' }}
               </td>
               <td :class="item['6j'] == '不合格' ? 'unqualified' : ''">
-                {{ item["6j"] || '--'  }}
+                {{ item["6j"] || '--' }}
               </td>
             </tr>
           </tbody>
@@ -144,26 +140,14 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button
-          class="page-button"
-          @click="() => (currentPage > 1 ? currentPage-- : '')"
-        >
+        <button class="page-button" @click="() => (currentPage > 1 ? currentPage-- : '')">
           上一页
         </button>
 
-        <el-pagination
-          class="page-list"
-          :page-size="19"
-          layout="pager"
-          :current-page="currentPage"
-          :total="total"
-          @current-change="handleCurrentChange"
-        >
+        <el-pagination class="page-list" :page-size="19" layout="pager" :current-page="currentPage" :total="total"
+          @current-change="handleCurrentChange">
         </el-pagination>
-        <button
-          class="page-button"
-          @click="() => (currentPage < pages ? currentPage++ : '')"
-        >
+        <button class="page-button" @click="() => (currentPage < pages ? currentPage++ : '')">
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -244,78 +228,16 @@ export default {
         }
       )
         .then((res) => {
-          console.log(res);
-          // const res = [
-          //   {
-          //     itemName: "基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     "1b": "-0.0211",
-          //     "1j": "+0.0395",
-          //     "1_meterNo": "00010223",
-          //     "2b": "-0.0211",
-          //     "2j": "+0.0395",
-          //     "2_meterNo": "00010224",
-          //     "3b": "-0.0211",
-          //     "3j": "+0.0395",
-          //     "3_meterNo": "00010225",
-          //     "4b": "-0.0211",
-          //     "4j": "+0.0395",
-          //     "4_meterNo": "00010226",
-          //     "5b": "-0.0211",
-          //     "5j": "+0.0395",
-          //     "5_meterNo": "00010227",
-          //     "6b": "-0.0211",
-          //     "6j": "+0.0395",
-          //     "6_meterNo": "00010228",
-          //   },
-          //   {
-          //     itemName: "基本误差1|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     "1b": "-0.0211",
-          //     "1j": "+0.0395",
-          //     "1_meterNo": "00010223",
-          //     "2b": "-0.0211",
-          //     "2j": "+0.0395",
-          //     "2_meterNo": "00010224",
-          //     "3b": "-0.0211",
-          //     "3j": "+0.0395",
-          //     "3_meterNo": "00010225",
-          //     "4b": "-0.0211",
-          //     "4j": "+0.0395",
-          //     "4_meterNo": "00010226",
-          //     "5b": "-0.0211",
-          //     "5j": "+0.0395",
-          //     "5_meterNo": "00010227",
-          //     "6b": "-0.0211",
-          //     "6j": "+0.0395",
-          //     "6_meterNo": "00010228",
-          //   },
-          //   {
-          //     itemName: "基本误差2|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     "1b": "-0.0211",
-          //     "1j": "+0.0395",
-          //     "1_meterNo": "00010223",
-          //     "2b": "-0.0211",
-          //     "2j": "+0.0395",
-          //     "2_meterNo": "00010224",
-          //     "3b": "-0.0211",
-          //     "3j": "+0.0395",
-          //     "3_meterNo": "00010225",
-          //     "4b": "-0.0211",
-          //     "4j": "+0.0395",
-          //     "4_meterNo": "00010226",
-          //     "5b": "-0.0211",
-          //     "5j": "+0.0395",
-          //     "5_meterNo": "00010227",
-          //     "6b": "-0.0211",
-          //     "6j": "+0.0395",
-          //     "6_meterNo": "00010228",
-          //   },
-          // ];
           this.initData = res.data;
           this.total = this.initData.length;
-          this.showData = this.initData.slice(0, 19);
+          if (this.currentPage !== 1) {
+            this.showData = this.initData.slice(
+              19 * (this.currentPage - 1),
+              19 * (this.currentPage - 1) + 19
+            );
+          } else {
+            this.showData = this.initData.slice(0, 19);
+          }
         })
         .finally(() => {
           this.tableLoad = false;
@@ -411,7 +333,7 @@ thead tr {
   height: 2rem;
 }
 
-thead > :first-child > :first-child {
+thead> :first-child> :first-child {
   width: 16rem !important;
 }
 
@@ -457,11 +379,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer > * {
+.footer>* {
   margin-right: 0.5rem;
 }
 
-.footer > :first-child {
+.footer> :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
