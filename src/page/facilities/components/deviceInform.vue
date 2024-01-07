@@ -38,7 +38,7 @@ export default {
 .information {
   width: 28.42rem;
   margin: 0.5rem auto;
-  font-size: 1.28rem;
+  font-size: 1.2rem;
   color: #b9b8b8;
   line-height: 2.58rem;
   font-weight: bold;

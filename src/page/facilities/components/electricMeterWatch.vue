@@ -50,7 +50,7 @@
             </tr>
             <tr>
               <th v-for="(item, index) in listTitles" :key="index">
-                {{ showData.length > 0 ? (showData[0][item] || '--') : '--' }}
+                {{ showData.length > 0 ? (showData[0][item].slice(-6) || '--') : '--' }}
               </th>
               <!-- <th>123456</th>
               <th>123456</th>
@@ -398,6 +398,7 @@ export default {
           }
         })
         .finally(() => {
+          console.log('this.showData', this.showData);
           this.tableLoad = false;
         });
       // console.log('this.watchList',this.watchList);
@@ -410,6 +411,11 @@ export default {
     toggleStatus(bt) {
       for (const key in this.buttonLoad) {
         if (this.buttonLoad[key]) {
+          Message({
+            showClose: true,
+            message: '有功能正在执行，请稍后再试！',
+            type: 'warning',
+          });
           return
         }
       }
@@ -423,6 +429,7 @@ export default {
             message: '请先选择一行数据！',
             type: 'warning',
           });
+          this.buttonLoad[bt] = false;
           this.tableLoad = false;
         } else {
           //(单步)
@@ -748,7 +755,7 @@ thead> :first-child> :first-child {
 thead> :nth-child(2)>* {
   color: #FFE117;
   height: 3rem;
-  font-size: 0.65rem;
+  font-size: 0.9rem;
   font-weight: bolder;
 
 }

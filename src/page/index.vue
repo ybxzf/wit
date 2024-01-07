@@ -115,11 +115,12 @@
 						</div>
 						<ul class="tagList row flexBox" v-if="onLine.sensorInfo">
 							<li class="flexBox">
-								<img v-if="onLine.sensorInfo.temperatureState == '异常'" src="../assets/img/icon_2_new_warn.png" class="icon" />
+								<img v-if="onLine.sensorInfo.temperatureState == '异常'"
+									src="../assets/img/icon_2_new_warn.png" class="icon" />
 								<img v-else src="../assets/img/icon_2_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.temperatureState == '异常'
-										? 'active': ''">
+										? 'active' : ''">
 										{{
 											onLine && Boolean(onLine.sensorInfo)
 											? onLine.sensorInfo.temperature
@@ -130,11 +131,12 @@
 								</div>
 							</li>
 							<li class="flexBox">
-								<img v-if="onLine.sensorInfo.humidityState == '异常'" src="../assets/img/icon_3_new_warn.png" class="icon" />
+								<img v-if="onLine.sensorInfo.humidityState == '异常'" src="../assets/img/icon_3_new_warn.png"
+									class="icon" />
 								<img v-else src="../assets/img/icon_3_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.humidityState == '异常' ? 'active' : ''
-											">
+										">
 										{{
 											onLine && Boolean(onLine.sensorInfo)
 											? onLine.sensorInfo.humidity
@@ -145,13 +147,14 @@
 								</div>
 							</li>
 							<li class="flexBox">
-								<img v-if="onLine.sensorInfo.illuminationState == '异常'" src="../assets/img/icon_4_new_warn.png" class="icon" />
+								<img v-if="onLine.sensorInfo.illuminationState == '异常'"
+									src="../assets/img/icon_4_new_warn.png" class="icon" />
 								<img v-else src="../assets/img/icon_4_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.illuminationState == '异常'
-												? 'active'
-												: ''
-											">
+										? 'active'
+										: ''
+										">
 										{{
 											onLine && Boolean(onLine.sensorInfo)
 											? onLine.sensorInfo.illumination
@@ -162,13 +165,14 @@
 								</div>
 							</li>
 							<li class="flexBox">
-								<img v-if="onLine.sensorInfo.electromagnetismState == '异常'" src="../assets/img/icon_5_new_warn.png" class="icon" />
+								<img v-if="onLine.sensorInfo.electromagnetismState == '异常'"
+									src="../assets/img/icon_5_new_warn.png" class="icon" />
 								<img v-else src="../assets/img/icon_5_new.png" class="icon" />
 								<div class="info">
 									<p class="val" :class="onLine.sensorInfo.electromagnetismState == '异常'
-												? 'active'
-												: ''
-											">
+										? 'active'
+										: ''
+										">
 										{{
 											onLine && Boolean(onLine.sensorInfo)
 											? onLine.sensorInfo.electromagnetism
@@ -187,13 +191,9 @@
 							<li>检定人员</li>
 						</ul>
 						<div class="swiper">
-							<div v-loading="!onLineLoad" 
-								element-loading-text="拼命加载中"
-								element-loading-spinner="el-icon-loading"
-								element-loading-background="rgba(0, 0, 0, 0.6)" 
-								class="swiper-wrapper" 
-								id="onLineSwiper"
-							>
+							<div v-loading="!onLineLoad" element-loading-text="拼命加载中"
+								element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.6)"
+								class="swiper-wrapper" id="onLineSwiper">
 								<div class="swiper-slide">
 									<ul class="swiperBody row" :class="item.errNum ? 'red_warn' : ''"
 										v-for="(item, idx) in onLine.rows" @click="clickJump(item, idx)">
@@ -227,13 +227,8 @@
 					<div class="roomTxt">
 						{{ room && room[roomIdx] ? room[roomIdx].labName : "--" }}
 					</div>
-					<div 
-						v-loading="!watchLoad" 
-						element-loading-text="拼命加载中"
-						element-loading-spinner="el-icon-loading"
-						element-loading-background="rgba(0, 0, 0, 0.6)"
-						id="dataWatch"
-					>
+					<div v-loading="!watchLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+						element-loading-background="rgba(0, 0, 0, 0.6)" id="dataWatch">
 						<div class="box" v-for="item in dataList">
 							<div class="tag">
 								<p>{{ item.equipName }}</p>
@@ -251,7 +246,7 @@
 										<span>实时数据</span>
 									</div>
 								</div>
-								<div class="right">
+								<!-- <div class="right">
 									<div class="right_1">
 										<div class="name">检定项目</div>
 										<div class="person">{{ item.projectName }}</div>
@@ -261,7 +256,232 @@
 									</div>
 									<div v-if="item.equipType == '互感器'" class="right_2">
 										<div class="name">实时数据</div>
-										<ul  class="list row">
+										<ul class="list row">
+											<li>
+												I<sub style="font-size: 0.5em;">1</sub>
+												<el-tooltip
+													:disabled="item.oneCurrent ? !String(item.oneCurrent).length > 5 : true"
+													:content="item.oneCurrent" placement="top">
+													<span>{{
+														item.oneCurrent ?
+														String(item.oneCurrent).length > 5 ?
+															`${String(item.oneCurrent).substring(0, 5)} ...` || '--' :
+															item.oneCurrent || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												Pn
+												<el-tooltip :disabled="item.rating ? !String(item.rating).length > 5 : true"
+													:content="item.rating" placement="top">
+													<span>{{
+														item.rating ?
+														String(item.rating).length > 5 ?
+															`${String(item.rating).substring(0, 5)} ...` || '--' :
+															item.rating || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												cosφ
+												<el-tooltip
+													:disabled="item.powerFactor ? !String(item.powerFactor).length > 5 : true"
+													:content="item.powerFactor" placement="top">
+													<span>{{
+														item.powerFactor ?
+														String(item.powerFactor).length > 5 ?
+															`${String(item.powerFactor).substring(0, 5)} ...` || '--' :
+															item.powerFactor || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												I<sub style="font-size: 0.5em;">2</sub>
+												<el-tooltip
+													:disabled="item.twoCurrent ? !String(item.twoCurrent).length > 5 : true"
+													:content="item.twoCurrent" placement="top">
+													<span>{{
+														item.twoCurrent ?
+														String(item.twoCurrent).length > 5 ?
+															`${String(item.twoCurrent).substring(0, 5)} ...` || '--' :
+															item.twoCurrent || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												Q
+												<el-tooltip
+													:disabled="item.lightLoad ? !String(item.lightLoad).length > 5 : true"
+													:content="item.lightLoad" placement="top">
+													<span>{{
+														item.lightLoad ?
+														String(item.lightLoad).length > 5 ?
+															`${String(item.lightLoad).substring(0, 5)} ...` || '--' :
+															item.lightLoad || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												φ&nbsp;&nbsp;&nbsp;&nbsp;
+												<el-tooltip :disabled="item.phase ? !String(item.phase).length > 5 : true"
+													:content="item.phase" placement="top">
+													<span>{{
+														item.phase ?
+														String(item.phase).length > 5 ?
+															`${String(item.phase).substring(0, 5)} ...` || '--' :
+															item.phase || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+										</ul>
+									</div>
+									<div v-else class="right_3">
+										<div class="name">实时数据</div>
+										<ul class="list row">
+											<li>
+												Ua
+												<el-tooltip :disabled="item.Ua ? !String(item.Ua).length > 5 : true"
+													:content="item.Ua" placement="top">
+													<span>{{
+														item.Ua ?
+														String(item.Ua).length > 5 ?
+															`${String(item.Ua).substring(0, 5)} ...` || '--' :
+															item.Ua || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												Ia
+												<el-tooltip :disabled="item.La ? !String(item.La).length > 5 : true"
+													:content="item.La" placement="top">
+													<span>{{
+														item.La ?
+														String(item.La).length > 5 ?
+															`${String(item.La).substring(0, 5)} ...` || '--' :
+															item.La || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												φa
+												<el-tooltip :disabled="item.phia ? !String(item.phia).length > 5 : true"
+													:content="item.phia" placement="top">
+													<span>{{
+														item.phia ?
+														String(item.phia).length > 5 ?
+															`${String(item.phia).substring(0, 5)} ...` || '--' :
+															item.phia || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												Ub
+												<el-tooltip :disabled="item.Ub ? !String(item.Ub).length > 5 : true"
+													:content="item.Ub" placement="top">
+													<span>{{
+														item.Ub ?
+														String(item.Ub).length > 5 ?
+															`${String(item.Ub).substring(0, 5)} ...` || '--' :
+															item.Ub || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												Ib
+												<el-tooltip :disabled="item.Lb ? !String(item.Lb).length > 5 : true"
+													:content="item.Lb" placement="top">
+													<span>{{
+														item.Lb ?
+														String(item.Lb).length > 5 ?
+															`${String(item.Lb).substring(0, 5)} ...` || '--' :
+															item.Lb || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												φb
+												<el-tooltip :disabled="item.phib ? !String(item.phib).length > 5 : true"
+													:content="item.phib" placement="top">
+													<span>{{
+														item.phib ?
+														String(item.phib).length > 5 ?
+															`${String(item.phib).substring(0, 5)} ...` || '--' :
+															item.phib || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												Uc
+												<el-tooltip :disabled="item.Uc ? !String(item.Uc).length > 5 : true"
+													:content="item.Uc" placement="top">
+													<span>{{
+														item.Uc ?
+														String(item.Uc).length > 5 ?
+															`${String(item.Uc).substring(0, 5)} ...` || '--' :
+															item.Uc || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												Ic
+												<el-tooltip :disabled="item.Lc ? !String(item.Lc).length > 5 : true"
+													:content="item.Lc" placement="top">
+													<span>{{
+														item.Lc ?
+														String(item.Lc).length > 5 ?
+															`${String(item.Lc).substring(0, 5)} ...` || '--' :
+															item.Lc || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+											<li>
+												φc
+												<el-tooltip :disabled="item.phic ? !String(item.phic).length > 5 : true"
+													:content="item.phic" placement="top">
+													<span>{{
+														item.phic ?
+														String(item.phic).length > 5 ?
+															`${String(item.phic).substring(0, 5)} ...` || '--' :
+															item.phic || '--'
+														: '--'
+													}}</span>
+												</el-tooltip>
+											</li>
+										</ul>
+									</div>
+								</div> -->
+								<div class="right">
+									<div class="right_1">
+										<div class="name">检定项目</div>
+										<el-tooltip :disabled="String(item.projectName).length > 25 ? false : true"
+											:content="item.projectName" placement="top">
+											<div class="person">{{
+												String(item.projectName).length > 25 ?
+												`${item.projectName.substring(0, 25)} ...` || '--' : item.projectName ||
+												'--' }}
+											</div>
+										</el-tooltip>
+										<div class="name">检定人员
+											<span class="person">{{ item.checker || '--' }}</span>
+										</div>
+									</div>
+									<div v-if="item.equipType == '互感器'" class="right_2">
+										<div class="name">实时数据</div>
+										<ul class="list row">
 											<!-- <li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li> -->
 											<li>
 												I<sub style="font-size: 0.5em;">1</sub>
@@ -286,7 +506,39 @@
 											</li>
 										</ul>
 									</div>
-									<div v-else class="right_3">
+									<div v-else-if="item.equipType == '标准表'" class="right_3">
+										<div class="name">实时数据</div>
+										<ul class="list row">
+											<li>
+												Ua<span>{{ item.Ua ? item.Ua : "--" }}</span>
+											</li>
+											<li>
+												Ia<span>{{ item.La ? item.La : "--" }}</span>
+											</li>
+											<!-- <li>
+												φa<span>{{ item.phia ? item.phia : "--" }}</span>
+											</li> -->
+											<li>
+												Ub<span>{{ item.Ub ? item.Ub : "--" }}</span>
+											</li>
+											<li>
+												Ib<span>{{ item.Lb ? item.Lb : "--" }}</span>
+											</li>
+											<!-- <li>
+												φb<span>{{ item.phib ? item.phib : "--" }}</span>
+											</li> -->
+											<li>
+												Uc<span>{{ item.Uc ? item.Uc : "--" }}</span>
+											</li>
+											<li>
+												Ic<span>{{ item.Lc ? item.Lc : "--" }}</span>
+											</li>
+											<!-- <li>
+												φc<span>{{ item.phic ? item.phic : "--" }}</span>
+											</li> -->
+										</ul>
+									</div>
+									<div v-else class="right_2">
 										<div class="name">实时数据</div>
 										<ul class="list row">
 											<li>
@@ -318,53 +570,7 @@
 											</li>
 										</ul>
 									</div>
-
 								</div>
-								<!-- <p class="name">基本信息</p>
-								<div class="info">
-									<ul class="type flexBox">
-										<li>当前检定项目</li>
-										<li>
-											<span>{{ item.projectName }}</span>
-										</li>
-									</ul>
-									<ul class="type flexBox">
-										<li>检定人员</li>
-										<li>
-											<span>{{ item.checker }}</span>
-										</li>
-									</ul>
-								</div>
-								<p class="name" style="margin-top: 0.8rem">实时数据</p>
-								<ul class="list row">
-									<li>
-										Ua<span>{{ item.Ua ? item.Ua : "--" }}</span>
-									</li>
-									<li>
-										Ia<span>{{ item.La ? item.La : "--" }}</span>
-									</li>
-									<li>
-										φa<span>{{ item.phia ? item.phia : "--" }}</span>
-									</li>
-									<li>
-										Ub<span>{{ item.Ub ? item.Ub : "--" }}</span>
-									</li>
-									<li>
-										Ib<span>{{ item.Lb ? item.Lb : "--" }}</span>
-									</li>
-									<li>
-										φb<span>{{ item.phib ? item.phib : "--" }}</span>
-									</li>
-									<li>
-										Uc<span>{{ item.Uc ? item.Uc : "--" }}</span>
-									</li>
-									<li>
-										Ic<span>{{ item.Lc ? item.Lc : "--" }}</span>
-									</li>
-									<li>
-										φc<span>{{ item.phic ? item.phic : "--" }}</span>
-									</li>
-								</ul> -->
 							</div>
 						</div>
 					</div>
@@ -813,8 +1019,8 @@ export default {
 				// path: "/facilities-model",
 				query: {
 					equipNo: item.equipNo || "",
-					taskNo:item.taskName || "",
-					equipType:item.equipType || "",
+					taskNo: item.taskName || "",
+					equipType: item.equipType || "",
 				}
 			});
 		},

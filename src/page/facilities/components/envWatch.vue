@@ -79,14 +79,14 @@ export default {
 
 .env-content-item .name {
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bolder;
 }
 
 .env-content-item .value {
   width: 10rem;
   color: #d6bd56;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: bolder;
 }
 

@@ -32,7 +32,7 @@
             </tr>
             <tr>
               <th colspan="6">基本误差</th>
-              <th colspan="8">表条码1234567891011</th>
+              <th colspan="8">{{ this.showData.length > 0 ? this.showData[0]['1_meterNo'] || '--' : '--' }}</th>
             </tr>
             <tr>
               <th rowspan="2">电量</th>
@@ -57,45 +57,48 @@
           <tbody v-loading="tableLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
             element-loading-background="rgba(0, 0, 0, 0.6)">
             <tr v-for="(item, index) in showData" :key="index">
-              <td class="project">{{ item.itemName }}</td>
-              <td>
-                {{ item['1_meterNo'] || '--' }}
+              <td class="project">{{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[2]
+                || '--' : '--'
+              }}
               </td>
               <td>
-                {{ item.epitope2 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[3] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope3 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[4] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope4 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[5] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope5 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[6] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope6 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[7] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope7 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][0] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope8 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][1] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope9 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][2] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope10 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][3] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope11 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][4] || '--' : '--' }}
               </td>
               <td>
-                {{ item.epitope12 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][5] || '--' : '--' }}
+              </td>
+              <td>
+                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][6] || '--' : '--' }}
               </td>
               <td :class="item.epitope13 == '不合格' ? 'unqualified' : ''">
-                {{ item.epitope13 || '--' }}
+                {{ Object.prototype.hasOwnProperty.call(item, 'trialResult') ? item['trialResult'] || '--' : '--' }}
               </td>
             </tr>
           </tbody>
@@ -141,25 +144,6 @@ export default {
         pause: false,
         stop: false,
       },
-      //表格表头列表
-      listTitles: [
-        "1_meterNo",
-        "2_meterNo",
-        "3_meterNo",
-        "4_meterNo",
-        "5_meterNo",
-        "6_meterNo",
-        "7_meterNo",
-        "8_meterNo",
-        "9_meterNo",
-        "10_meterNo",
-        "11_meterNo",
-        "12_meterNo",
-        "13_meterNo",
-        "14_meterNo",
-        "15_meterNo",
-        "16_meterNo",
-      ],
       interval: null,
       //每页能显示18行
       initData: [],
@@ -184,6 +168,14 @@ export default {
         18 * (newValue - 1),
         18 * (newValue - 1) + 18
       );
+      this.showData.map(item => {
+        item.itemNameValues = Object.prototype.hasOwnProperty.call(item, 'itemName') ?
+          item.itemName.split('|') :
+          [];
+        item['1_Values'] = Object.prototype.hasOwnProperty.call(item, '1') ?
+          item['1'].split('|') :
+          [];
+      })
       this.tableLoad = false;
     },
   },
@@ -224,183 +216,6 @@ export default {
       )
         .then((res) => {
           console.log(res);
-          // const res = [
-          //   {
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },{
-          //     itemName: "111|基本误差|正向无功|ABC|0.5L|1.0Ib",
-          //     itemId: "12",
-          //     1: "-0.0211|001|8928|87.111|980|111|222",
-          //     "1_meterNo": "00010021",
-          //     trialResult: "合格",
-          //   },
-          // ];
           this.initData = res.data;
           this.total = this.initData.length;
           if (this.currentPage !== 1) {
@@ -413,6 +228,15 @@ export default {
           }
         })
         .finally(() => {
+          this.showData.map(item => {
+            item.itemNameValues = Object.prototype.hasOwnProperty.call(item, 'itemName') ?
+              item.itemName.split('|') :
+              [];
+            item['1_Values'] = Object.prototype.hasOwnProperty.call(item, '1') ?
+              item['1'].split('|') :
+              [];
+          })
+          console.log('this.showData', this.showData);
           this.tableLoad = false;
         });
       // this.initData = normalMeterData;
@@ -424,6 +248,11 @@ export default {
     toggleStatus(bt) {
       for (const key in this.buttonLoad) {
         if (this.buttonLoad[key]) {
+          Message({
+            showClose: true,
+            message: '有功能正在执行，请稍后再试！',
+            type: 'warning',
+          });
           return
         }
       }
@@ -683,7 +512,7 @@ thead> :nth-child(3)>* {
 }
 
 thead> :nth-child(3)> :first-child {
-  width: 14rem !important;
+  /* width: 14rem !important; */
 }
 
 thead> :nth-child(4)>* {

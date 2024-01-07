@@ -73,8 +73,8 @@ export default {
 }
 
 .tester-content .text_2 {
-  font-size: 1.2rem;
-  font-weight: bolder;
+  font-size: 1.3rem;
+  font-weight: bold;
   margin: 0.5rem;
   color: #b9b8b8;
 }

@@ -2,7 +2,7 @@
   <div class="unusual">
     <p class="title">实时数据</p>
     <div class="content">
-      <div class="left">
+      <div class="left" :style="{ width: realTimeList.equipType == '标准表' ? '20rem' : '15rem' }">
         <img class="icon" src="@/assets/img/realTimeData.png">
         <img class="triangle" src="@/assets/img/tag_4.png">
         <span>实时数据</span>
@@ -92,7 +92,6 @@ export default {
 
 .left {
   height: 100%;
-  width: 50%;
   position: relative;
 }
 
@@ -126,12 +125,16 @@ export default {
   line-height: 1.66rem;
   display: flex;
   align-items: center;
-  font-size: 1.15rem;
+  font-size: 0.9rem;
   color: #fff;
 }
 
 .right_1 {
   width: 100%;
+}
+
+.right_1 li {
+  font-size: 1.1rem;
 }
 
 .list li span {
