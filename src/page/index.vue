@@ -622,7 +622,18 @@ export default {
 			roomIdx: 0,
 			room: null,
 			roomIdx: 0,
-			onLine: {},
+			onLine: {
+				// sensorInfo : {
+				// 	"illuminationState": "正常",
+				// 	"illumination": " 3300lux",
+				// 	"electromagnetism": "100mg/L",
+				// 	"electromagnetismState": "正常",
+				// 	"temperature": " 25℃",
+				// 	"humidityState": "正常",
+				// 	"humidity": " 55%RH",
+				// 	"temperatureState": "正常"
+				// }
+			},
 			onLineLoad: false,
 			watchLoad: false,
 			dataList: [],
@@ -799,15 +810,15 @@ export default {
 			if (data.length == 0) {
 				data = [
 					{
-						"equipType": "电能表鉴定装置",
+						"equipType": "电能表检定装置",
 						"num": 0
 					},
 					{
-						"equipType": "标准表鉴定装置",
+						"equipType": "标准表检定装置",
 						"num": 0
 					},
 					{
-						"equipType": "互感器鉴定装置",
+						"equipType": "互感器检定装置",
 						"num": 0
 					},
 				];
