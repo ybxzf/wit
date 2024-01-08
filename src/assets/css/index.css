@@ -620,7 +620,7 @@
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-weight: bold;
-	font-size: 1rem;
+	font-size: 0.85rem;
 	line-height: 1.6rem;
 	height: 1.6rem;
 }
@@ -633,7 +633,7 @@
 
 .indexBox .onLine .tagList li .info .name {
 	color: #fff;
-	font-size: 1rem;
+	font-size: 0.85rem;
 	line-height: 1.72rem;
 }
 
@@ -645,7 +645,7 @@
 .indexBox .onLine .swiperHead {
 	width: 32.35rem;
 	margin: 0.5rem auto 0;
-	font-size: 1.14rem;
+	font-size: 1rem;
 	color: #fff;
 	font-weight: bold;
 	line-height: 3rem;
