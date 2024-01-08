@@ -124,6 +124,20 @@
         </button>
       </el-col>
     </el-row>
+    <el-dialog
+      :visible.sync="messageDetails.visible"
+      width="30%"
+      :before-close="handleClose"
+      :close-on-click-modal="false">
+      <span slot="title" :class="`dialog_title_${messageDetails.type}`">
+        <i :class="`el-icon-${messageDetails.type}`"></i>
+        <span> 温馨提示</span>
+      </span>
+      <div class="dialog_content">{{ messageDetails.message }}</div>
+      <span slot="footer">
+        <el-button type="primary" @click="messageDetails.visible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -133,17 +147,26 @@ import { Message } from 'element-ui';
 export default {
   data() {
     return {
+      //按钮状态
       buttonMun: {
         start: false,
         // step: false,
         pause: false,
         stop: true,
       },
+      //按钮加载
       buttonLoad: {
         start: false,
         pause: false,
         stop: false,
       },
+      //提示框
+      messageDetails:{
+        visible:false,
+        type:'warning',
+        message:'请重试！'
+      },
+      //定时器
       interval: null,
       //每页能显示18行
       initData: [],
@@ -158,7 +181,7 @@ export default {
       return Math.ceil(this.total / 18);
     },
     deviceStatus() {
-      return window.localStorage.getItem('deviceStatus');
+      return window.localStorage.getItem('deviceStatus') || '';
     }
   },
   watch: {
@@ -248,11 +271,11 @@ export default {
     toggleStatus(bt) {
       for (const key in this.buttonLoad) {
         if (this.buttonLoad[key]) {
-          Message({
-            showClose: true,
+          this.messageDetails = {
+            visible: true,
             message: '有功能正在执行，请稍后再试！',
-            type: 'warning',
-          });
+            type: 'warning'
+          };
           return
         }
       }
@@ -276,29 +299,28 @@ export default {
           .then((res) => {
             console.log("停止", res);
             if (res.code == 0) {
-              Message({
-                showClose: true,
+              this.messageDetails = {
+                visible: true,
                 message: '停止成功！',
-                type: 'success',
-              });
-
+                type: 'success'
+              }
               for (const key in this.buttonMun) {
                 this.buttonMun[key] = key == bt ? true : false;
               }
             } else {
-              Message({
-                showClose: true,
+              this.messageDetails = {
+                visible: true,
                 message: '停止失败！',
-                type: 'error',
-              });
+                type: 'error'
+              }
             }
           })
           .catch(() => {
-            Message({
-              showClose: true,
+            this.messageDetails = {
+              visible: true,
               message: '停止失败！',
-              type: 'error',
-            });
+              type: 'error'
+            }
           })
           .finally(() => {
             this.tableLoad = false;
@@ -325,28 +347,28 @@ export default {
             .then((res) => {
               console.log("启动", res);
               if (res.code == 0) {
-                Message({
-                  showClose: true,
+                this.messageDetails = {
+                  visible: true,
                   message: '启动成功！',
-                  type: 'success',
-                });
+                  type: 'success'
+                }
                 for (const key in this.buttonMun) {
                   this.buttonMun[key] = key == bt ? true : false;
                 }
               } else {
-                Message({
-                  showClose: true,
+                this.messageDetails = {
+                  visible: true,
                   message: '启动失败！',
-                  type: 'error',
-                });
+                  type: 'error'
+                }
               }
             })
             .catch(() => {
-              Message({
-                showClose: true,
+              this.messageDetails = {
+                visible: true,
                 message: '启动失败！',
-                type: 'error',
-              });
+                type: 'error'
+              }
             })
             .finally(() => {
               this.tableLoad = false;
@@ -375,28 +397,28 @@ export default {
             .then((res) => {
               console.log("暂停", res);
               if (res.code == 0) {
-                Message({
-                  showClose: true,
+                this.messageDetails = {
+                  visible: true,
                   message: '暂停成功！',
-                  type: 'success',
-                });
+                  type: 'success'
+                }
                 for (const key in this.buttonMun) {
                   this.buttonMun[key] = key == bt ? true : false;
                 }
               } else {
-                Message({
-                  showClose: true,
+                this.messageDetails = {
+                  visible: true,
                   message: '暂停失败！',
-                  type: 'error',
-                });
+                  type: 'error'
+                }
               }
             })
             .catch(() => {
-              Message({
-                showClose: true,
+              this.messageDetails = {
+                visible: true,
                 message: '暂停失败！',
-                type: 'error',
-              });
+                type: 'error'
+              }
             })
             .finally(() => {
               this.tableLoad = false;
@@ -405,11 +427,11 @@ export default {
             });
           return;
         } else {
-          Message({
-            showClose: true,
+          this.messageDetails = {
+            visible: true,
             message: '请先点击启动！',
-            type: 'warning',
-          });
+            type: 'warning'
+          }
           this.tableLoad = false;
           this.buttonLoad[bt] = false;
           return;
@@ -445,6 +467,33 @@ export default {
   /* border: 1px solid red; */
   height: 77rem;
   padding: 1rem 2rem;
+}
+
+.el-dialog__wrapper /deep/ .el-dialog{
+  background-color: rgba(136, 178, 255, 0.3);
+	box-shadow: inset 0 0 10px rgba(76, 134, 243, 1);
+  border-radius: 10px;
+}
+
+.dialog_title_success{
+  font-size: 2rem;
+  color: #67C23A;
+}
+
+.dialog_title_warning{
+  font-size: 2rem;
+  color: #E6A23C;
+}
+
+.dialog_title_error{
+  font-size: 2rem;
+  color: #F56C6C;
+}
+
+.dialog_content{
+  text-align: center;
+  font-size: 3rem;
+  color: #fff;
 }
 
 .title {
@@ -636,4 +685,5 @@ tbody .unqualified {
   border: 1px solid #0095f8;
   box-shadow: inset 0 0 10px #47aef3;
 }
+
 </style>
