@@ -34,7 +34,7 @@
       <el-col :span="24">
         <div class="content-right">
           <el-table class="table" :data="tableData" border height="65rem" style="width: 100%">
-            <el-table-column label="鉴定项目" min-width="40%">
+            <el-table-column label="检定项目" min-width="40%">
               <template slot-scope="scope">
                 <span style="color: #fff">
                   {{ scope.$index + 1 }}
