@@ -61,7 +61,7 @@ export default {
       '互感器': 'transformerWatch',
       },
       deviceList: [
-        // { name: "设备名称", value: "互感器鉴定装置" },
+        // { name: "设备名称", value: "互感器检定装置" },
         // { name: "设备编号", value: "02031" },
         // { name: "设备厂家信息", value: "深圳科陆电子" },
         // { name: "所属实验室", value: "2308" },
@@ -99,6 +99,7 @@ export default {
 					this.updateHide();
 				}
 			});
+      this.showComponent = this.processWatchList[this.$route.query.equipType]
       //设备信息API
       this.$request(
         "post", "/bigScreen/getEquipInfoByNo", {
@@ -135,7 +136,6 @@ export default {
         this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
         this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
         window.localStorage.setItem('deviceStatus', res.data.isDetail)
-        this.showComponent = this.processWatchList[this.$route.query.equipType]
       });
       //检定人员
       this.$request(
