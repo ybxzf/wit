@@ -153,7 +153,6 @@
     <el-dialog
       :visible.sync="messageDetails.visible"
       width="30%"
-      :before-close="handleClose"
       :close-on-click-modal="false">
       <span slot="title" :class="`dialog_title_${messageDetails.type}`">
         <i :class="`el-icon-${messageDetails.type}`"></i>
@@ -432,6 +431,14 @@ export default {
     },
     //切换功能
     toggleStatus(bt) {
+      if (this.buttonMun[bt]) {
+        this.messageDetails = {
+          visible: true,
+          message: '当前正处于此状态！',
+          type: 'warning'
+        };
+        return
+      }
       for (const key in this.buttonLoad) {
         if (this.buttonLoad[key]) {
           this.messageDetails = {

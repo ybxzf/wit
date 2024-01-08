@@ -594,8 +594,45 @@ export default {
 			isShow: false,
 			passRate: 0,
 			time: "",
-			unusual: [],
-			check: [],
+			unusual: [
+			// 	{
+			// 		"durationTime": "273.00小时",
+			// 		"sensorType": "光照超标",
+			// 		"labName": "2303实验室",
+			// 		"updateTime": "2023-12-03 14:00:00"
+			// 	},
+			// 	{
+			// 		"durationTime": "273.00小时",
+			// 		"sensorType": "温度超标",
+			// 		"labName": "2303实验室",
+			// 		"updateTime": "2023-12-03 14:00:00"
+			// 	},
+			// 	{
+			// 		"durationTime": "273.00小时",
+			// 		"sensorType": "湿度不达标",
+			// 		"labName": "2308实验室",
+			// 		"updateTime": "2023-12-03 14:00:00"
+			// 	}
+			],
+			check: [
+			// 	{
+			// 		"personnelName": "江*涛",
+			// 		"post": "电能,"
+			// 	},
+			// 	{
+			// 		"personnelName": "江正涛",
+			// 		"userStatus": "正常",
+			// 		"post": "电能,电阻,"
+			// 	},
+			// 	{
+			// 		"personnelName": "张三",
+			// 		"post": "电能,"
+			// 	},
+			// 	{
+			// 		"personnelName": "李四",
+			// 		"post": "电阻,"
+			// 	}
+			],
 			tagList: {
 				正在使用: {
 					class: "green",
@@ -620,44 +657,7 @@ export default {
 				停运: "red",
 			},
 			roomIdx: 0,
-			room: null,
-			roomIdx: 0,
-			onLine: {
-				// sensorInfo : {
-				// 	"illuminationState": "正常",
-				// 	"illumination": " 3300lux",
-				// 	"electromagnetism": "100mg/L",
-				// 	"electromagnetismState": "正常",
-				// 	"temperature": " 25℃",
-				// 	"humidityState": "正常",
-				// 	"humidity": " 55%RH",
-				// 	"temperatureState": "正常"
-				// }
-			},
-			onLineLoad: false,
-			watchLoad: false,
-			dataList: [],
-			hideTime: 1,
-		};
-	},
-	mounted() {
-		this.getData();
-		this.updateTime();
-		this.updateData();
-	},
-	destroyed() {
-		if (this.tempObj.data) {
-			clearInterval(this.tempObj.data);
-		}
-		if (this.tempObj.timer) {
-			clearInterval(this.tempObj.timer);
-		}
-	},
-	methods: {
-		getData() {
-			this.$request("get", "/bigScreen/laboratoryInfo").then((res) => {
-				this.room = res.data;
-				// this.room = [
+			room: [
 				// 	{
 				// 		labNo: "2303",
 				// 		labName: "2303实验室",
@@ -689,7 +689,106 @@ export default {
 				// 		labName: "2313实验室",
 				// 		labStatus: "正在使用",
 				// 	},
-				// ];
+			],
+			onLine: {
+				// sensorInfo : {
+				// 	"illuminationState": "正常",
+				// 	"illumination": " 3300lux",
+				// 	"electromagnetism": "100mg/L",
+				// 	"electromagnetismState": "正常",
+				// 	"temperature": " 25℃",
+				// 	"humidityState": "正常",
+				// 	"humidity": " 55%RH",
+				// 	"temperatureState": "正常"
+				// },
+				//rows: [
+				// 	{
+				// 		"equipName": "单相电能表检定装置",
+				// 		"errNum": 3,
+				// 		"equipNo": "2309##004##GN002",
+				// 		"taskName": "1202002",
+				// 		"checker": "江正涛",
+				// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
+				// 		"equipState": "停运",
+				// 		"projectName": "基本误差"
+				// 	},
+				// 	{
+				// 		"equipName": "三相电能表检定装置",
+				// 		"equipNo": "2309##004##HP003",
+				// 		"taskName": "1202002",
+				// 		"checker": "江正涛",
+				// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
+				// 		"equipState": "运行",
+				// 		"projectName": "基本误差"
+				// 	}
+				// ]
+			},
+			onLineLoad: false,
+			watchLoad: false,
+			dataList: [
+			// 	{
+			// 		"equipName": "直流电能表检定装置",
+			// 		"phia": "0.00",
+			// 		"phib": "240.00",
+			// 		"phic": "120.00",
+			// 		"checker": "江正涛",
+			// 		"Ua": "219.99",
+			// 		"Ub": "220.01",
+			// 		"Uc": "220.10",
+			// 		"La": "5.01",
+			// 		"equipType": "电能表",
+			// 		"Lb": "4.99",
+			// 		"Lc": "4.98",
+			// 		"equipNo": "2304##002##TH001",
+			// 		"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差"
+			// 	},
+			// 	{
+			// 		"phase": "123",
+			// 		"equipName": "三相谐波表检定装置",
+			// 		"lightLoad": "123",
+			// 		"rating": "123",
+			// 		"accuracy": "123",
+			// 		"oneCurrent": "123",
+			// 		"updateTime": 1702650566000,
+			// 		"checker": "江正涛",
+			// 		"params": {},
+			// 		"booster": "123",
+			// 		"twoCurrent": "123",
+			// 		"equipType": "互感器",
+			// 		"taskNo": "1202002",
+			// 		"equipNo": "2304##002##WSD001",
+			// 		"id": 1,
+			// 		"resistor": "123",
+			// 		"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差",
+			// 		"powerFactor": "123"
+			// 	}
+			],
+			hideTime: 1,
+		};
+	},
+	mounted() {
+		this.getData();
+		this.updateTime();
+		this.updateData();
+		this.roomIdx = Number(window.localStorage.getItem('roomIdx')) || 0;
+	},
+	watch: {
+		roomIdx(newValue, oldValue) {
+			this.updateOnLine(newValue);
+		}
+	},
+	destroyed() {
+		if (this.tempObj.data) {
+			clearInterval(this.tempObj.data);
+		}
+		if (this.tempObj.timer) {
+			clearInterval(this.tempObj.timer);
+		}
+	},
+	methods: {
+		getData() {
+			this.$request("get", "/bigScreen/laboratoryInfo").then((res) => {
+				this.room = res.data;
 				this.$nextTick(() => {
 					this.updateVerticalSwiper(
 						"room",
@@ -707,26 +806,6 @@ export default {
 			});
 			this.$request("get", "/bigScreen/sensorErrorInfo").then((res) => {
 				this.unusual = res.data;
-				// this.unusual = [
-				// 	{
-				// 		"durationTime": "273.00小时",
-				// 		"sensorType": "光照超标",
-				// 		"labName": "2303实验室",
-				// 		"updateTime": "2023-12-03 14:00:00"
-				// 	},
-				// 	{
-				// 		"durationTime": "273.00小时",
-				// 		"sensorType": "温度超标",
-				// 		"labName": "2303实验室",
-				// 		"updateTime": "2023-12-03 14:00:00"
-				// 	},
-				// 	{
-				// 		"durationTime": "273.00小时",
-				// 		"sensorType": "湿度不达标",
-				// 		"labName": "2308实验室",
-				// 		"updateTime": "2023-12-03 14:00:00"
-				// 	}
-				// ]
 				this.$nextTick(() => {
 					this.updateVerticalSwiper(
 						"unusualSwiper",
@@ -738,25 +817,6 @@ export default {
 
 			this.$request("post", "/bigScreen/personnelInfo", {}).then((res) => {
 				this.check = res.data;
-				// this.check = [
-				// 	{
-				// 		"personnelName": "江*涛",
-				// 		"post": "电能,"
-				// 	},
-				// 	{
-				// 		"personnelName": "江正涛",
-				// 		"userStatus": "正常",
-				// 		"post": "电能,电阻,"
-				// 	},
-				// 	{
-				// 		"personnelName": "张三",
-				// 		"post": "电能,"
-				// 	},
-				// 	{
-				// 		"personnelName": "李四",
-				// 		"post": "电阻,"
-				// 	}
-				// ];
 				this.$nextTick(() => {
 					this.updateVerticalSwiper(
 						"check",
@@ -768,6 +828,7 @@ export default {
 
 			if (this.refresh % 3 === 0) {
 				this.$request("get", "/bigScreen/capacity").then((res) => {
+					// console.log('产能监测',res.data);
 					this.updateCapacity("capacity", res.data);
 				});
 				this.$request("get", "/bigScreen/qualityInfo").then((res) => {
@@ -806,7 +867,6 @@ export default {
 			}, 1000);
 		},
 		updateCapacity(val, data) {
-			console.log(data);
 			if (data.length == 0) {
 				data = [
 					{
@@ -877,23 +937,12 @@ export default {
 		},
 		changeRoomIdx(idx) {
 			this.roomIdx = idx;
-			this.updateOnLine();
 		},
 		updateOnLine() {
 			let msg = this.room[this.roomIdx];
 			window.localStorage.setItem('labNo', msg.labNo);
 			this.onLineLoad = false;
 			this.watchLoad = false;
-			// this.onLine.sensorInfo = {
-			// 	"illuminationState": "正常",
-			// 	"illumination": " 3300lux",
-			// 	"electromagnetism": "100mg/L",
-			// 	"electromagnetismState": "正常",
-			// 	"temperature": " 25℃",
-			// 	"humidityState": "正常",
-			// 	"humidity": " 55%RH",
-			// 	"temperatureState": "正常"
-			// }
 			this.$request(
 				"post",
 				"/bigScreen/onlineLab",
@@ -925,27 +974,6 @@ export default {
 						this.tempObj.onLineSwiper = null;
 					}
 				}).finally(() => {
-					// this.onLine.rows = [
-					// 	{
-					// 		"equipName": "单相电能表检定装置",
-					// 		"errNum": 3,
-					// 		"equipNo": "2309##004##GN002",
-					// 		"taskName": "1202002",
-					// 		"checker": "江正涛",
-					// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-					// 		"equipState": "停运",
-					// 		"projectName": "基本误差"
-					// 	},
-					// 	{
-					// 		"equipName": "三相电能表检定装置",
-					// 		"equipNo": "2309##004##HP003",
-					// 		"taskName": "1202002",
-					// 		"checker": "江正涛",
-					// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-					// 		"equipState": "运行",
-					// 		"projectName": "基本误差"
-					// 	}
-					// ]
 					this.$nextTick(() => {
 						this.updateVerticalSwiper(
 							"onLineSwiper",
@@ -969,55 +997,11 @@ export default {
 					},
 				}
 			).then((res) => {
+				// console.log('dataList', res.data);
 				this.dataList.length = 2;
 				for (let i = 0; i < 2; i++) {
 					this.dataList[i] = res.data[i]
 				}
-				// res.data.forEach(item => {
-				// 	if (item.projectName) {
-				// 		if (this.dataList.length < 2) {
-				// 			this.dataList.push(item);
-				// 		}
-				// 	}
-				// })
-				// this.dataList = [
-				// 	{
-				// 		"equipName": "直流电能表检定装置",
-				// 		"phia": "0.00",
-				// 		"phib": "240.00",
-				// 		"phic": "120.00",
-				// 		"checker": "江正涛",
-				// 		"Ua": "219.99",
-				// 		"Ub": "220.01",
-				// 		"Uc": "220.10",
-				// 		"La": "5.01",
-				// 		"equipType": "电能表",
-				// 		"Lb": "4.99",
-				// 		"Lc": "4.98",
-				// 		"equipNo": "2304##002##TH001",
-				// 		"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差"
-				// 	},
-				// 	{
-				// 		"phase": "123",
-				// 		"equipName": "三相谐波表检定装置",
-				// 		"lightLoad": "123",
-				// 		"rating": "123",
-				// 		"accuracy": "123",
-				// 		"oneCurrent": "123",
-				// 		"updateTime": 1702650566000,
-				// 		"checker": "江正涛",
-				// 		"params": {},
-				// 		"booster": "123",
-				// 		"twoCurrent": "123",
-				// 		"equipType": "互感器",
-				// 		"taskNo": "1202002",
-				// 		"equipNo": "2304##002##WSD001",
-				// 		"id": 1,
-				// 		"resistor": "123",
-				// 		"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-				// 		"powerFactor": "123"
-				// 	}
-				// ]
 			}).finally(() => {
 				this.watchLoad = true;
 			});
@@ -1034,6 +1018,8 @@ export default {
 					equipType: item.equipType || "",
 				}
 			});
+			window.localStorage.setItem('deviceStatus', item.equipState || '');
+			window.localStorage.setItem('roomIdx', this.roomIdx || 0);
 		},
 		updateVerticalSwiper(name, num, type) {
 			if (!this.tempObj[name]) {

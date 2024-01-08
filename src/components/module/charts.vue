@@ -10,6 +10,10 @@ export default {
    * @returns
    */
   cylinderOption(xData, list) {
+    let maxNum = 2;
+    list.forEach(item => {
+      maxNum = item.value > maxNum ? Math.ceil(item.value) : maxNum;
+    })
     const option = {
       title: {
         text: "单位：台",
@@ -79,14 +83,18 @@ export default {
         axisTick: {
           show: false,
         },
-        axisLine: {
+        axisLine: { //坐标轴线配置
           show: true,
           lineStyle: {
             color: "rgba(41, 121, 255, 0.2)",
           },
         },
-        axisLabel: {
-          formatter: '{value}', // 这里设置 Y 轴的单位
+        interval: maxNum <= 2 ? 1 : undefined, //刻度值间隔
+        max: maxNum <= 2 ? maxNum : undefined,  //最大刻度值
+        axisLabel: {  //坐标轴值配置
+          formatter: function (value) {  // 这里设置 Y 轴的单位
+            return value;
+          },
           color: "rgba(255, 255, 255, 0.6)",
           fontSize: that.$tools.getFitSize(0.86),
         },
