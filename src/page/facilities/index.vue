@@ -1,8 +1,8 @@
 <template>
-  <div class="indexBox"  @mousemove="move">
+  <div class="indexBox" @mousemove="move">
     <vue-particles v-if="isShow" color="#00C6FB" :particleOpacity="0.8" shapeType="circle" :particleSize="40"
-			:lineLinked="false" :moveSpeed="3" :hoverEffect="false" :clickEffect="false" class="particles">
-		</vue-particles>
+      :lineLinked="false" :moveSpeed="3" :hoverEffect="false" :clickEffect="false" class="particles">
+    </vue-particles>
     <el-row>
       <el-col :span="6" style=" height: 77rem; padding: 1rem 0 1rem 1rem">
         <el-row>
@@ -21,7 +21,7 @@
         </el-row>
       </el-col>
       <el-col :span="18">
-        <component :is="showComponent"></component>
+        <component :is="showComponent" @statusChange="statusChange"></component>
         <!-- <electric-meter-watch v-if="this.$route.query.equipType == '电能表'" />
         <normal-meter-watch v-if="this.$route.query.equipType == '标准表'" />
         <transformer-watch v-if="this.$route.query.equipType == '互感器'" /> -->
@@ -40,6 +40,11 @@ import normalMeterWatch from "./components/normalMeterWatch.vue";
 import transformerWatch from "./components/transformerWatch.vue";
 import { electricMeterData } from "./virtualData.js";
 
+import { mapState, mapActions, } from 'pinia';
+import deviceStatus from '../../store/index.js';
+
+const { status, updateStatus } = deviceStatus();
+
 export default {
   components: {
     deviceInform,
@@ -54,11 +59,11 @@ export default {
   data() {
     return {
       isShow: false,
-      showComponent:'',
-      processWatchList:{
-      '电能表': 'electricMeterWatch',
-      '标准表': 'normalMeterWatch',
-      '互感器': 'transformerWatch',
+      showComponent: '',
+      processWatchList: {
+        '电能表': 'electricMeterWatch',
+        '标准表': 'normalMeterWatch',
+        '互感器': 'transformerWatch',
       },
       deviceList: [
         // { name: "设备名称", value: "互感器检定装置" },
@@ -94,11 +99,11 @@ export default {
       // console.log('route', this.$route.query);
       //定时器
       this.$request("get", "/bigScreen/durationLock").then((res) => {
-				this.hideTime = res.data;
-				if (this.hideTime) {
-					this.updateHide();
-				}
-			});
+        this.hideTime = res.data;
+        if (this.hideTime) {
+          this.updateHide();
+        }
+      });
       this.showComponent = this.processWatchList[this.$route.query.equipType]
       //设备信息API
       this.$request(
@@ -135,6 +140,7 @@ export default {
         this.deviceList.push({ name: "设备检定日期", value: res.data.checkTime })
         this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
         this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
+        updateStatus(res.data.isDetail || '')
       });
       //检定人员
       this.$request(
@@ -245,20 +251,56 @@ export default {
       //   })
     },
     move() {
-			if (this.isShow) {
-				this.isShow = false;
-				window.clearTimeout(this.tempObj.hide);
-				this.tempObj.hide = null;
-				this.updateHide();
-			}
-		},
+      if (this.isShow) {
+        this.isShow = false;
+        window.clearTimeout(this.tempObj.hide);
+        this.tempObj.hide = null;
+        this.updateHide();
+      }
+    },
     updateHide() {
-			if (!this.tempObj.hide) {
-				this.tempObj.hide = setTimeout(() => {
-					this.isShow = true;
-				}, this.hideTime * 1000);
-			}
-		},
+      if (!this.tempObj.hide) {
+        this.tempObj.hide = setTimeout(() => {
+          this.isShow = true;
+        }, this.hideTime * 1000);
+      }
+    },
+    //点击按钮回调事件
+    statusChange(status) {
+      if (status) {
+        this.init();
+        // this.deviceList.length = 0
+        // const res = {
+        //   "msg": "操作成功",
+        //   "code": 0,
+        //   "data": {
+        //     "createBy": null,
+        //     "createTime": null,
+        //     "updateBy": null,
+        //     "updateTime": null,
+        //     "remark": null,
+        //     "id": 6,
+        //     "equipName": "三相谐波表检定装置",//设备名称
+        //     "equipNo": "2304##002##WSD001",//设备编号
+        //     "manufacturers": "山东威斯顿",//厂商
+        //     "laboratoryNo": "2304",//所属实验室
+        //     "checkTime": "20220513",//检定时间
+        //     "validDate": "20240512",//检定有效期
+        //     "isDetail": "运行",//设备状态
+        //     "model": "WE0129",//型号
+        //     "equipType": "互感器"//设备类型
+        //   }
+        // }
+        // this.deviceList.push({ name: "设备名称", value: res.data.equipName })
+        // this.deviceList.push({ name: "设备编号", value: res.data.equipNo })
+        // this.deviceList.push({ name: "设备厂家信息", value: res.data.manufacturers })
+        // this.deviceList.push({ name: "所属实验室", value: res.data.laboratoryNo })
+        // this.deviceList.push({ name: "设备检定日期", value: res.data.checkTime })
+        // this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
+        // this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
+        // updateStatus('运行');
+      }
+    },
   },
   beforeDestroy() {
     clearInterval(this.interval);

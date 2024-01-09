@@ -585,6 +585,10 @@ import "echarts-gl";
 import Swiper, { Autoplay, Grid } from "swiper";
 Swiper.use([Autoplay, Grid]);
 import GlobalInfo from "@/components/GlobalInfo.vue";
+import { mapState, mapActions, } from 'pinia';
+import deviceStatus from '../store/index.js';
+
+const { status, updateStatus } = deviceStatus();
 export default {
 	name: "Index",
 	data() {
@@ -658,37 +662,37 @@ export default {
 			},
 			roomIdx: 0,
 			room: [
-				// 	{
-				// 		labNo: "2303",
-				// 		labName: "2303实验室",
-				// 		labStatus: "闲置待用",
-				// 	},
-				// 	{
-				// 		labNo: "2304",
-				// 		labName: "2304实验室",
-				// 		labStatus: "正在使用",
-				// 	},
-				// 	{
-				// 		labNo: "2308",
-				// 		labName: "2308实验室",
-				// 		labStatus: "故障维修",
-				// 		errNum: '12'
-				// 	},
-				// 	{
-				// 		labNo: "2309",
-				// 		labName: "2309实验室",
-				// 		labStatus: "正在使用",
-				// 	},
-				// 	{
-				// 		labNo: "2311",
-				// 		labName: "2311实验室",
-				// 		labStatus: "正在使用",
-				// 	},
-				// 	{
-				// 		labNo: "2313",
-				// 		labName: "2313实验室",
-				// 		labStatus: "正在使用",
-				// 	},
+				{
+					labNo: "2303",
+					labName: "2303实验室",
+					labStatus: "闲置待用",
+				},
+				{
+					labNo: "2304",
+					labName: "2304实验室",
+					labStatus: "正在使用",
+				},
+				{
+					labNo: "2308",
+					labName: "2308实验室",
+					labStatus: "故障维修",
+					errNum: '12'
+				},
+				{
+					labNo: "2309",
+					labName: "2309实验室",
+					labStatus: "正在使用",
+				},
+				{
+					labNo: "2311",
+					labName: "2311实验室",
+					labStatus: "正在使用",
+				},
+				{
+					labNo: "2313",
+					labName: "2313实验室",
+					labStatus: "正在使用",
+				},
 			],
 			onLine: {
 				// sensorInfo : {
@@ -1018,7 +1022,7 @@ export default {
 					equipType: item.equipType || "",
 				}
 			});
-			window.localStorage.setItem('deviceStatus', item.equipState || '');
+			updateStatus(item.equipState || '');
 			window.localStorage.setItem('roomIdx', this.roomIdx || 0);
 		},
 		updateVerticalSwiper(name, num, type) {

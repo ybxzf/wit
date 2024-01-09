@@ -7,12 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vue/composition-api": "^1.7.2",
     "ant-design-vue": "^1.7.7",
     "axios": "^0.27.2",
     "core-js": "^2.6.5",
     "echarts": "^5.3.2",
     "echarts-gl": "^2.0.9",
     "element-ui": "^2.15.14",
+    "pinia": "^2.1.7",
     "swiper": "^8.3.2",
     "vue": "^2.6.10",
     "vue-router": "^3.5.3",

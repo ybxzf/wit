@@ -169,6 +169,11 @@
 import { electricMeterData } from "../virtualData.js";
 import { Message } from 'element-ui';
 
+import { mapState, mapActions, } from 'pinia';
+import deviceStatus from '../../../store/index.js';
+
+const { status, updateStatus } = deviceStatus();
+
 export default {
   data() {
     return {
@@ -227,7 +232,7 @@ export default {
       return Math.ceil(this.total / 19);
     },
     deviceStatus() {
-      return window.localStorage.getItem('deviceStatus') || '';
+      return status;
     }
   },
   watch: {
@@ -488,6 +493,7 @@ export default {
                 for (const key in this.buttonMun) {
                   this.buttonMun[key] = key == bt ? true : false;
                 }
+                this.$emit('statusChange', true);
               } else {
                 this.messageDetails = {
                   visible: true,
@@ -534,10 +540,10 @@ export default {
                 message: '停止成功！',
                 type: 'success'
               }
-
               for (const key in this.buttonMun) {
                 this.buttonMun[key] = key == bt ? true : false;
               }
+              this.$emit('statusChange', true);
             } else {
               this.messageDetails = {
                 visible: true,
@@ -586,6 +592,7 @@ export default {
                 for (const key in this.buttonMun) {
                   this.buttonMun[key] = key == bt ? true : false;
                 }
+                this.$emit('statusChange', true);
               } else {
                 this.messageDetails = {
                   visible: true,
@@ -636,6 +643,7 @@ export default {
                 for (const key in this.buttonMun) {
                   this.buttonMun[key] = key == bt ? true : false;
                 }
+                this.$emit('statusChange', true);
               } else {
                 this.messageDetails = {
                   visible: true,

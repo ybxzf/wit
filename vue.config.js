@@ -14,4 +14,15 @@ module.exports = {
       },
     },
   },
+  configureWebpack: { //这个是配置
+    module: {
+      rules: [
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: "javascript/auto"
+        }
+      ]
+    }
+  },
 };
