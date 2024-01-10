@@ -586,9 +586,9 @@ import Swiper, { Autoplay, Grid } from "swiper";
 Swiper.use([Autoplay, Grid]);
 import GlobalInfo from "@/components/GlobalInfo.vue";
 import { mapState, mapActions, } from 'pinia';
-import deviceStatus from '../store/index.js';
+import useDeviceStore from '../store/index.js';
 
-const { status, updateStatus } = deviceStatus();
+const store = useDeviceStore();
 export default {
 	name: "Index",
 	data() {
@@ -705,7 +705,7 @@ export default {
 				// 	"humidity": " 55%RH",
 				// 	"temperatureState": "正常"
 				// },
-				//rows: [
+				// rows: [
 				// 	{
 				// 		"equipName": "单相电能表检定装置",
 				// 		"errNum": 3,
@@ -713,8 +713,9 @@ export default {
 				// 		"taskName": "1202002",
 				// 		"checker": "江正涛",
 				// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-				// 		"equipState": "停运",
-				// 		"projectName": "基本误差"
+				// 		"equipState": "空闲",
+				// 		"projectName": "基本误差",
+				// 		"equipType":"标准表",
 				// 	},
 				// 	{
 				// 		"equipName": "三相电能表检定装置",
@@ -723,7 +724,8 @@ export default {
 				// 		"checker": "江正涛",
 				// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
 				// 		"equipState": "运行",
-				// 		"projectName": "基本误差"
+				// 		"projectName": "基本误差",
+				// 		"equipType":"电能表",
 				// 	}
 				// ]
 			},
@@ -1022,7 +1024,7 @@ export default {
 					equipType: item.equipType || "",
 				}
 			});
-			updateStatus(item.equipState || '');
+			store.updateStatus(item.equipState);
 			window.localStorage.setItem('roomIdx', this.roomIdx || 0);
 		},
 		updateVerticalSwiper(name, num, type) {
