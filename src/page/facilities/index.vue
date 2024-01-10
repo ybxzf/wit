@@ -70,6 +70,7 @@ export default {
         // { name: "设备编号", value: "02031" },
         // { name: "设备厂家信息", value: "深圳科陆电子" },
         // { name: "所属实验室", value: "2308" },
+        // { name: "设备等级", value: "0.05" },
         // { name: "设备检定日期", value: "20220513" },
         // { name: "检定有效期", value: "20240512" },
         // { name: "设备运行状态", value: "运行" },
@@ -114,29 +115,31 @@ export default {
         // const res = {
         //   "msg": "操作成功",
         //   "code": 0,
-        //   "data": {
+        //   "data":  {
         //     "createBy": null,
         //     "createTime": null,
         //     "updateBy": null,
         //     "updateTime": null,
         //     "remark": null,
-        //     "id": 6,
-        //     "equipName": "三相谐波表检定装置",//设备名称
-        //     "equipNo": "2304##002##WSD001",//设备编号
-        //     "manufacturers": "山东威斯顿",//厂商
-        //     "laboratoryNo": "2304",//所属实验室
-        //     "checkTime": "20220513",//检定时间
-        //     "validDate": "20240512",//检定有效期
-        //     "isDetail": "运行",//设备状态
-        //     "model": "WE0129",//型号
-        //     "equipType": "互感器"//设备类型
-        //   }
+        //     "id": 7,
+        //     "equipNo": "2308##003##KL001",
+        //     "equipName": "三相电能表检定装置",
+        //     "laboratoryNo": "2308",
+        //     "manufacturers": "深圳科陆电子",
+        //     "model": "CL3000D",
+        //     "isDetail": "空闲",
+        //     "checkTime": "2023-12-20",
+        //     "validDate": "2024-12-31",
+        //     "equipType": "电能表",
+        //     "equipDj": "0.05"
+        // }
         // }
         this.deviceList.length = 0
         this.deviceList.push({ name: "设备名称", value: res.data.equipName })
         this.deviceList.push({ name: "设备编号", value: res.data.equipNo })
         this.deviceList.push({ name: "设备厂家信息", value: res.data.manufacturers })
         this.deviceList.push({ name: "所属实验室", value: res.data.laboratoryNo })
+        this.deviceList.push({ name: "设备等级", value: res.data.equipDj })
         this.deviceList.push({ name: "设备检定日期", value: res.data.checkTime })
         this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
         this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
