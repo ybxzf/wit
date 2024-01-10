@@ -2,25 +2,9 @@
   <div class="page">
     <el-row>
       <el-col class="title" :span="24">
-        <div class="title-botton" v-loading="buttonLoad.start" element-loading-background="rgba(0, 0, 0, 0.1)"
-          @click="toggleStatus('start')">
-          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
-          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
-        </div>
-        <!-- <div class="title-botton" @click="toggleStatus('step')">
-          <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
-          <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
-        </div> -->
-        <div class="title-botton" v-loading="buttonLoad.pause" element-loading-background="rgba(0, 0, 0, 0.1)"
-          @click="toggleStatus('pause')">
-          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
-          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
-        </div>
-        <div class="title-botton" v-loading="buttonLoad.stop" element-loading-background="rgba(0, 0, 0, 0.1)"
-          @click="toggleStatus('stop')">
-          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
-          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
-        </div>
+        <div class="title-botton start" @click="changeStatus('start')" />
+        <div class="title-botton pause" @click="changeStatus('pause')" />
+        <div class="title-botton stop" @click="changeStatus('stop')" />
       </el-col>
       <el-col class="content" :span="24">
         <table class="content-table">
@@ -32,7 +16,13 @@
             </tr>
             <tr>
               <th colspan="6">基本误差</th>
-              <th colspan="8">{{ this.showData.length > 0 ? this.showData[0]['1_meterNo'] || '--' : '--' }}</th>
+              <th colspan="8">
+                {{
+                  this.showData.length > 0
+                    ? this.showData[0]["1_meterNo"] || "--"
+                    : "--"
+                }}
+              </th>
             </tr>
             <tr>
               <th rowspan="2">电量</th>
@@ -54,51 +44,110 @@
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody v-loading="tableLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)">
+          <tbody
+            v-loading="tableLoad"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
+          >
             <tr v-for="(item, index) in showData" :key="index">
-              <td class="project">{{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[2]
-                || '--' : '--'
-              }}
+              <td class="project">
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "itemNameValues")
+                    ? item.itemNameValues[2] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[3] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "itemNameValues")
+                    ? item.itemNameValues[3] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[4] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "itemNameValues")
+                    ? item.itemNameValues[4] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[5] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "itemNameValues")
+                    ? item.itemNameValues[5] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[6] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "itemNameValues")
+                    ? item.itemNameValues[6] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, 'itemNameValues') ? item.itemNameValues[7] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "itemNameValues")
+                    ? item.itemNameValues[7] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][0] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "1_Values")
+                    ? item["1_Values"][0] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][1] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "1_Values")
+                    ? item["1_Values"][1] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][2] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "1_Values")
+                    ? item["1_Values"][2] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][3] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "1_Values")
+                    ? item["1_Values"][3] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][4] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "1_Values")
+                    ? item["1_Values"][4] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][5] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "1_Values")
+                    ? item["1_Values"][5] || "--"
+                    : "--"
+                }}
               </td>
               <td>
-                {{ Object.prototype.hasOwnProperty.call(item, '1_Values') ? item['1_Values'][6] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "1_Values")
+                    ? item["1_Values"][6] || "--"
+                    : "--"
+                }}
               </td>
               <td :class="item.epitope13 == '不合格' ? 'unqualified' : ''">
-                {{ Object.prototype.hasOwnProperty.call(item, 'trialResult') ? item['trialResult'] || '--' : '--' }}
+                {{
+                  Object.prototype.hasOwnProperty.call(item, "trialResult")
+                    ? item["trialResult"] || "--"
+                    : "--"
+                }}
               </td>
             </tr>
           </tbody>
@@ -109,14 +158,26 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button class="page-button" @click="() => (currentPage > 1 ? currentPage-- : '')">
+        <button
+          class="page-button"
+          @click="() => (currentPage > 1 ? currentPage-- : '')"
+        >
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="18" layout="pager" :current-page="currentPage" :total="total"
-          @current-change="handleCurrentChange">
+        <el-pagination
+          class="page-list"
+          :page-size="18"
+          layout="pager"
+          :current-page="currentPage"
+          :total="total"
+          @current-change="handleCurrentChange"
+        >
         </el-pagination>
-        <button class="page-button" @click="() => (currentPage < pages ? currentPage++ : '')">
+        <button
+          class="page-button"
+          @click="() => (currentPage < pages ? currentPage++ : '')"
+        >
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -127,48 +188,38 @@
     <el-dialog
       :visible.sync="messageDetails.visible"
       width="30%"
-      :close-on-click-modal="false">
+      :close-on-click-modal="false"
+    >
       <span slot="title" :class="`dialog_title_${messageDetails.type}`">
         <i :class="`el-icon-${messageDetails.type}`"></i>
         <span> 温馨提示</span>
       </span>
       <div class="dialog_content">{{ messageDetails.message }}</div>
       <span slot="footer">
-        <el-button type="primary" @click="messageDetails.visible = false">确 定</el-button>
+        <el-button type="primary" @click="messageDetails.visible = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 import { normalMeterData } from "../virtualData.js";
-import { Message } from 'element-ui';
+import { Message } from "element-ui";
 
-import { mapState, mapActions, } from 'pinia';
-import deviceStatus from '../../../store/index.js';
+import { mapState, mapActions, useStore } from "pinia";
+import useDeviceStore from "../../../store/index.js";
 
-const { status, updateStatus } = deviceStatus();
+const store = useDeviceStore();
 
 export default {
   data() {
     return {
-      //按钮状态
-      buttonMun: {
-        start: false,
-        // step: false,
-        pause: false,
-        stop: true,
-      },
-      //按钮加载
-      buttonLoad: {
-        start: false,
-        pause: false,
-        stop: false,
-      },
       //提示框
-      messageDetails:{
-        visible:false,
-        type:'warning',
-        message:'请重试！'
+      messageDetails: {
+        visible: false,
+        type: "warning",
+        message: "请重试！",
       },
       //定时器
       interval: null,
@@ -176,7 +227,7 @@ export default {
       initData: [],
       showData: [],
       tableLoad: false,
-      total: 1001,
+      total: 1,
       currentPage: 1,
     };
   },
@@ -185,38 +236,35 @@ export default {
       return Math.ceil(this.total / 18);
     },
     deviceStatus() {
-      return status;
-    }
+      return store.status;
+    },
   },
   watch: {
+    deviceStatus(newValue, oldValue) {
+      console.log("变化了", newValue, oldValue);
+      this.$emit("statusChange", true);
+    },
     currentPage(newValue, oldValue) {
       this.tableLoad = true;
       this.showData = this.initData.slice(
         18 * (newValue - 1),
         18 * (newValue - 1) + 18
       );
-      this.showData.map(item => {
-        item.itemNameValues = Object.prototype.hasOwnProperty.call(item, 'itemName') ?
-          item.itemName.split('|') :
-          [];
-        item['1_Values'] = Object.prototype.hasOwnProperty.call(item, '1') ?
-          item['1'].split('|') :
-          [];
-      })
+      this.showData.map((item) => {
+        item.itemNameValues = Object.prototype.hasOwnProperty.call(
+          item,
+          "itemName"
+        )
+          ? item.itemName.split("|")
+          : [];
+        item["1_Values"] = Object.prototype.hasOwnProperty.call(item, "1")
+          ? item["1"].split("|")
+          : [];
+      });
       this.tableLoad = false;
     },
   },
   mounted() {
-    if (this.deviceStatus.trim() == '空闲') {
-      this.buttonMun.start = false
-      this.buttonMun.pause = false
-      this.buttonMun.stop = true
-    }
-    if (this.deviceStatus.trim() == '运行') {
-      this.buttonMun.start = true
-      this.buttonMun.pause = false
-      this.buttonMun.stop = false
-    }
     this.init();
     this.interval = setInterval(() => {
       this.init();
@@ -255,205 +303,129 @@ export default {
           }
         })
         .finally(() => {
-          this.showData.map(item => {
-            item.itemNameValues = Object.prototype.hasOwnProperty.call(item, 'itemName') ?
-              item.itemName.split('|') :
-              [];
-            item['1_Values'] = Object.prototype.hasOwnProperty.call(item, '1') ?
-              item['1'].split('|') :
-              [];
-          })
-          console.log('this.showData', this.showData);
+          this.showData.map((item) => {
+            item.itemNameValues = Object.prototype.hasOwnProperty.call(
+              item,
+              "itemName"
+            )
+              ? item.itemName.split("|")
+              : [];
+            item["1_Values"] = Object.prototype.hasOwnProperty.call(item, "1")
+              ? item["1"].split("|")
+              : [];
+          });
+          console.log("this.showData", this.showData);
           this.tableLoad = false;
         });
-      // this.initData = normalMeterData;
-      // this.total = normalMeterData.length;
-      // this.showData = this.initData.slice(0, 18);
-      // this.tableLoad = false;
     },
-    //切换功能
-    toggleStatus(bt) {
-      if (this.buttonMun[bt]) {
-        this.messageDetails = {
-          visible: true,
-          message: '当前正处于此状态！',
-          type: 'warning'
-        };
-        return
-      }
-      for (const key in this.buttonLoad) {
-        if (this.buttonLoad[key]) {
-          this.messageDetails = {
-            visible: true,
-            message: '有功能正在执行，请稍后再试！',
-            type: 'warning'
-          };
-          return
+    //新切换功能
+    changeStatus(bt) {
+      console.log("status", this.deviceStatus);
+      const statusHeaders = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      if (bt == "stop") {
+        if (this.deviceStatus == "空闲") {
+          this.tipDialog("当前正处于此状态！", "warning");
+          return;
         }
-      }
-      console.log(bt);
-      this.buttonLoad[bt] = true;
-      this.tableLoad = true;
-      if (bt == 'stop' && !this.buttonMun.stop) {
-        this.$requestSys(
-          "post",
-          "/meterInfo/equipStateControl",
-          {
-            equipNo: this.$route.query.equipNo,
-            checkState: 2
-          },
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        )
-          .then((res) => {
-            console.log("停止", res);
-            if (res.code == 0) {
-              this.messageDetails = {
-                visible: true,
-                message: '停止成功！',
-                type: 'success'
-              }
-              for (const key in this.buttonMun) {
-                this.buttonMun[key] = key == bt ? true : false;
-              }
-              this.$emit('statusChange', true);
-            } else {
-              this.messageDetails = {
-                visible: true,
-                message: '停止失败！',
-                type: 'error'
-              }
-            }
-          })
-          .catch(() => {
-            this.messageDetails = {
-              visible: true,
-              message: '停止失败！',
-              type: 'error'
-            }
-          })
-          .finally(() => {
-            this.tableLoad = false;
-            this.buttonLoad[bt] = false;
-            return;
-          });
-        return;
-      }
-      if (bt == 'start' && !this.buttonMun.start) {
-        if (this.deviceStatus.trim() == '空闲' || this.buttonMun.start == false) {
+        if (this.deviceStatus == "运行") {
           this.$requestSys(
             "post",
             "/meterInfo/equipStateControl",
             {
               equipNo: this.$route.query.equipNo,
-              checkState: 0
+              checkState: 2,
             },
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
+            statusHeaders
           )
             .then((res) => {
-              console.log("启动", res);
               if (res.code == 0) {
-                this.messageDetails = {
-                  visible: true,
-                  message: '启动成功！',
-                  type: 'success'
-                }
-                for (const key in this.buttonMun) {
-                  this.buttonMun[key] = key == bt ? true : false;
-                }
-                this.$emit('statusChange', true);
+                this.tipDialog("停止成功！", "success");
+                this.$emit("statusChange", true);
               } else {
-                this.messageDetails = {
-                  visible: true,
-                  message: '启动失败！',
-                  type: 'error'
-                }
+                this.tipDialog("停止失败！", "error");
               }
             })
             .catch(() => {
-              this.messageDetails = {
-                visible: true,
-                message: '启动失败！',
-                type: 'error'
-              }
+              this.tipDialog("停止失败！", "error");
             })
             .finally(() => {
-              this.tableLoad = false;
-              this.buttonLoad[bt] = false;
               return;
             });
         }
-        // this.tableLoad = false;
-        return;
       }
-      if (bt == 'pause' && !this.buttonMun.pause) {
-        if (this.buttonMun.start == true) {
+      if (bt == "pause") {
+        if (this.deviceStatus == "空闲") {
+          this.tipDialog("请先点击启动！", "warning");
+          return;
+        }
+        if (this.deviceStatus == "运行") {
           this.$requestSys(
             "post",
             "/meterInfo/equipStateControl",
             {
               equipNo: this.$route.query.equipNo,
-              checkState: 1
+              checkState: 1,
             },
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
+            statusHeaders
           )
             .then((res) => {
-              console.log("暂停", res);
               if (res.code == 0) {
-                this.messageDetails = {
-                  visible: true,
-                  message: '暂停成功！',
-                  type: 'success'
-                }
-                for (const key in this.buttonMun) {
-                  this.buttonMun[key] = key == bt ? true : false;
-                }
-                this.$emit('statusChange', true);
+                this.tipDialog("暂停成功！", "success");
+                this.$emit("statusChange", true);
               } else {
-                this.messageDetails = {
-                  visible: true,
-                  message: '暂停失败！',
-                  type: 'error'
-                }
+                this.tipDialog("暂停失败！", "error");
               }
             })
             .catch(() => {
-              this.messageDetails = {
-                visible: true,
-                message: '暂停失败！',
-                type: 'error'
-              }
+              this.tipDialog("暂停失败！", "error");
             })
             .finally(() => {
-              this.tableLoad = false;
-              this.buttonLoad[bt] = false;
               return;
             });
-          return;
-        } else {
-          this.messageDetails = {
-            visible: true,
-            message: '请先点击启动！',
-            type: 'warning'
-          }
-          this.tableLoad = false;
-          this.buttonLoad[bt] = false;
-          return;
         }
       }
-      this.tableLoad = false;
-      this.buttonLoad[bt] = false;
+      if (bt == "start") {
+        if (this.deviceStatus == "空闲") {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 0,
+            },
+            statusHeaders
+          )
+            .then((res) => {
+              if (res.code == 0) {
+                this.tipDialog("启动成功！", "success");
+                this.$emit("statusChange", true);
+              } else {
+                this.tipDialog("启动失败！", "error");
+              }
+            })
+            .catch(() => {
+              this.tipDialog("启动失败！", "error");
+            })
+            .finally(() => {
+              return;
+            });
+        }
+        if (this.deviceStatus == "运行") {
+          this.tipDialog("当前正处于此状态！", "warning");
+        }
+      }
+    },
+    //调提示框的方法
+    tipDialog(_message, _type) {
+      this.messageDetails = {
+        visible: true,
+        message: _message,
+        type: _type,
+      };
     },
     //返回上一级
     goBack() {
@@ -474,7 +446,7 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.interval);
-  }
+  },
 };
 </script>
 <style scoped>
@@ -484,28 +456,28 @@ export default {
   padding: 1rem 2rem;
 }
 
-.el-dialog__wrapper /deep/ .el-dialog{
+.el-dialog__wrapper /deep/ .el-dialog {
   background-color: rgba(136, 178, 255, 0.3);
-	box-shadow: inset 0 0 10px rgba(76, 134, 243, 1);
+  box-shadow: inset 0 0 10px rgba(76, 134, 243, 1);
   border-radius: 10px;
 }
 
-.dialog_title_success{
+.dialog_title_success {
   font-size: 2rem;
-  color: #67C23A;
+  color: #67c23a;
 }
 
-.dialog_title_warning{
+.dialog_title_warning {
   font-size: 2rem;
-  color: #E6A23C;
+  color: #e6a23c;
 }
 
-.dialog_title_error{
+.dialog_title_error {
   font-size: 2rem;
-  color: #F56C6C;
+  color: #f56c6c;
 }
 
-.dialog_content{
+.dialog_content {
   text-align: center;
   font-size: 3rem;
   color: #fff;
@@ -526,19 +498,41 @@ export default {
   cursor: pointer;
 }
 
-.title-botton img {
-  position: absolute;
-  width: 10rem;
-  bottom: 0.65rem;
+.start {
+  background-image: url("../../../assets/img/start_default.png");
+  background-size: 100% 100%;
+  height: 4rem;
+  margin-top: -1rem;
 }
-
-.title-botton .default {
-  width: 9rem;
+.start:active {
+  background-image: url("../../../assets/img/start_click.png");
+  background-size: 100% 100%;
+  height: 6rem;
+  margin-top: -3rem;
 }
-
-.title-botton>>>.circular {
-  width: 2.5rem;
-  height: 2.5rem;
+.pause {
+  background-image: url("../../../assets/img/pause_default.png");
+  background-size: 100% 100%;
+  height: 4rem;
+  margin-top: -1rem;
+}
+.pause:active {
+  background-image: url("../../../assets/img/pause_click.png");
+  background-size: 100% 100%;
+  height: 6rem;
+  margin-top: -3rem;
+}
+.stop {
+  background-image: url("../../../assets/img/stop_default.png");
+  background-size: 100% 100%;
+  height: 4rem;
+  margin-top: -1rem;
+}
+.stop:active {
+  background-image: url("../../../assets/img/stop_click.png");
+  background-size: 100% 100%;
+  height: 6rem;
+  margin-top: -3rem;
 }
 
 .content {
@@ -567,19 +561,19 @@ thead tr th {
   font-size: 1.2rem;
 }
 
-thead> :nth-child(2)>* {
-  color: #FFE117;
+thead > :nth-child(2) > * {
+  color: #ffe117;
 }
 
-thead> :nth-child(3)>* {
+thead > :nth-child(3) > * {
   width: 7rem !important;
 }
 
-thead> :nth-child(3)> :first-child {
+thead > :nth-child(3) > :first-child {
   /* width: 14rem !important; */
 }
 
-thead> :nth-child(4)>* {
+thead > :nth-child(4) > * {
   width: 7rem !important;
 }
 
@@ -621,11 +615,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer>* {
+.footer > * {
   margin-right: 0.5rem;
 }
 
-.footer> :first-child {
+.footer > :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
@@ -700,5 +694,4 @@ tbody .unqualified {
   border: 1px solid #0095f8;
   box-shadow: inset 0 0 10px #47aef3;
 }
-
 </style>
