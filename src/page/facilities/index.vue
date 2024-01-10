@@ -41,9 +41,9 @@ import transformerWatch from "./components/transformerWatch.vue";
 import { electricMeterData } from "./virtualData.js";
 
 import { mapState, mapActions, } from 'pinia';
-import deviceStatus from '../../store/index.js';
+import useDeviceStore from '../../store/index.js';
 
-const { status, updateStatus } = deviceStatus();
+const store = useDeviceStore();
 
 export default {
   components: {
@@ -72,7 +72,7 @@ export default {
         // { name: "所属实验室", value: "2308" },
         // { name: "设备检定日期", value: "20220513" },
         // { name: "检定有效期", value: "20240512" },
-        // { name: "设备运行状态", value: "闲置" },
+        // { name: "设备运行状态", value: "运行" },
       ],
       testerList: [],
       envList: {},
@@ -111,7 +111,6 @@ export default {
         "equipNo": this.$route.query.equipNo
       }
       ).then(res => {
-        this.deviceList.length = 0
         // const res = {
         //   "msg": "操作成功",
         //   "code": 0,
@@ -133,6 +132,7 @@ export default {
         //     "equipType": "互感器"//设备类型
         //   }
         // }
+        this.deviceList.length = 0
         this.deviceList.push({ name: "设备名称", value: res.data.equipName })
         this.deviceList.push({ name: "设备编号", value: res.data.equipNo })
         this.deviceList.push({ name: "设备厂家信息", value: res.data.manufacturers })
@@ -140,8 +140,9 @@ export default {
         this.deviceList.push({ name: "设备检定日期", value: res.data.checkTime })
         this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
         this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
-        updateStatus(res.data.isDetail || '')
-      });
+      }).finally(() => {
+        store.updateStatus(this.deviceList[this.deviceList.length - 1].value);
+      })
       //检定人员
       this.$request(
         "post", "/bigScreen/personnelInfo", {
@@ -304,6 +305,7 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.interval);
+    store.updateStatus('');
     // 清空 localStorage
     // localStorage.clear();
   }
