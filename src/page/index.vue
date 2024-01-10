@@ -185,27 +185,27 @@
 						</ul>
 						<ul class="swiperHead row">
 							<li>设备名称</li>
-							<li>检定任务</li>
 							<li>检定状态</li>
-							<li>检定项目</li>
-							<li>检定人员</li>
+							<li>设备等级</li>
+							<li>检定日期</li>
+							<li>检定效期</li>
 						</ul>
 						<div class="swiper">
 							<div v-loading="!onLineLoad" element-loading-text="拼命加载中"
-								element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.6)"
+								element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.3)"
 								class="swiper-wrapper" id="onLineSwiper">
 								<div class="swiper-slide">
 									<ul class="swiperBody row" :class="item.errNum ? 'red_warn' : ''"
 										v-for="(item, idx) in onLine.rows" @click="clickJump(item, idx)">
-										<li class="txtOver">{{ item.equipName }}</li>
-										<li class="txtOver">
-											{{ item.taskName }}
-										</li>
+										<li class="txtOver">{{ item.equipName || "--" }}</li>
 										<li :class="equipState[item.equipState]">
-											{{ item.equipState }}
+											{{ item.equipState || "--" }}
 										</li>
-										<li class="txtOver">{{ item.projectName }}</li>
-										<li>{{ item.checker }}</li>
+										<li class="txtOver">
+											{{ item.equipDj || "--" }}
+										</li>
+										<li class="txtOver">{{ item.checkTime.substring(0, 7) || "--" }}</li>
+										<li>{{ item.validDate.substring(0, 7) || "--" }}</li>
 									</ul>
 								</div>
 							</div>
@@ -228,7 +228,7 @@
 						{{ room && room[roomIdx] ? room[roomIdx].labName : "--" }}
 					</div>
 					<div v-loading="!watchLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
-						element-loading-background="rgba(0, 0, 0, 0.6)" id="dataWatch">
+						element-loading-background="rgba(0, 0, 0, 0.3)" id="dataWatch">
 						<div class="box" v-for="item in dataList">
 							<div class="tag">
 								<p>{{ item.equipName }}</p>
@@ -478,6 +478,9 @@
 										<div class="name">检定人员
 											<span class="person">{{ item.checker || '--' }}</span>
 										</div>
+										<div class="name">检定任务
+											<span class="person">{{ item.taskNo || '--' }}</span>
+										</div>
 									</div>
 									<div v-if="item.equipType == '互感器'" class="right_2">
 										<div class="name">实时数据</div>
@@ -707,67 +710,57 @@ export default {
 				// },
 				// rows: [
 				// 	{
-				// 		"equipName": "单相电能表检定装置",
-				// 		"errNum": 3,
-				// 		"equipNo": "2309##004##GN002",
-				// 		"taskName": "1202002",
-				// 		"checker": "江正涛",
-				// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-				// 		"equipState": "空闲",
-				// 		"projectName": "基本误差",
-				// 		"equipType":"标准表",
+				// 		"equipName": "三相电能表检定装置",
+				// 		"checkTime": "2023-12-20T12:49:12",
+				// 		"errNum": 17,
+				// 		"equipType": "电能表",
+				// 		"validDate": "2024-12-31T12:49:18",
+				// 		"equipNo": "2308##003##KL001",
+				// 		"checker": "",
+				// 		"projectDetailName": null,
+				// 		"equipState": "故障",
+				// 		"equipDj": "0.05"
 				// 	},
 				// 	{
 				// 		"equipName": "三相电能表检定装置",
-				// 		"equipNo": "2309##004##HP003",
-				// 		"taskName": "1202002",
-				// 		"checker": "江正涛",
-				// 		"projectDetailName": "Q+ 合元 0.8C 1.0Ib 基本误差",
+				// 		"checkTime": "2023-07-12T12:49:30",
+				// 		"equipType": "电能表",
+				// 		"validDate": "2024-12-31T12:49:37",
+				// 		"equipNo": "2308##003##KL002",
+				// 		"projectDetailName": null,
 				// 		"equipState": "运行",
-				// 		"projectName": "基本误差",
-				// 		"equipType":"电能表",
+				// 		"equipDj": "0.05"
 				// 	}
 				// ]
 			},
 			onLineLoad: false,
 			watchLoad: false,
 			dataList: [
-			// 	{
-			// 		"equipName": "直流电能表检定装置",
-			// 		"phia": "0.00",
-			// 		"phib": "240.00",
-			// 		"phic": "120.00",
-			// 		"checker": "江正涛",
-			// 		"Ua": "219.99",
-			// 		"Ub": "220.01",
-			// 		"Uc": "220.10",
-			// 		"La": "5.01",
-			// 		"equipType": "电能表",
-			// 		"Lb": "4.99",
-			// 		"Lc": "4.98",
-			// 		"equipNo": "2304##002##TH001",
-			// 		"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差"
-			// 	},
-			// 	{
-			// 		"phase": "123",
-			// 		"equipName": "三相谐波表检定装置",
-			// 		"lightLoad": "123",
-			// 		"rating": "123",
-			// 		"accuracy": "123",
-			// 		"oneCurrent": "123",
-			// 		"updateTime": 1702650566000,
-			// 		"checker": "江正涛",
-			// 		"params": {},
-			// 		"booster": "123",
-			// 		"twoCurrent": "123",
-			// 		"equipType": "互感器",
-			// 		"taskNo": "1202002",
-			// 		"equipNo": "2304##002##WSD001",
-			// 		"id": 1,
-			// 		"resistor": "123",
-			// 		"projectName": "Q+ 合元 0.8C 1.0Ib 基本误差",
-			// 		"powerFactor": "123"
-			// 	}
+				// {
+				// 	"equipName": "三相电能表检定装置",
+				// 	"phia": "358.06",
+				// 	"phib": "118.03",
+				// 	"phic": "237.78",
+				// 	"checker": "",
+				// 	"Ua": "57.70",
+				// 	"Ub": "57.72",
+				// 	"Uc": "57.70",
+				// 	"La": "0.00",
+				// 	"equipType": "电能表",
+				// 	"Lb": "0.00",
+				// 	"Lc": "0.00",
+				// 	"taskNo": "江正涛",
+				// 	"equipNo": "2308##003##KL001",
+				// 	"projectName": null
+				// },
+				// {
+				// 	"equipName": "三相电能表检定装置",
+				// 	"equipType": "电能表",
+				// 	"taskNo": null,
+				// 	"equipNo": "2308##003##KL002",
+				// 	"checker": null,
+				// 	"projectName": null
+				// }
 			],
 			hideTime: 1,
 		};
