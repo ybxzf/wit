@@ -143,6 +143,7 @@ export default {
         this.deviceList.push({ name: "设备检定日期", value: res.data.checkTime })
         this.deviceList.push({ name: "检定有效期", value: res.data.validDate })
         this.deviceList.push({ name: "设备运行状态", value: res.data.isDetail })
+        console.log('状态更新:', store.status);
       }).finally(() => {
         store.updateStatus(this.deviceList[this.deviceList.length - 1].value);
       })

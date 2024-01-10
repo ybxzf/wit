@@ -7,7 +7,7 @@ import tools from './tools.vue';
 import {
 	message
 } from 'ant-design-vue';
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 10000;
 // axios.defaults.baseURL = "/base/";
 
 /**

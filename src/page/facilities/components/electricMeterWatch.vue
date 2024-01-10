@@ -2,10 +2,14 @@
   <div class="page">
     <el-row>
       <el-col class="title" :span="24">
-        <div class="title-botton start" @click="changeStatus('start')" />
-        <div class="title-botton step" @click="changeStatus('step')" />
-        <div class="title-botton pause" @click="changeStatus('pause')" />
-        <div class="title-botton stop" @click="changeStatus('stop')" />
+        <div class="title-botton start" v-loading="buttonLoad.start" element-loading-background="rgba(0, 0, 0, 0.1)"
+          @click="changeStatus('start')" />
+        <div class="title-botton step" v-loading="buttonLoad.step" element-loading-background="rgba(0, 0, 0, 0.1)"
+          @click="changeStatus('step')" />
+        <div class="title-botton pause" v-loading="buttonLoad.pause" element-loading-background="rgba(0, 0, 0, 0.1)"
+          @click="changeStatus('pause')" />
+        <div class="title-botton stop" v-loading="buttonLoad.stop" element-loading-background="rgba(0, 0, 0, 0.1)"
+          @click="changeStatus('stop')" />
       </el-col>
       <el-col class="content" :span="24">
         <table class="content-table">
@@ -21,25 +25,17 @@
               <th v-for="(item, index) in listTitles" :key="index">
                 {{
                   showData.length > 0
-                    ? showData[0][item].slice(-6) || "--"
-                    : "--"
+                  ? showData[0][item].slice(-6) || "--"
+                  : "--"
                 }}
               </th>
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody
-            v-loading="tableLoad"
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
-          >
-            <tr
-              v-for="(item, index) in showData"
-              :key="index"
-              @click="selectRow(item)"
-              :class="{ selected: selectedName === item.itemName }"
-            >
+          <tbody v-loading="tableLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)">
+            <tr v-for="(item, index) in showData" :key="index" @click="selectRow(item)"
+              :class="{ selected: selectedName === item.itemName }">
               <td class="project">{{ item.itemName }}</td>
               <td :class="item['1'] == '不合格' ? 'unqualified' : ''">
                 {{ item["1"] || "--" }}
@@ -98,26 +94,14 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button
-          class="page-button"
-          @click="() => (currentPage > 1 ? currentPage-- : '')"
-        >
+        <button class="page-button" @click="() => (currentPage > 1 ? currentPage-- : '')">
           上一页
         </button>
 
-        <el-pagination
-          class="page-list"
-          :page-size="19"
-          layout="pager"
-          :current-page="currentPage"
-          :total="total"
-          @current-change="handleCurrentChange"
-        >
+        <el-pagination class="page-list" :page-size="19" layout="pager" :current-page="currentPage" :total="total"
+          @current-change="handleCurrentChange">
         </el-pagination>
-        <button
-          class="page-button"
-          @click="() => (currentPage < pages ? currentPage++ : '')"
-        >
+        <button class="page-button" @click="() => (currentPage < pages ? currentPage++ : '')">
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -125,20 +109,14 @@
         </button>
       </el-col>
     </el-row>
-    <el-dialog
-      :visible.sync="messageDetails.visible"
-      width="30%"
-      :close-on-click-modal="false"
-    >
+    <el-dialog :visible.sync="messageDetails.visible" width="30%" :close-on-click-modal="false">
       <span slot="title" :class="`dialog_title_${messageDetails.type}`">
         <i :class="`el-icon-${messageDetails.type}`"></i>
         <span> 温馨提示</span>
       </span>
       <div class="dialog_content">{{ messageDetails.message }}</div>
       <span slot="footer">
-        <el-button type="primary" @click="messageDetails.visible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="messageDetails.visible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -157,6 +135,13 @@ export default {
     return {
       //定时器
       interval: null,
+      //按钮加载
+      buttonLoad: {
+        start: false,
+        step: false,
+        pause: false,
+        stop: false,
+      },
       //提示框
       messageDetails: {
         visible: false,
@@ -381,77 +366,23 @@ export default {
     //新切换功能
     changeStatus(bt) {
       console.log("status", this.deviceStatus);
+      for (const key in this.buttonLoad) {
+        if (this.buttonLoad[key]) {
+          this.tipDialog("有功能正在执行，请稍后再试！", "warning");
+          return;
+        }
+      }
+      this.buttonLoad[bt] = true;
       const statusHeaders = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
-      if (bt == "stop") {
-        if (this.deviceStatus == "空闲") {
-          this.tipDialog("当前正处于此状态！", "warning");
-          return;
-        }
-        if (this.deviceStatus == "运行") {
-          this.$requestSys(
-            "post",
-            "/meterInfo/equipStateControl",
-            {
-              equipNo: this.$route.query.equipNo,
-              checkState: 2,
-            },
-            statusHeaders
-          )
-            .then((res) => {
-              if (res.code == 0) {
-                this.tipDialog("停止成功！", "success");
-                this.$emit("statusChange", true);
-              } else {
-                this.tipDialog("停止失败！", "error");
-              }
-            })
-            .catch(() => {
-              this.tipDialog("停止失败！", "error");
-            })
-            .finally(() => {
-              return;
-            });
-        }
-      }
-      if (bt == "pause") {
-        if (this.deviceStatus == "空闲") {
-          this.tipDialog("请先点击启动！", "warning");
-          return;
-        }
-        if (this.deviceStatus == "运行") {
-          this.$requestSys(
-            "post",
-            "/meterInfo/equipStateControl",
-            {
-              equipNo: this.$route.query.equipNo,
-              checkState: 1,
-            },
-            statusHeaders
-          )
-            .then((res) => {
-              if (res.code == 0) {
-                this.tipDialog("暂停成功！", "success");
-                this.$emit("statusChange", true);
-              } else {
-                this.tipDialog("暂停失败！", "error");
-              }
-            })
-            .catch(() => {
-              this.tipDialog("暂停失败！", "error");
-            })
-            .finally(() => {
-              return;
-            });
-        }
-      }
       if (bt == "step") {
         if (this.deviceStatus == "空闲") {
           if (this.selectedName == "") {
             this.tipDialog("请先选择一行数据！", "warning");
+            this.buttonLoad[bt] = false;
             return;
           }
           this.$requestSys(
@@ -476,12 +407,83 @@ export default {
               this.tipDialog("单步失败！", "error");
             })
             .finally(() => {
+              this.buttonLoad[bt] = false;
+              return;
+            });
+          return;
+        }
+        if (this.deviceStatus == "运行") {
+          // this.selectedName = "";
+          this.tipDialog("请先暂停或停止！", "warning");
+          this.buttonLoad[bt] = false;
+          return;
+        }
+      }
+      this.selectedName = "";
+      if (bt == "stop") {
+        if (this.deviceStatus == "空闲") {
+          this.tipDialog("当前正处于此状态！", "warning");
+          this.buttonLoad[bt] = false;
+          return;
+        }
+        if (this.deviceStatus == "运行") {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 2,
+            },
+            statusHeaders
+          )
+            .then((res) => {
+              if (res.code == 0) {
+                this.tipDialog("停止成功！", "success");
+                this.$emit("statusChange", true);
+              } else {
+                this.tipDialog("停止失败！", "error");
+              }
+            })
+            .catch(() => {
+              this.tipDialog("停止失败！", "error");
+            })
+            .finally(() => {
+              this.buttonLoad[bt] = false;
               return;
             });
         }
+      }
+      if (bt == "pause") {
+        if (this.deviceStatus == "空闲") {
+          this.tipDialog("请先点击启动！", "warning");
+          this.buttonLoad[bt] = false;
+          return;
+        }
         if (this.deviceStatus == "运行") {
-          this.selectedName = "";
-          this.tipDialog("请先暂停或停止！", "warning");
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 1,
+            },
+            statusHeaders
+          )
+            .then((res) => {
+              if (res.code == 0) {
+                this.tipDialog("暂停成功！", "success");
+                this.$emit("statusChange", true);
+              } else {
+                this.tipDialog("暂停失败！", "error");
+              }
+            })
+            .catch(() => {
+              this.tipDialog("暂停失败！", "error");
+            })
+            .finally(() => {
+              this.buttonLoad[bt] = false;
+              return;
+            });
         }
       }
       if (bt == "start") {
@@ -507,11 +509,14 @@ export default {
               this.tipDialog("启动失败！", "error");
             })
             .finally(() => {
+              this.buttonLoad[bt] = false;
               return;
             });
         }
         if (this.deviceStatus == "运行") {
           this.tipDialog("当前正处于此状态！", "warning");
+          this.buttonLoad[bt] = false;
+          return;
         }
       }
     },
@@ -610,42 +615,49 @@ export default {
   height: 4rem;
   margin-top: -1rem;
 }
+
 .start:active {
   background-image: url("../../../assets/img/start_click.png");
   background-size: 100% 100%;
   height: 6rem;
   margin-top: -3rem;
 }
+
 .step {
   background-image: url("../../../assets/img/step_default.png");
   background-size: 100% 100%;
   height: 4rem;
   margin-top: -1rem;
 }
+
 .step:active {
   background-image: url("../../../assets/img/step_click.png");
   background-size: 100% 100%;
   height: 6rem;
   margin-top: -3rem;
 }
+
 .pause {
   background-image: url("../../../assets/img/pause_default.png");
   background-size: 100% 100%;
   height: 4rem;
   margin-top: -1rem;
 }
+
 .pause:active {
   background-image: url("../../../assets/img/pause_click.png");
   background-size: 100% 100%;
   height: 6rem;
   margin-top: -3rem;
 }
+
 .stop {
   background-image: url("../../../assets/img/stop_default.png");
   background-size: 100% 100%;
   height: 4rem;
   margin-top: -1rem;
 }
+
 .stop:active {
   background-image: url("../../../assets/img/stop_click.png");
   background-size: 100% 100%;
@@ -679,11 +691,11 @@ thead tr {
   height: 3rem;
 }
 
-thead > :first-child > :first-child {
+thead> :first-child> :first-child {
   width: 20rem !important;
 }
 
-thead > :nth-child(2) > * {
+thead> :nth-child(2)>* {
   color: #ffe117;
   height: 3rem;
   font-size: 0.9rem;
@@ -732,11 +744,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer > * {
+.footer>* {
   margin-right: 0.5rem;
 }
 
-.footer > :first-child {
+.footer> :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
@@ -810,5 +822,4 @@ tbody .unqualified {
   border-radius: 0.4rem;
   border: 1px solid #0095f8;
   box-shadow: inset 0 0 10px #47aef3;
-}
-</style>
+}</style>

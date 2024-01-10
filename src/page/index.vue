@@ -188,7 +188,7 @@
 							<li>检定状态</li>
 							<li>设备等级</li>
 							<li>检定日期</li>
-							<li>检定效期</li>
+							<li>有效期</li>
 						</ul>
 						<div class="swiper">
 							<div v-loading="!onLineLoad" element-loading-text="拼命加载中"
@@ -204,8 +204,8 @@
 										<li class="txtOver">
 											{{ item.equipDj || "--" }}
 										</li>
-										<li class="txtOver">{{ item.checkTime.substring(0, 7) || "--" }}</li>
-										<li>{{ item.validDate.substring(0, 7) || "--" }}</li>
+										<li class="txtOver">{{ String(item.checkTime || "--" ).substring(0, 7)}}</li>
+										<li>{{ String(item.validDate || "--").substring(0, 7) }}</li>
 									</ul>
 								</div>
 							</div>
