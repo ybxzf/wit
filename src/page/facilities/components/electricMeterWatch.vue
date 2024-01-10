@@ -2,26 +2,10 @@
   <div class="page">
     <el-row>
       <el-col class="title" :span="24">
-        <div class="title-botton" v-loading="buttonLoad.start" element-loading-background="rgba(0, 0, 0, 0.1)"
-          @click="toggleStatus('start')">
-          <img v-show="buttonMun.start" src="../../../assets/img/start_click.png" />
-          <img class="default" v-show="!buttonMun.start" src="../../../assets/img/start_default.png" />
-        </div>
-        <div class="title-botton" v-loading="buttonLoad.step" element-loading-background="rgba(0, 0, 0, 0.1)"
-          @click="toggleStatus('step')">
-          <img v-show="buttonMun.step" src="../../../assets/img/step_click.png" />
-          <img class="default" v-show="!buttonMun.step" src="../../../assets/img/step_default.png" />
-        </div>
-        <div class="title-botton" v-loading="buttonLoad.pause" element-loading-background="rgba(0, 0, 0, 0.1)"
-          @click="toggleStatus('pause')">
-          <img v-show="buttonMun.pause" src="../../../assets/img/pause_click.png" />
-          <img class="default" v-show="!buttonMun.pause" src="../../../assets/img/pause_default.png" />
-        </div>
-        <div class="title-botton" v-loading="buttonLoad.stop" element-loading-background="rgba(0, 0, 0, 0.1)"
-          @click="toggleStatus('stop')">
-          <img v-show="buttonMun.stop" src="../../../assets/img/stop_click.png" />
-          <img class="default" v-show="!buttonMun.stop" src="../../../assets/img/stop_default.png" />
-        </div>
+        <div class="title-botton start" @click="changeStatus('start')" />
+        <div class="title-botton step" @click="changeStatus('step')" />
+        <div class="title-botton pause" @click="changeStatus('pause')" />
+        <div class="title-botton stop" @click="changeStatus('stop')" />
       </el-col>
       <el-col class="content" :span="24">
         <table class="content-table">
@@ -32,99 +16,78 @@
               <th v-for="(item, index) in listTitles" :key="index">
                 表{{ index + 1 }}
               </th>
-              <!-- <th>表2</th>
-              <th>表3</th>
-              <th>表4</th>
-              <th>表5</th>
-              <th>表6</th>
-              <th>表7</th>
-              <th>表8</th>
-              <th>表9</th>
-              <th>表10</th>
-              <th>表11</th>
-              <th>表12</th>
-              <th>表13</th>
-              <th>表14</th>
-              <th>表15</th>
-              <th>表16</th> -->
             </tr>
             <tr>
               <th v-for="(item, index) in listTitles" :key="index">
-                {{ showData.length > 0 ? (showData[0][item].slice(-6) || '--') : '--' }}
+                {{
+                  showData.length > 0
+                    ? showData[0][item].slice(-6) || "--"
+                    : "--"
+                }}
               </th>
-              <!-- <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th>
-              <th>123456</th> -->
             </tr>
           </thead>
           <!-- 表格体，使用 v-for 渲染数据 -->
-          <tbody v-loading="tableLoad" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)">
-            <tr v-for="(item, index) in showData" :key="index" @click="selectRow(item)"
-              :class="{ 'selected': selectedName === item.itemName }">
+          <tbody
+            v-loading="tableLoad"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
+          >
+            <tr
+              v-for="(item, index) in showData"
+              :key="index"
+              @click="selectRow(item)"
+              :class="{ selected: selectedName === item.itemName }"
+            >
               <td class="project">{{ item.itemName }}</td>
-              <!-- <td v-for="(it, i) in listTitles" :key="i" :class="item[i + 1] == '不合格' ? 'unqualified' : ''">
-                {{ item[i + 1] || '--' }}
-              </td> -->
               <td :class="item['1'] == '不合格' ? 'unqualified' : ''">
-                {{ item["1"] || '--' }}
+                {{ item["1"] || "--" }}
               </td>
               <td :class="item['2'] == '不合格' ? 'unqualified' : ''">
-                {{ item["2"] || '--' }}
+                {{ item["2"] || "--" }}
               </td>
               <td :class="item['3'] == '不合格' ? 'unqualified' : ''">
-                {{ item["3"] || '--' }}
+                {{ item["3"] || "--" }}
               </td>
               <td :class="item['4'] == '不合格' ? 'unqualified' : ''">
-                {{ item["4"] || '--' }}
+                {{ item["4"] || "--" }}
               </td>
               <td :class="item['5'] == '不合格' ? 'unqualified' : ''">
-                {{ item["5"] || '--' }}
+                {{ item["5"] || "--" }}
               </td>
               <td :class="item['6'] == '不合格' ? 'unqualified' : ''">
-                {{ item["6"] || '--' }}
+                {{ item["6"] || "--" }}
               </td>
               <td :class="item['7'] == '不合格' ? 'unqualified' : ''">
-                {{ item["7"] || '--' }}
+                {{ item["7"] || "--" }}
               </td>
               <td :class="item['8'] == '不合格' ? 'unqualified' : ''">
-                {{ item["8"] || '--' }}
+                {{ item["8"] || "--" }}
               </td>
               <td :class="item['9'] == '不合格' ? 'unqualified' : ''">
-                {{ item["9"] || '--' }}
+                {{ item["9"] || "--" }}
               </td>
               <td :class="item['10'] == '不合格' ? 'unqualified' : ''">
-                {{ item["10"] || '--' }}
+                {{ item["10"] || "--" }}
               </td>
               <td :class="item['11'] == '不合格' ? 'unqualified' : ''">
-                {{ item["11"] || '--' }}
+                {{ item["11"] || "--" }}
               </td>
               <td :class="item['12'] == '不合格' ? 'unqualified' : ''">
-                {{ item["12"] || '--' }}
+                {{ item["12"] || "--" }}
               </td>
               <td :class="item['13'] == '不合格' ? 'unqualified' : ''">
-                {{ item["13"] || '--' }}
+                {{ item["13"] || "--" }}
               </td>
               <td :class="item['14'] == '不合格' ? 'unqualified' : ''">
-                {{ item["14"] || '--' }}
+                {{ item["14"] || "--" }}
               </td>
               <td :class="item['15'] == '不合格' ? 'unqualified' : ''">
-                {{ item["15"] || '--' }}
+                {{ item["15"] || "--" }}
               </td>
               <td :class="item['16'] == '不合格' ? 'unqualified' : ''">
-                {{ item["16"] || '--' }}
+                {{ item["16"] || "--" }}
               </td>
             </tr>
           </tbody>
@@ -135,14 +98,26 @@
         <button class="first-end-page-button" @click="toFirstPage()">
           首页
         </button>
-        <button class="page-button" @click="() => (currentPage > 1 ? currentPage-- : '')">
+        <button
+          class="page-button"
+          @click="() => (currentPage > 1 ? currentPage-- : '')"
+        >
           上一页
         </button>
 
-        <el-pagination class="page-list" :page-size="19" layout="pager" :current-page="currentPage" :total="total"
-          @current-change="handleCurrentChange">
+        <el-pagination
+          class="page-list"
+          :page-size="19"
+          layout="pager"
+          :current-page="currentPage"
+          :total="total"
+          @current-change="handleCurrentChange"
+        >
         </el-pagination>
-        <button class="page-button" @click="() => (currentPage < pages ? currentPage++ : '')">
+        <button
+          class="page-button"
+          @click="() => (currentPage < pages ? currentPage++ : '')"
+        >
           下一页
         </button>
         <button class="first-end-page-button" @click="toLastPage()">
@@ -153,51 +128,40 @@
     <el-dialog
       :visible.sync="messageDetails.visible"
       width="30%"
-      :close-on-click-modal="false">
+      :close-on-click-modal="false"
+    >
       <span slot="title" :class="`dialog_title_${messageDetails.type}`">
         <i :class="`el-icon-${messageDetails.type}`"></i>
         <span> 温馨提示</span>
       </span>
       <div class="dialog_content">{{ messageDetails.message }}</div>
       <span slot="footer">
-        <el-button type="primary" @click="messageDetails.visible = false">确 定</el-button>
+        <el-button type="primary" @click="messageDetails.visible = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 import { electricMeterData } from "../virtualData.js";
-import { Message } from 'element-ui';
+import { Message } from "element-ui";
 
-import { mapState, mapActions, } from 'pinia';
-import deviceStatus from '../../../store/index.js';
+import { mapState, mapActions } from "pinia";
+import useDeviceStore from "../../../store/index.js";
 
-const { status, updateStatus } = deviceStatus();
+const store = useDeviceStore();
 
 export default {
   data() {
     return {
       //定时器
       interval: null,
-      //按钮状态
-      buttonMun: {
-        start: false,
-        step: false,
-        pause: false,
-        stop: true,
-      },
-      //按钮加载
-      buttonLoad: {
-        start: false,
-        step: false,
-        pause: false,
-        stop: false,
-      },
       //提示框
-      messageDetails:{
-        visible:false,
-        type:'warning',
-        message:'请重试！'
+      messageDetails: {
+        visible: false,
+        type: "warning",
+        message: "请重试！",
       },
       //表格表头列表
       listTitles: [
@@ -218,12 +182,12 @@ export default {
         "15_meterNo",
         "16_meterNo",
       ],
-      selectedName: '',
+      selectedName: "",
       //每页能显示20行
       initData: [],
       showData: [],
       tableLoad: false,
-      total: 1001,
+      total: 1,
       currentPage: 1,
     };
   },
@@ -232,10 +196,14 @@ export default {
       return Math.ceil(this.total / 19);
     },
     deviceStatus() {
-      return status;
-    }
+      return store.status;
+    },
   },
   watch: {
+    deviceStatus(newValue, oldValue) {
+      console.log("变化了", newValue, oldValue);
+      this.$emit("statusChange", true);
+    },
     currentPage(newValue, oldValue) {
       // console.log(newValue, oldValue);
       this.tableLoad = true;
@@ -246,37 +214,13 @@ export default {
       this.tableLoad = false;
     },
     selectedName(newValue, oldValue) {
-      if (newValue == '') {
-        window.localStorage.removeItem('selectedItemName');
-        window.localStorage.removeItem('selectedItemID');
-        if (this.deviceStatus.trim() == '空闲') {
-          this.buttonMun.start = false
-          this.buttonMun.step = false
-          this.buttonMun.pause = false
-          this.buttonMun.stop = true
-        }
-        if (this.deviceStatus.trim() == '运行') {
-          this.buttonMun.start = true
-          this.buttonMun.step = false
-          this.buttonMun.pause = false
-          this.buttonMun.stop = false
-        }
+      if (newValue == "") {
+        window.localStorage.removeItem("selectedItemName");
+        window.localStorage.removeItem("selectedItemID");
       }
     },
   },
   mounted() {
-    if (this.deviceStatus.trim() == '空闲') {
-      this.buttonMun.start = false
-      this.buttonMun.step = false
-      this.buttonMun.pause = false
-      this.buttonMun.stop = true
-    }
-    if (this.deviceStatus.trim() == '运行') {
-      this.buttonMun.start = true
-      this.buttonMun.step = false
-      this.buttonMun.pause = false
-      this.buttonMun.stop = false
-    }
     this.init();
     this.interval = setInterval(() => {
       this.init();
@@ -303,7 +247,7 @@ export default {
       )
         .then((res) => {
           // console.log("电能表过程监测", res);
-          // const res = [
+          // res.data = [
           //   {
           //     1: "-0.0211",
           //     2: "+0.0395",
@@ -425,7 +369,7 @@ export default {
           }
         })
         .finally(() => {
-          console.log('this.showData', this.showData);
+          console.log("this.showData", this.showData);
           this.tableLoad = false;
         });
       // console.log('this.watchList',this.watchList);
@@ -434,271 +378,159 @@ export default {
       // this.showData = this.initData.slice(0, 19);
       // this.tableLoad = false;
     },
-    //切换功能
-    toggleStatus(bt) {
-      if (this.buttonMun[bt]) {
-        this.messageDetails = {
-          visible: true,
-          message: '当前正处于此状态！',
-          type: 'warning'
-        };
-        return
-      }
-      for (const key in this.buttonLoad) {
-        if (this.buttonLoad[key]) {
-          this.messageDetails = {
-            visible: true,
-            message: '有功能正在执行，请稍后再试！',
-            type: 'warning'
-          };
-          return
+    //新切换功能
+    changeStatus(bt) {
+      console.log("status", this.deviceStatus);
+      const statusHeaders = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      if (bt == "stop") {
+        if (this.deviceStatus == "空闲") {
+          this.tipDialog("当前正处于此状态！", "warning");
+          return;
+        }
+        if (this.deviceStatus == "运行") {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 2,
+            },
+            statusHeaders
+          )
+            .then((res) => {
+              if (res.code == 0) {
+                this.tipDialog("停止成功！", "success");
+                this.$emit("statusChange", true);
+              } else {
+                this.tipDialog("停止失败！", "error");
+              }
+            })
+            .catch(() => {
+              this.tipDialog("停止失败！", "error");
+            })
+            .finally(() => {
+              return;
+            });
         }
       }
-      console.log(bt);
-      this.buttonLoad[bt] = true;
-      this.tableLoad = true;
-      if (bt == 'step' && !this.buttonMun.step) {
-        if (this.selectedName == '') {
-          this.messageDetails = {
-            visible: true,
-            message: '请先选择一行数据！',
-            type: 'warning'
-          };
-          this.buttonLoad[bt] = false;
-          this.tableLoad = false;
-        } else {
-          //(单步)
+      if (bt == "pause") {
+        if (this.deviceStatus == "空闲") {
+          this.tipDialog("请先点击启动！", "warning");
+          return;
+        }
+        if (this.deviceStatus == "运行") {
+          this.$requestSys(
+            "post",
+            "/meterInfo/equipStateControl",
+            {
+              equipNo: this.$route.query.equipNo,
+              checkState: 1,
+            },
+            statusHeaders
+          )
+            .then((res) => {
+              if (res.code == 0) {
+                this.tipDialog("暂停成功！", "success");
+                this.$emit("statusChange", true);
+              } else {
+                this.tipDialog("暂停失败！", "error");
+              }
+            })
+            .catch(() => {
+              this.tipDialog("暂停失败！", "error");
+            })
+            .finally(() => {
+              return;
+            });
+        }
+      }
+      if (bt == "step") {
+        if (this.deviceStatus == "空闲") {
+          if (this.selectedName == "") {
+            this.tipDialog("请先选择一行数据！", "warning");
+            return;
+          }
           this.$requestSys(
             "post",
             "/equipDetailInfoNew/checkEquipStepControl",
             {
               equipNo: this.$route.query.equipNo,
-              itemName: window.localStorage.getItem('selectedItemName'),
-              itemID: window.localStorage.getItem('selectedItemID'),
+              itemName: window.localStorage.getItem("selectedItemName"),
+              itemID: window.localStorage.getItem("selectedItemID"),
             },
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
+            statusHeaders
           )
             .then((res) => {
-              console.log("单步", res);
               if (res.code == 0) {
-                this.messageDetails = {
-                  visible: true,
-                  message: '单步成功！',
-                  type: 'success',
-                };
-                for (const key in this.buttonMun) {
-                  this.buttonMun[key] = key == bt ? true : false;
-                }
-                this.$emit('statusChange', true);
+                this.tipDialog("单步成功！", "success");
+                this.$emit("statusChange", true);
               } else {
-                this.messageDetails = {
-                  visible: true,
-                  message: '单步失败！',
-                  type: 'error',
-                };
+                this.tipDialog("单步失败！", "error");
               }
             })
             .catch(() => {
-              this.messageDetails = {
-                visible: true,
-                message: '单步失败！',
-                type: 'error',
-              };
+              this.tipDialog("单步失败！", "error");
             })
             .finally(() => {
-              this.tableLoad = false;
-              this.buttonLoad[bt] = false;
               return;
             });
         }
-        return;
+        if (this.deviceStatus == "运行") {
+          this.selectedName = "";
+          this.tipDialog("请先暂停或停止！", "warning");
+        }
       }
-      this.selectedName = '';
-      if (bt == 'stop' && !this.buttonMun.stop) {
-        this.$requestSys(
-          "post",
-          "/meterInfo/equipStateControl",
-          {
-            equipNo: this.$route.query.equipNo,
-            checkState: 2
-          },
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        )
-          .then((res) => {
-            console.log("停止", res);
-            if (res.code == 0) {
-              this.messageDetails = {
-                visible: true,
-                message: '停止成功！',
-                type: 'success'
-              }
-              for (const key in this.buttonMun) {
-                this.buttonMun[key] = key == bt ? true : false;
-              }
-              this.$emit('statusChange', true);
-            } else {
-              this.messageDetails = {
-                visible: true,
-                message: '停止失败！',
-                type: 'error'
-              }
-            }
-          })
-          .catch(() => {
-            this.messageDetails = {
-              visible: true,
-              message: '停止失败！',
-              type: 'error'
-            }
-          })
-          .finally(() => {
-            this.tableLoad = false;
-            this.buttonLoad[bt] = false;
-            return;
-          });
-        return;
-      }
-      if (bt == 'start' && !this.buttonMun.start) {
-        if (this.deviceStatus == '空闲' || this.buttonMun.start == false) {
+      if (bt == "start") {
+        if (this.deviceStatus == "空闲") {
           this.$requestSys(
             "post",
             "/meterInfo/equipStateControl",
             {
               equipNo: this.$route.query.equipNo,
-              checkState: 0
+              checkState: 0,
             },
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
+            statusHeaders
           )
             .then((res) => {
-              console.log("启动", res);
               if (res.code == 0) {
-                this.messageDetails = {
-                  visible: true,
-                  message: '启动成功！',
-                  type: 'success'
-                }
-                for (const key in this.buttonMun) {
-                  this.buttonMun[key] = key == bt ? true : false;
-                }
-                this.$emit('statusChange', true);
+                this.tipDialog("启动成功！", "success");
+                this.$emit("statusChange", true);
               } else {
-                this.messageDetails = {
-                  visible: true,
-                  message: '启动失败！',
-                  type: 'error'
-                }
+                this.tipDialog("启动失败！", "error");
               }
             })
             .catch(() => {
-              this.messageDetails = {
-                  visible: true,
-                  message: '启动失败！',
-                  type: 'error'
-                }
+              this.tipDialog("启动失败！", "error");
             })
             .finally(() => {
-              this.tableLoad = false;
-              this.buttonLoad[bt] = false;
               return;
             });
         }
-        // this.tableLoad = false;
-        return;
-      }
-      if (bt == 'pause' && !this.buttonMun.pause) {
-        if (this.buttonMun.start == true) {
-          this.$requestSys(
-            "post",
-            "/meterInfo/equipStateControl",
-            {
-              equipNo: this.$route.query.equipNo,
-              checkState: 1
-            },
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-          )
-            .then((res) => {
-              console.log("暂停", res);
-              if (res.code == 0) {
-                this.messageDetails = {
-                  visible: true,
-                  message: '暂停成功！',
-                  type: 'success'
-                }
-                for (const key in this.buttonMun) {
-                  this.buttonMun[key] = key == bt ? true : false;
-                }
-                this.$emit('statusChange', true);
-              } else {
-                this.messageDetails = {
-                  visible: true,
-                  message: '暂停失败！',
-                  type: 'error'
-                }
-              }
-            })
-            .catch(() => {
-              this.messageDetails = {
-                visible: true,
-                message: '暂停失败！',
-                type: 'error'
-              }
-            })
-            .finally(() => {
-              this.tableLoad = false;
-              this.buttonLoad[bt] = false;
-              return;
-            });
-          return;
-        } else {
-          this.messageDetails = {
-            visible: true,
-            message: '请先点击启动！',
-            type: 'warning'
-          }
-          this.tableLoad = false;
-          this.buttonLoad[bt] = false;
-          return;
+        if (this.deviceStatus == "运行") {
+          this.tipDialog("当前正处于此状态！", "warning");
         }
       }
-      this.tableLoad = false;
-      this.buttonLoad[bt] = false;
+    },
+    //调提示框的方法
+    tipDialog(_message, _type) {
+      this.messageDetails = {
+        visible: true,
+        message: _message,
+        type: _type,
+      };
     },
     //选中行
     selectRow(item) {
-      if (this.deviceStatus == '空闲') {
-        this.buttonMun.start = false
-        this.buttonMun.step = false
-        this.buttonMun.pause = false
-        this.buttonMun.stop = true
-      }
-      if (this.deviceStatus == '运行') {
-        this.buttonMun.start = true
-        this.buttonMun.step = false
-        this.buttonMun.pause = false
-        this.buttonMun.stop = false
-      }
       if (this.selectedName == item.itemName) {
-        this.selectedName = '';
+        this.selectedName = "";
       } else {
         this.selectedName = item.itemName;
-        window.localStorage.setItem('selectedItemName', item.itemName)
-        window.localStorage.setItem('selectedItemID', item.itemId)
+        window.localStorage.setItem("selectedItemName", item.itemName);
+        window.localStorage.setItem("selectedItemID", item.itemId);
       }
     },
     //返回上一级
@@ -720,7 +552,7 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.interval);
-  }
+  },
 };
 </script>
 <style scoped>
@@ -730,29 +562,28 @@ export default {
   padding: 1rem 2rem;
 }
 
-
-.el-dialog__wrapper /deep/ .el-dialog{
+.el-dialog__wrapper /deep/ .el-dialog {
   background-color: rgba(136, 178, 255, 0.3);
-	box-shadow: inset 0 0 10px rgba(76, 134, 243, 1);
+  box-shadow: inset 0 0 10px rgba(76, 134, 243, 1);
   border-radius: 10px;
 }
 
-.dialog_title_success{
+.dialog_title_success {
   font-size: 2rem;
-  color: #67C23A;
+  color: #67c23a;
 }
 
-.dialog_title_warning{
+.dialog_title_warning {
   font-size: 2rem;
-  color: #E6A23C;
+  color: #e6a23c;
 }
 
-.dialog_title_error{
+.dialog_title_error {
   font-size: 2rem;
-  color: #F56C6C;
+  color: #f56c6c;
 }
 
-.dialog_content{
+.dialog_content {
   text-align: center;
   font-size: 3rem;
   color: #fff;
@@ -773,19 +604,53 @@ export default {
   cursor: pointer;
 }
 
-.title-botton img {
-  position: absolute;
-  width: 10rem;
-  bottom: 0.65rem;
+.start {
+  background-image: url("../../../assets/img/start_default.png");
+  background-size: 100% 100%;
+  height: 4rem;
+  margin-top: -1rem;
 }
-
-.title-botton .default {
-  width: 9rem;
+.start:active {
+  background-image: url("../../../assets/img/start_click.png");
+  background-size: 100% 100%;
+  height: 6rem;
+  margin-top: -3rem;
 }
-
-.title-botton>>>.circular {
-  width: 2.5rem;
-  height: 2.5rem;
+.step {
+  background-image: url("../../../assets/img/step_default.png");
+  background-size: 100% 100%;
+  height: 4rem;
+  margin-top: -1rem;
+}
+.step:active {
+  background-image: url("../../../assets/img/step_click.png");
+  background-size: 100% 100%;
+  height: 6rem;
+  margin-top: -3rem;
+}
+.pause {
+  background-image: url("../../../assets/img/pause_default.png");
+  background-size: 100% 100%;
+  height: 4rem;
+  margin-top: -1rem;
+}
+.pause:active {
+  background-image: url("../../../assets/img/pause_click.png");
+  background-size: 100% 100%;
+  height: 6rem;
+  margin-top: -3rem;
+}
+.stop {
+  background-image: url("../../../assets/img/stop_default.png");
+  background-size: 100% 100%;
+  height: 4rem;
+  margin-top: -1rem;
+}
+.stop:active {
+  background-image: url("../../../assets/img/stop_click.png");
+  background-size: 100% 100%;
+  height: 6rem;
+  margin-top: -3rem;
 }
 
 .content {
@@ -814,16 +679,15 @@ thead tr {
   height: 3rem;
 }
 
-thead> :first-child> :first-child {
+thead > :first-child > :first-child {
   width: 20rem !important;
 }
 
-thead> :nth-child(2)>* {
-  color: #FFE117;
+thead > :nth-child(2) > * {
+  color: #ffe117;
   height: 3rem;
   font-size: 0.9rem;
   font-weight: bolder;
-
 }
 
 tbody tr {
@@ -868,11 +732,11 @@ tbody .unqualified {
   justify-content: space-between;
 }
 
-.footer>* {
+.footer > * {
   margin-right: 0.5rem;
 }
 
-.footer> :first-child {
+.footer > :first-child {
   margin-right: auto;
   margin-left: 0.5rem;
 }
