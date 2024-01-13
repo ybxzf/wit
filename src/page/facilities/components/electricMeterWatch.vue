@@ -186,7 +186,6 @@ export default {
   },
   watch: {
     deviceStatus(newValue, oldValue) {
-      console.log("变化了", newValue, oldValue);
       this.$emit("statusChange", true);
     },
     currentPage(newValue, oldValue) {
@@ -354,7 +353,7 @@ export default {
           }
         })
         .finally(() => {
-          console.log("this.showData", this.showData);
+          // console.log("this.showData", this.showData);
           this.tableLoad = false;
         });
       // console.log('this.watchList',this.watchList);
@@ -365,7 +364,7 @@ export default {
     },
     //新切换功能
     changeStatus(bt) {
-      console.log("status", this.deviceStatus);
+      // console.log("status", this.deviceStatus);
       for (const key in this.buttonLoad) {
         if (this.buttonLoad[key]) {
           this.tipDialog("有功能正在执行，请稍后再试！", "warning");
@@ -399,6 +398,7 @@ export default {
               if (res.code == 0) {
                 this.tipDialog("单步成功！", "success");
                 this.$emit("statusChange", true);
+                this.init();
               } else {
                 this.tipDialog("单步失败！", "error");
               }
@@ -440,6 +440,7 @@ export default {
               if (res.code == 0) {
                 this.tipDialog("停止成功！", "success");
                 this.$emit("statusChange", true);
+                this.init();
               } else {
                 this.tipDialog("停止失败！", "error");
               }
@@ -473,6 +474,7 @@ export default {
               if (res.code == 0) {
                 this.tipDialog("暂停成功！", "success");
                 this.$emit("statusChange", true);
+                this.init();
               } else {
                 this.tipDialog("暂停失败！", "error");
               }
@@ -501,6 +503,7 @@ export default {
               if (res.code == 0) {
                 this.tipDialog("启动成功！", "success");
                 this.$emit("statusChange", true);
+                this.init();
               } else {
                 this.tipDialog("启动失败！", "error");
               }
