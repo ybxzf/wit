@@ -1,11 +1,11 @@
 <template>
   <div class="unusual">
-    <p class="title">实时数据</p>
+    <p class="title">装置状态</p>
     <div class="content">
       <div class="left" :style="{ width: realTimeList.equipType == '标准表' ? '20rem' : '15rem' }">
         <img class="icon" src="@/assets/img/realTimeData.png">
         <img class="triangle" src="@/assets/img/tag_4.png">
-        <span>实时数据</span>
+        <span>装置状态</span>
       </div>
       <ul v-if="realTimeList.equipType == '互感器'" class="right_1 list">
         <li>

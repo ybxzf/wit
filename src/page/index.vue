@@ -10,7 +10,7 @@
 		<div class="mainBox flexBox">
 			<div class="left">
 				<div class="unusual">
-					<p class="title">异常监测</p>
+					<p class="title">环境异常监测</p>
 					<ul class="swiperHead row">
 						<li>异常类型</li>
 						<li>实验室</li>
@@ -35,7 +35,7 @@
 					</div>
 				</div>
 				<div class="check">
-					<p class="title">监测人员</p>
+					<p class="title">实验室人员</p>
 					<div class="swiper" id="check">
 						<div class="swiper-wrapper">
 							<div class="swiper-slide" v-for="item in check">
@@ -46,7 +46,7 @@
 										<div class="name fl">
 											<div>{{ item.personnelName }}</div>
 											<p class="type">
-												资质信息：<span>{{ item.post }}</span>
+												人员所在实验室：<span>{{ item.post }}</span>
 											</p>
 										</div>
 										<div class="status">
@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div class="capacity">
-					<p class="title">产能监测</p>
+					<p class="title">产能监测（周）</p>
 					<div class="echarts" id="capacity"></div>
 				</div>
 			</div>
@@ -91,14 +91,14 @@
 				</div>
 				<div class="flexBox">
 					<div class="room">
-						<p class="title">实验室监测</p>
+						<p class="title">实验室状态监测</p>
 						<div class="swiper" id="room">
 							<div class="swiper-wrapper">
 								<div class="swiper-slide" v-for="(item, idx) in room">
 									<div class="bodyInfo flexBox" :class="tagList[item.labStatus].class">
-										<p class="tag" :class="tagList[item.labStatus].class">
-											<!-- {{ tagList[item.labStatus].txt }} -->
-										</p>
+										<!-- <p class="tag" :class="tagList[item.labStatus].class">
+											{{ tagList[item.labStatus].txt }}
+										</p> -->
 										<p class="name txtOver">
 											<span>{{ item.labName }}</span>
 										</p>
@@ -109,7 +109,7 @@
 						</div>
 					</div>
 					<div class="onLine">
-						<p class="title">在线监测</p>
+						<p class="title">设备在线监测</p>
 						<div class="roomTxt">
 							{{ room && room[roomIdx] ? room[roomIdx].labName : "" }}
 						</div>
@@ -199,7 +199,7 @@
 										v-for="(item, idx) in onLine.rows" @click="clickJump(item, idx)">
 										<li class="txtOver">{{ item.equipName || "--" }}</li>
 										<li :class="equipState[item.equipState]">
-											{{ item.equipState || "--" }}
+											{{ item.equipState || "离线" }}
 										</li>
 										<li class="txtOver">
 											{{ item.equipDj || "--" }}
@@ -215,7 +215,7 @@
 			</div>
 			<div class="right">
 				<div class="quality">
-					<p class="title">当前合格率</p>
+					<p class="title">当前合格率（周）</p>
 					<div class="content">
 						<div style="color: #45c2ff">合格率：{{ (passRate).toFixed(2) }}%</div>
 						<div style="color: #ffd635">不合格率：{{ ((100 - passRate)).toFixed(2) }}%</div>
@@ -466,6 +466,10 @@
 								</div> -->
 								<div class="right">
 									<div class="right_1">
+										<div class="name">装置编号
+											<span class="person">{{ item.checker || '--' }}</span>
+										</div>
+										
 										<div class="name">检定项目</div>
 										<el-tooltip :disabled="String(item.projectName).length > 25 ? false : true"
 											:content="item.projectName" placement="top">
@@ -475,9 +479,6 @@
 												'--' }}
 											</div>
 										</el-tooltip>
-										<div class="name">检定人员
-											<span class="person">{{ item.checker || '--' }}</span>
-										</div>
 										<div class="name">检定任务
 											<span class="person">{{ item.taskNo || '--' }}</span>
 										</div>

@@ -6,7 +6,10 @@
         <img class="icon-avatar" src="@/assets/img/avatar.png" />
         <div class="tester-content">
           <div class="text_1">检定人：{{ item.personnelName }}</div>
-          <div class="text_2">资质信息：<span>{{ item.post }}</span></div>
+          <div class="text_2">
+            <!-- 资质信息： -->
+            <span>{{ item.post }}</span>
+          </div>
         </div>
       </ol>
     </ul>
