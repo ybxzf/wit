@@ -85,7 +85,16 @@
 							<span>
 								<el-badge class="badge" v-if="item.errNum" :value="item.errNum" />
 							</span>
-							<span>{{ item.labName }}</span>
+							<div style="line-height: 2rem;
+								height: 2rem;
+								display: flex;
+								flex-direction: column !important;
+								position: relative;
+								top: 2rem;"
+							>
+								<span style="line-height: 1rem;">{{ item.labName }}</span>
+								<span style="font-size: 0.8rem;">{{ item.labDelName }}</span>
+							</div>
 						</li>
 					</ul>
 				</div>
