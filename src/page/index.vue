@@ -35,40 +35,13 @@
 					</div>
 				</div>
 				<div class="check">
-					<p class="title">实验室人员</p>
-					<div class="swiper" id="check">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide" v-for="item in check">
-								<div class="bodyInfo flexBox">
-									<img v-if="item.userStatus" src="../assets/img/working.png" class="icon" />
-									<img v-else src="../assets/img/rest.png" class="icon" />
-									<div class="info">
-										<div class="name fl">
-											<div>{{ item.personnelName }}</div>
-											<p class="type">
-												人员所在实验室：<span>{{ item.post }}</span>
-											</p>
-										</div>
-										<div class="status">
-											<span :class="item.userStatus ? 'work' : 'rest'">
-												{{ item.userStatus ? item.userStatus : '休息' }}
-											</span>
-										</div>
-										<!-- <div class="row">
-											<p class="name fl">
-												检定人员<span>{{ item.personnelName }}</span>
-											</p>
-											<p class="value fr">
-												操作设备<span>{{ item.equipName }}</span>
-											</p>
-										</div>
-										<p class="type">
-											资质信息<span>{{ item.post }}</span>
-										</p> -->
-									</div>
-								</div>
-							</div>
+					<div class="quality">
+						<p class="title">当前合格率（周）</p>
+						<div class="content">
+							<div style="color: #45c2ff">合格率：{{ (passRate).toFixed(2) }}%</div>
+							<div style="color: #ffd635">不合格率：{{ ((100 - passRate)).toFixed(2) }}%</div>
 						</div>
+						<div class="echarts" id="quality"></div>
 					</div>
 				</div>
 				<div class="capacity">
@@ -90,8 +63,7 @@
 								display: flex;
 								flex-direction: column !important;
 								position: relative;
-								top: 2rem;"
-							>
+								top: 2rem;">
 								<span style="line-height: 1rem;">{{ item.labName }}</span>
 								<span style="font-size: 0.8rem;">{{ item.labDelName }}</span>
 							</div>
@@ -213,7 +185,7 @@
 										<li class="txtOver">
 											{{ item.equipDj || "--" }}
 										</li>
-										<li class="txtOver">{{ String(item.checkTime || "--" ).substring(0, 7)}}</li>
+										<li class="txtOver">{{ String(item.checkTime || "--").substring(0, 7) }}</li>
 										<li>{{ String(item.validDate || "--").substring(0, 7) }}</li>
 									</ul>
 								</div>
@@ -223,13 +195,43 @@
 				</div>
 			</div>
 			<div class="right">
-				<div class="quality">
-					<p class="title">当前合格率（周）</p>
-					<div class="content">
-						<div style="color: #45c2ff">合格率：{{ (passRate).toFixed(2) }}%</div>
-						<div style="color: #ffd635">不合格率：{{ ((100 - passRate)).toFixed(2) }}%</div>
+
+				<div class="check">
+					<p class="title">实验室人员</p>
+					<div class="swiper" id="check">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" v-for="item in check">
+								<div class="bodyInfo flexBox">
+									<img v-if="item.userStatus" src="../assets/img/working.png" class="icon" />
+									<img v-else src="../assets/img/rest.png" class="icon" />
+									<div class="info">
+										<div class="name fl">
+											<div>{{ item.personnelName }}</div>
+											<p class="type">
+												人员所在实验室：<span>{{ item.post }}</span>
+											</p>
+										</div>
+										<!-- <div class="status">
+											<span :class="item.userStatus ? 'work' : 'rest'">
+												{{ item.userStatus ? item.userStatus : '休息' }}
+											</span>
+										</div> -->
+										<!-- <div class="row">
+											<p class="name fl">
+												检定人员<span>{{ item.personnelName }}</span>
+											</p>
+											<p class="value fr">
+												操作设备<span>{{ item.equipName }}</span>
+											</p>
+										</div>
+										<p class="type">
+											资质信息<span>{{ item.post }}</span>
+										</p> -->
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="echarts" id="quality"></div>
 				</div>
 				<div class="data">
 					<p class="title">数据监测</p>
@@ -476,9 +478,9 @@
 								<div class="right">
 									<div class="right_1">
 										<div class="name">装置编号
-											<span class="person">{{ item.checker || '--' }}</span>
+											<span class="person">{{ item.equipNo || '--' }}</span>
 										</div>
-										
+
 										<div class="name">检定项目</div>
 										<el-tooltip :disabled="String(item.projectName).length > 25 ? false : true"
 											:content="item.projectName" placement="top">
@@ -612,43 +614,43 @@ export default {
 			passRate: 0,
 			time: "",
 			unusual: [
-			// 	{
-			// 		"durationTime": "273.00小时",
-			// 		"sensorType": "光照超标",
-			// 		"labName": "2303实验室",
-			// 		"updateTime": "2023-12-03 14:00:00"
-			// 	},
-			// 	{
-			// 		"durationTime": "273.00小时",
-			// 		"sensorType": "温度超标",
-			// 		"labName": "2303实验室",
-			// 		"updateTime": "2023-12-03 14:00:00"
-			// 	},
-			// 	{
-			// 		"durationTime": "273.00小时",
-			// 		"sensorType": "湿度不达标",
-			// 		"labName": "2308实验室",
-			// 		"updateTime": "2023-12-03 14:00:00"
-			// 	}
+				// 	{
+				// 		"durationTime": "273.00小时",
+				// 		"sensorType": "光照超标",
+				// 		"labName": "2303实验室",
+				// 		"updateTime": "2023-12-03 14:00:00"
+				// 	},
+				// 	{
+				// 		"durationTime": "273.00小时",
+				// 		"sensorType": "温度超标",
+				// 		"labName": "2303实验室",
+				// 		"updateTime": "2023-12-03 14:00:00"
+				// 	},
+				// 	{
+				// 		"durationTime": "273.00小时",
+				// 		"sensorType": "湿度不达标",
+				// 		"labName": "2308实验室",
+				// 		"updateTime": "2023-12-03 14:00:00"
+				// 	}
 			],
 			check: [
-			// 	{
-			// 		"personnelName": "江*涛",
-			// 		"post": "电能,"
-			// 	},
-			// 	{
-			// 		"personnelName": "江正涛",
-			// 		"userStatus": "正常",
-			// 		"post": "电能,电阻,"
-			// 	},
-			// 	{
-			// 		"personnelName": "张三",
-			// 		"post": "电能,"
-			// 	},
-			// 	{
-			// 		"personnelName": "李四",
-			// 		"post": "电阻,"
-			// 	}
+				// 	{
+				// 		"personnelName": "江*涛",
+				// 		"post": "电能,"
+				// 	},
+				// 	{
+				// 		"personnelName": "江正涛",
+				// 		"userStatus": "正常",
+				// 		"post": "电能,电阻,"
+				// 	},
+				// 	{
+				// 		"personnelName": "张三",
+				// 		"post": "电能,"
+				// 	},
+				// 	{
+				// 		"personnelName": "李四",
+				// 		"post": "电阻,"
+				// 	}
 			],
 			tagList: {
 				正在使用: {

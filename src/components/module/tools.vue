@@ -58,7 +58,7 @@
 			  5: '星期五',
 			  6: '星期六'
 			 };
-			return y + '--' + this.coverTime(m) + '--' + this.coverTime(d) + "　"+ this.coverTime(h) + ':' + this.coverTime(
+			return y + '-' + this.coverTime(m) + '-' + this.coverTime(d) + "　"+ this.coverTime(h) + ':' + this.coverTime(
 				mm);
 		},
 		/**
